@@ -47,7 +47,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     // : if date wrong, change locale
                     // time now
                     Date now = new Date(System.currentTimeMillis());
-                    DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPANESE);
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
                     String nowDate = formatter.format(now);
 
 
@@ -66,7 +66,7 @@ public class WifiReceiver extends BroadcastReceiver {
 
                     // time now
                     Date now = new Date(System.currentTimeMillis());
-                    DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPANESE);
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
                     String nowDate = formatter.format(now);
 
                     // : save disconnect to database, state(disconnect), ssid and data
