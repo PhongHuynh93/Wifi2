@@ -8,8 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.utils.TimeStampFormatter;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
@@ -17,6 +23,7 @@ import dhbk.android.wifi2.models.WifiModel;
 public class HistoryWifiRecyclerViewAdapter extends
         CursorRecyclerViewAdapter<HistoryWifiRecyclerViewAdapter.ViewHolder>{
 
+    private TimeStampFormatter mTimeStampFormatter = new TimeStampFormatter();
     public HistoryWifiRecyclerViewAdapter(Context context, Cursor cursor) {
         super(context, cursor);
     }
@@ -26,7 +33,7 @@ public class HistoryWifiRecyclerViewAdapter extends
         WifiModel myListItem = WifiModel.fromCursor(cursor);
         viewHolder.wifiStateHotspotTv.setText(myListItem.getState());
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
-        viewHolder.wifiDateHotspotTv.setText(myListItem.getDate());
+        viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
     }
 
     @Override
@@ -46,6 +53,14 @@ public class HistoryWifiRecyclerViewAdapter extends
             wifiStateHotspotTv = (TextView) itemView.findViewById(R.id.row_state_wifi_history);
             wifiSsidHotspotTv = (TextView) itemView.findViewById(R.id.row_ssid_wifi_history);
             wifiDateHotspotTv = (TextView) itemView.findViewById(R.id.row_date_wifi_history);
+        }
+    }
+
+    private static Date date(String string) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK).parse(string);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 }
