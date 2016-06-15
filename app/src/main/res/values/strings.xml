@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WifiTeplePhone</string>
+    <string name="action_settings">Settings</string>
+
+    <!--main navigation-->
+    <string name="tv_main_nav">F e a t u r e</string>
+    <string name="wifi">wifi</string>
+    <string name="button_scan_wifi">scan now</string>
+
+    <!--turn on wifi dialog-->
+    <string name="mes_turn_on_wifi_title">Use wifi service?</string>
+    <string name="mes_turn_on_wifi_body">Let app scan the access points around you </string>
+    <string name="mes_wifi_turn_on">AGREE</string>
+    <string name="mes_wifi_cancel">DISAGREE</string>
+</resources>

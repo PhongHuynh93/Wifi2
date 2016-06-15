@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <!--TODO change this layout-->
+
+    <ImageView
+        android:layout_gravity="center_vertical"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/wifi"
+        android:scaleType="fitXY"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"/>
+
+    <LinearLayout
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Ssid"
+            android:textSize="30sp"
+            android:textColor="@color/dark_teal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/row_ssid_wifi_history"/>
+
+        <TextView
+            android:text="State"
+            android:textColor="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/row_state_wifi_history"/>
+
+
+        <TextView
+            android:text="Date"
+            android:textColor="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/row_date_wifi_history"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wifi_frag_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.phongdthky.wifiteplephone.fragments.WifiFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/mes_not_have_wifi"
+        android:background="@android:color/black"
+        android:textColor="@android:color/white"
+        android:text="Not turn on wifi yet"/>
+</FrameLayout>
