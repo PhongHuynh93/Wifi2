@@ -9,4 +9,8 @@
     <dimen name="tv_feature_mg_left">15dp</dimen>
     <dimen name="margin_between_two_box">3dp</dimen>
     <dimen name="btn_scan_wifi_mg_bot">50dp</dimen>
+
+    <!--connect wifi dialog-->
+    <dimen name="connect_wifi_dialog_margin_left">10dp</dimen>
+    <dimen name="connect_wifi_dialog_authen_margin">20dp</dimen>
 </resources>

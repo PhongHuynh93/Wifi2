@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,6 +36,7 @@ public class WifiReceiver extends BroadcastReceiver {
             if (info != null && info.isConnected()) {
                 if (firstConnect) {
                     // Do your work.
+                    Log.i(TAG, "WifiReceiver onReceive: connected");
 
                     // e.g. To check the Network Name or other info:
                     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -64,6 +66,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     firstConnect = true;
                     firstDisconnect = false;
 
+                    Log.i(TAG, "WifiReceiver onReceive: disconnected");
                     // time now
                     Date now = new Date(System.currentTimeMillis());
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);

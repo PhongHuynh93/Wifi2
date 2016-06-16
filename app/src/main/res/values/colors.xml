@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">@color/dark_teal</color>
     <color name="grey_dark">#212121</color>
     <color name="deep_purple_medium">#673AB7</color>
     <color name="dark_teal">#009688</color>
+    <color name="dark_orange">#EF6C00</color>
+    <color name="wifi_connect_dialog">@color/dark_teal</color>
 </resources>
