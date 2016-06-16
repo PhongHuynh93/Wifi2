@@ -26,6 +26,21 @@ public class NetworkWifiDb implements
             + KEY_WIFI_SSID + " TEXT NOT NULL, "
             + KEY_WIFI_DATE + " TEXT NOT NULL);";
 
+    // wifi hotspot table
+    public static final String TABLE_WIFI_HOTSPOT = "table_wifi_hotspot";
+    public static final String KEY_WIFI_HOTSPOT_ID = "_id";
+    public static final String KEY_WIFI_HOTSPOT_SSID = "key_wifi_hotspot_ssid";
+    public static final String KEY_WIFI_HOTSPOT_PASS = "key_wifi_hotspot_pass";
+    public static final String KEY_WIFI_HOTSPOT_LAT = "key_wifi_hotspot_lat";
+    public static final String KEY_WIFI_HOTSPOT_LONG = "key_wifi_hotspot_long";
+
+    public static final String CREATE_TABLE_WIFI_HOTSPOT = "CREATE TABLE " + TABLE_WIFI_HOTSPOT + "("
+            + KEY_WIFI_HOTSPOT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + KEY_WIFI_HOTSPOT_SSID + " TEXT NOT NULL, "
+            + KEY_WIFI_HOTSPOT_PASS + " TEXT NOT NULL, "
+            + KEY_WIFI_HOTSPOT_LAT + " REAL NOT NULL, "
+            + KEY_WIFI_HOTSPOT_LONG + " REAL NOT NULL);";
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.i(TAG, "onCreate: name of table syntax" + CREATE_TABLE);

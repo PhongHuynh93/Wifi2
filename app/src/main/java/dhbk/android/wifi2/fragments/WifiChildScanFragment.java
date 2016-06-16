@@ -1,17 +1,26 @@
 package dhbk.android.wifi2.fragments;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationManager;
+import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,11 +30,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.activities.MainActivity;
 import dhbk.android.wifi2.adapters.ScanWifiRecyclerviewAdapter;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
@@ -41,6 +54,12 @@ public class WifiChildScanFragment extends Fragment {
     private RecyclerView mListWifiRecyclerView;
     ArrayList<WifiModel> wifiModels;
     private boolean mHasTurnOnGps; // state of turn of GPS
+
+    private boolean firstConnect = true;
+    private boolean firstDisconnect = true;
+    private Object mCurrentLocation;
+    private String networkSSID;
+    private String networkPass;
 
     public WifiChildScanFragment() {
     }
@@ -127,6 +146,7 @@ public class WifiChildScanFragment extends Fragment {
         });
     }
 
+    // TODO: 6/16/16
     // register broadcast to get wifi scans
     @Override
     public void onResume() {
@@ -153,9 +173,9 @@ public class WifiChildScanFragment extends Fragment {
     public void authenWifiWithPass(String pass, int position) {
         ScanWifiRecyclerviewAdapter scanWifiRecyclerviewAdapter = (ScanWifiRecyclerviewAdapter) mListWifiRecyclerView.getAdapter();
         WifiModel wifiModel = scanWifiRecyclerviewAdapter.getWifiModelAtPosition(position);
-        String networkSSID = wifiModel.getSsid();
+        networkSSID = wifiModel.getSsid();
         String encryption = wifiModel.getEncryption();
-        String networkPass = pass;
+        networkPass = pass;
 
         // Add a new network description to the set of configured networks.
         WifiConfiguration conf = new WifiConfiguration();
@@ -184,11 +204,50 @@ public class WifiChildScanFragment extends Fragment {
         }
 
         // TODO: 6/16/16 fix broadcast receiver to recieve wifi connect success
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
         WifiGetConnectionEstablished WifiGetConnectionEstablished = new WifiGetConnectionEstablished();
-        getActivity().getApplicationContext().registerReceiver(WifiGetConnectionEstablished, intentFilter);
+        getActivity().getApplicationContext().registerReceiver(WifiGetConnectionEstablished, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
     }
+
+    // get location and save to datbase
+    private void saveWifiHotspotToDb(boolean hasTurnOnGps) {
+        // : 6/16/16 get lat long
+        if (hasTurnOnGps) {
+            Location currentLocation = getCurrentLocation();
+            if (currentLocation != null) {
+                Double latitude = currentLocation.getLatitude();
+                Double longitude = currentLocation.getLongitude();
+                Log.i(TAG, "onReceive: " + latitude);
+                Log.i(TAG, "onReceive: " + longitude);
+                // : 6/16/16 save to datbase
+                Fragment parentFragment = getParentFragment();
+                if (parentFragment instanceof WifiFragment) {
+                    ((WifiFragment) parentFragment).saveWifiHotspotToDb(networkSSID, networkPass, currentLocation.getLatitude(), currentLocation.getLongitude());
+                }
+            }
+
+        } else {
+            Fragment parentFragment = getParentFragment();
+            if (parentFragment instanceof WifiFragment) {
+                ((WifiFragment) parentFragment).saveWifiHotspotToDb(networkSSID, networkPass, 0, 0);
+            }
+        }
+
+    }
+
+
+    @Nullable
+    private Location getCurrentLocation() {
+        LocationManager locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+
+        return locationManager
+                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+
+    }
+
 
     // get result when scan wifi hotspot around
     public class WifiScanReceiver extends BroadcastReceiver {
@@ -231,23 +290,26 @@ public class WifiChildScanFragment extends Fragment {
 
     // : 6/16/2016 receive when a connection to the supplicant has been established
     public class WifiGetConnectionEstablished extends BroadcastReceiver {
-
         @Override
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
-            if (action.equals(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION)) {
-                if (intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false)) {
-                    // do stuff
-                    // TODO: 6/16/2016 check if UserHasTUrnOnLocation = true, save to database
-                    // id turn on insert(ssid, pass, double lat, double long)
-                    Log.i(TAG, "onReceive: ket noi thanh cong");
+            if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+                boolean connected = info.isConnected();
+
+                if (connected) {
+                    if (firstConnect) {
+                        firstConnect = false;
+                        // save to datbase
+                        saveWifiHotspotToDb(mHasTurnOnGps);
+                    }
                 } else {
-                    // wifi connection was lost
-                    // TODO: 6/16/2016 check if UserHasTUrnOnLocation = false, save to database
-                    // id turn on insert(ssid, pass)
-                    Log.i(TAG, "onReceive: ket noi khong thanh cong");
+                    firstConnect = true;
                 }
             }
+            // TODO: 6/16/16 unregister it
         }
     }
+
+
 }

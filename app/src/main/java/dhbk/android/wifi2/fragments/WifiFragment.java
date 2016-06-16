@@ -109,4 +109,9 @@ public class WifiFragment extends Fragment {
             ((WifiChildScanFragment)wifiChildScanFragment).authenWifiWithPass(pass, position);
         }
     }
+
+    // TODO: 6/16/16 save wifi states to database
+    public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude) {
+
+    }
 }
