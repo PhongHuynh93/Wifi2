@@ -3,8 +3,11 @@ package dhbk.android.wifi2.fragments;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,9 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.utils.Constant;
 
 public class WifiFragment extends Fragment {
+
+    private static final String TAG = WifiFragment.class.getSimpleName();
+    private boolean mHasTurnOnGps;
 
     public WifiFragment() {
     }
@@ -36,7 +42,7 @@ public class WifiFragment extends Fragment {
         TextView tv = (TextView) view.findViewById(R.id.mes_not_have_wifi);
     }
 
-    // check if only when open app, not restart app
+    // check if only when app start and restart app
     @Override
     public void onStart() {
         super.onStart();
@@ -61,7 +67,7 @@ public class WifiFragment extends Fragment {
         if (wifiChildScanFragment == null) {
             getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.wifi_frag_container, WifiChildScanFragment.newInstance(), Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT)
+                    .add(R.id.wifi_frag_container, WifiChildScanFragment.newInstance(mHasTurnOnGps), Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT)
                     .commit();
         }
     }
@@ -71,5 +77,36 @@ public class WifiFragment extends Fragment {
         WifiManager wifi = (WifiManager)getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         wifi.setWifiEnabled(true);
         showWifi();
+    }
+
+    // : 6/16/2016 implement this to show a gps dialog
+    public void showGpsDialogToTurnOn() {
+        GpsChildTurnOnDialogFragment gpsChildTurnOnDialogFragment = new GpsChildTurnOnDialogFragment();
+        gpsChildTurnOnDialogFragment.show(getChildFragmentManager(), Constant.TAG_CHILD_GPS_FRAGMENT);
+    }
+
+    //  a callback with para showing the gps has turn on or not
+    public void hasTurnOnGPS(boolean b) {
+        mHasTurnOnGps = b;
+    }
+
+    //  call Dialog to to let user complete pass
+    public void onShowFillInPassWifiDialog(@NonNull String ssid, int position) {
+        ChildConnectWifiDialogFragment childConnectWifiDialogFragment = ChildConnectWifiDialogFragment.newInstance(ssid, position);
+        childConnectWifiDialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE, 0);
+        childConnectWifiDialogFragment.show(getChildFragmentManager(), Constant.TAG_CHILD_CONNECT_WIFI_FRAGMENT);
+    }
+
+    //  authen with pass at position in recyclerview at WifiChildTurnOnDialogFragment Fragment.
+    public void onAuthen(String pass, int position) {
+        // correct pass and position
+        Log.i(TAG, "onAuthen: " + pass);
+        Log.i(TAG, "onAuthen: " + position);
+
+        // : 6/16/2016 depend on position, get ssid and security
+        Fragment wifiChildScanFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT);
+        if (wifiChildScanFragment instanceof WifiChildScanFragment) {
+            ((WifiChildScanFragment)wifiChildScanFragment).authenWifiWithPass(pass, position);
+        }
     }
 }
