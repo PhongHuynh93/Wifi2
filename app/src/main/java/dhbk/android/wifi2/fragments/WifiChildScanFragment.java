@@ -157,11 +157,6 @@ public class WifiChildScanFragment extends Fragment {
         String encryption = wifiModel.getEncryption();
         String networkPass = pass;
 
-        Log.i(TAG, "authenWifiWithPass: networkSSID: " + networkSSID);
-        Log.i(TAG, "authenWifiWithPass: networkPass: " + networkPass);
-        Log.i(TAG, "authenWifiWithPass: encryption: " + encryption);
-        Log.i(TAG, "authenWifiWithPass: position: " + position);
-
         // Add a new network description to the set of configured networks.
         WifiConfiguration conf = new WifiConfiguration();
         conf.SSID = "\"" + networkSSID + "\"";
@@ -172,26 +167,23 @@ public class WifiChildScanFragment extends Fragment {
             conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
         } else if (encryption.equals(Constant.WIFI_WPA)) {
-            conf.preSharedKey = "\""+ networkPass +"\"";
+            conf.preSharedKey = "\"" + networkPass + "\"";
         } else if (encryption.equals(Constant.WIFI_OPEN)) {
             conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        } // TODO: 6/16/2016 miss 1 condition if wifi_wpa2
-
-        WifiManager wifiManager = (WifiManager)getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        wifiManager.addNetwork(conf);
-
-        // connect to Access Point
-        List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
-        for( WifiConfiguration i : list ) {
-            if(i.SSID != null && i.SSID.equals("\"" + networkSSID + "\"")) {
-                wifiManager.disconnect();
-                wifiManager.enableNetwork(i.networkId, true);
-                wifiManager.reconnect();
-                break;
-            }
+        } else if (encryption.equals(Constant.WIFI_WPA2)) {
+            conf.preSharedKey = "\"" + networkPass + "\"";
         }
 
-        // : 6/16/2016 make a broadcast receiver to check if the connection is established
+        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        int networkId = wifiManager.addNetwork(conf);
+        if (networkId != -1) {
+            wifiManager.enableNetwork(networkId, true);
+            // Use this to permanently save this network
+            // Otherwise, it will disappear after a reboot
+            wifiManager.saveConfiguration();
+        }
+
+        // TODO: 6/16/16 fix broadcast receiver to recieve wifi connect success
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
         WifiGetConnectionEstablished WifiGetConnectionEstablished = new WifiGetConnectionEstablished();
@@ -210,7 +202,7 @@ public class WifiChildScanFragment extends Fragment {
                 String ssid = wifiScanList.get(i).SSID;
                 String capabilities = wifiScanList.get(i).capabilities;
                 String encryption;
-                Log.i(TAG, "onReceive: capabilities: " +capabilities);
+                Log.i(TAG, "onReceive: capabilities: " + capabilities);
                 if (capabilities.contains(Constant.WIFI_WPA2)) {
                     // We know there is WPA2 encryption
                     encryption = Constant.WIFI_WPA2;
@@ -244,7 +236,7 @@ public class WifiChildScanFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             if (action.equals(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION)) {
-                if (intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false)){
+                if (intent.getBooleanExtra(WifiManager.EXTRA_SUPPLICANT_CONNECTED, false)) {
                     // do stuff
                     // TODO: 6/16/2016 check if UserHasTUrnOnLocation = true, save to database
                     // id turn on insert(ssid, pass, double lat, double long)
