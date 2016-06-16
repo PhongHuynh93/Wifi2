@@ -31,7 +31,8 @@ import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.ItemClickSupport;
 
-// FIXME: 6/15/16 not show all of wifi around yet
+// TODO: 6/16/16 add animation when wait for wifi scan
+// show all of wifi around yet
 public class WifiChildScanFragment extends Fragment {
     private static final String TAG = WifiChildScanFragment.class.getSimpleName();
     private static final String ARG_GPS = "turn_gps";
@@ -148,7 +149,7 @@ public class WifiChildScanFragment extends Fragment {
         scanWifiRecyclerviewAdapter.notifyItemRangeChanged(0, wifiModels.size());
     }
 
-    // FIXME: 6/16/2016 test this (forget old wifi AP and input pass) depend on position, get ssid and encryption, and then authen with pass
+    // : 6/16/2016 test this (forget old wifi AP and input pass) depend on position, get ssid and encryption, and then authen with pass
     public void authenWifiWithPass(String pass, int position) {
         ScanWifiRecyclerviewAdapter scanWifiRecyclerviewAdapter = (ScanWifiRecyclerviewAdapter) mListWifiRecyclerView.getAdapter();
         WifiModel wifiModel = scanWifiRecyclerviewAdapter.getWifiModelAtPosition(position);
@@ -247,10 +248,12 @@ public class WifiChildScanFragment extends Fragment {
                     // do stuff
                     // TODO: 6/16/2016 check if UserHasTUrnOnLocation = true, save to database
                     // id turn on insert(ssid, pass, double lat, double long)
+                    Log.i(TAG, "onReceive: ket noi thanh cong");
                 } else {
                     // wifi connection was lost
                     // TODO: 6/16/2016 check if UserHasTUrnOnLocation = false, save to database
                     // id turn on insert(ssid, pass)
+                    Log.i(TAG, "onReceive: ket noi khong thanh cong");
                 }
             }
         }
