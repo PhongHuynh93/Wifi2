@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,11 +115,6 @@ public class WifiFragment extends Fragment {
             isTurnGpsInt = 0;
         }
 
-        Log.i(TAG, "saveWifiHotspotToDb: " + networkSSID);
-        Log.i(TAG, "saveWifiHotspotToDb: " + networkPass);
-        Log.i(TAG, "saveWifiHotspotToDb: " + latitude);
-        Log.i(TAG, "saveWifiHotspotToDb: " + longitude);
-        Log.i(TAG, "saveWifiHotspotToDb: " + isTurnGpsInt);
 
         WifiHotsPotModel wifiHotsPotModel = new WifiHotsPotModel(networkSSID, networkPass, latitude, longitude, isTurnGpsInt);
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());

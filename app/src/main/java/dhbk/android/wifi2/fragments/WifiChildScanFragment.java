@@ -184,7 +184,7 @@ public class WifiChildScanFragment extends Fragment {
         Fragment parentFrag = getParentFragment();
         boolean isTurnOnGps = false;
 
-        // TODO: 6/17/2016 check step by step how to call this method
+        // : 6/17/2016 check step by step how to call this method
         checkGpsHasTurnOn();
 
         if (parentFrag instanceof WifiFragment)
