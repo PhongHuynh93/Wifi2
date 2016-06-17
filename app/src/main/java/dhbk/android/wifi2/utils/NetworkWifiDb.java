@@ -39,7 +39,7 @@ public class NetworkWifiDb implements
 
     public static final String CREATE_TABLE_WIFI_HOTSPOT = "CREATE TABLE " + TABLE_WIFI_HOTSPOT + "("
             + KEY_WIFI_HOTSPOT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + KEY_WIFI_HOTSPOT_SSID + " TEXT NOT NULL, "
+            + KEY_WIFI_HOTSPOT_SSID + " TEXT NOT NULL UNIQUE, "
             + KEY_WIFI_HOTSPOT_PASS + " TEXT NOT NULL, "
             + KEY_WIFI_HOTSPOT_LAT + " REAL NOT NULL, "
             + KEY_WIFI_HOTSPOT_LONG + " REAL NOT NULL, "
