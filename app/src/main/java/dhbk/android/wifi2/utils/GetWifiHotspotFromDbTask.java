@@ -27,7 +27,7 @@ public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
     protected Cursor doInBackground(Void... params) {
         Cursor cursor;
         try {
-            // FIXME (check this cursor): 6/17/2016 change column to get ssid, pass, lat/long
+            //  (check this cursor): 6/17/2016 change column to get ssid, pass, lat/long
             cursor = mDb.query (NetworkWifiDb.TABLE_WIFI_HOTSPOT,
                     new String[] {NetworkWifiDb.KEY_WIFI_HOTSPOT_ID, NetworkWifiDb.KEY_WIFI_HOTSPOT_SSID, NetworkWifiDb.KEY_WIFI_HOTSPOT_PASS, NetworkWifiDb.KEY_WIFI_HOTSPOT_LAT, NetworkWifiDb.KEY_WIFI_HOTSPOT_LONG},
                     NetworkWifiDb.KEY_WIFI_HOTSPOT_ISTURNONGPS + " = ?",

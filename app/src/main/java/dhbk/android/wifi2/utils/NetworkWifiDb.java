@@ -46,7 +46,7 @@ public class NetworkWifiDb implements
             + KEY_WIFI_HOTSPOT_ISTURNONGPS + " INTEGER NOT NULL);";
 
 
-    // FIXME: 6/17/2016 test name of create table
+    // : 6/17/2016 test name of create table
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.i(TAG, "onCreate: name of table syntax" + CREATE_TABLE_WIFI_HOTSPOT);
