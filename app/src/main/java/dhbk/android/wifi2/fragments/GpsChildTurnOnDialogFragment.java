@@ -51,24 +51,30 @@ public class GpsChildTurnOnDialogFragment extends DialogFragment {
             return builder.create();
         }
 
-    // FIXME: 6/17/2016 test this method - check to see whether this method has turn on gps or not
+    // ko the bat propramming gps được
     // turn on location
-    public void turnGPSOn()
-    {
-        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
-        intent.putExtra("enabled", true);
-        Context appContext = getActivity().getApplicationContext();
-        appContext.sendBroadcast(intent);
-
-        String provider = Settings.Secure.getString(appContext.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-        if(!provider.contains("gps")){ //if gps is disabled
-            final Intent poke = new Intent();
-            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
-            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
-            poke.setData(Uri.parse("3"));
-            appContext.sendBroadcast(poke);
-        }
+//    public void turnGPSOn()
+//    {
+//        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+//        intent.putExtra("enabled", true);
+//        Context appContext = getActivity().getApplicationContext();
+//        appContext.sendBroadcast(intent);
+//
+//        String provider = Settings.Secure.getString(appContext.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+//        if(!provider.contains("gps")){ //if gps is disabled
+//            final Intent poke = new Intent();
+//            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+//            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+//            poke.setData(Uri.parse("3"));
+//            appContext.sendBroadcast(poke);
+//        }
+//    }
+//
+    // let user manually turn on GPS
+    public void turnGPSOn() {
+        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     }
+
     // automatic turn off the gps
     public void turnGPSOff()
     {
