@@ -1,7 +1,6 @@
 package dhbk.android.wifi2.fragments;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,14 +12,11 @@ import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,15 +26,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.activities.MainActivity;
 import dhbk.android.wifi2.adapters.ScanWifiRecyclerviewAdapter;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
@@ -211,13 +203,13 @@ public class WifiChildScanFragment extends Fragment {
     // get location and save to datbase
     private void saveWifiHotspotToDb(boolean hasTurnOnGps) {
         // : 6/16/16 get lat long
-        if (hasTurnOnGps) {
+        if (mHasTurnOnGps) {
             Location currentLocation = getCurrentLocation();
             if (currentLocation != null) {
                 Double latitude = currentLocation.getLatitude();
                 Double longitude = currentLocation.getLongitude();
-                Log.i(TAG, "onReceive: " + latitude);
-                Log.i(TAG, "onReceive: " + longitude);
+                Log.i(TAG, "saveWifiHotspotToDb onReceive: " + latitude);
+                Log.i(TAG, "saveWifiHotspotToDb onReceive: " + longitude);
                 // : 6/16/16 save to datbase
                 Fragment parentFragment = getParentFragment();
                 if (parentFragment instanceof WifiFragment) {
@@ -237,15 +229,29 @@ public class WifiChildScanFragment extends Fragment {
 
     @Nullable
     private Location getCurrentLocation() {
-        LocationManager locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
 
-        return locationManager
-                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        LocationManager mLocationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
 
+    }
 
+    public void setHasTurnOnGps(boolean hasTurnOnGps) {
+        mHasTurnOnGps = hasTurnOnGps;
     }
 
 

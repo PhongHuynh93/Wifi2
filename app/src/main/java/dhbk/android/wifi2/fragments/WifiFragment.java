@@ -25,8 +25,7 @@ public class WifiFragment extends Fragment {
     }
 
     public static WifiFragment newInstance() {
-        WifiFragment fragment = new WifiFragment();
-        return fragment;
+        return new WifiFragment();
     }
 
     @Override
@@ -87,7 +86,11 @@ public class WifiFragment extends Fragment {
 
     //  a callback with para showing the gps has turn on or not
     public void hasTurnOnGPS(boolean b) {
-        mHasTurnOnGps = b;
+        // pass this var to wifichildscan
+        Fragment childScanWifi = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT);
+        if (childScanWifi instanceof WifiChildScanFragment) {
+            ((WifiChildScanFragment)childScanWifi).setHasTurnOnGps(b);
+        }
     }
 
     //  call Dialog to to let user complete pass
@@ -110,8 +113,11 @@ public class WifiFragment extends Fragment {
         }
     }
 
-    // TODO: 6/16/16 save wifi states to database
+    // Fixme (not get location): 6/16/16 save wifi states to database
     public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude) {
-
+        Log.i(TAG, "saveWifiHotspotToDb: " + networkSSID);
+        Log.i(TAG, "saveWifiHotspotToDb: " + networkPass);
+        Log.i(TAG, "saveWifiHotspotToDb: " + latitude);
+        Log.i(TAG, "saveWifiHotspotToDb: " + longitude);
     }
 }
