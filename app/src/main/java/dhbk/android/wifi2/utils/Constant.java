@@ -12,7 +12,9 @@ public class Constant {
     public static final String TAG_CHILD_SCAN_WIFI_FRAGMENT = "scan_wifi";
     public static final String TAG_CHILD_GPS_FRAGMENT = "gps_dialog";
     public static final String TAG_CHILD_CONNECT_WIFI_FRAGMENT = "connect_wifi";
-
+    public static final String TAG_HISTORY_WITH_OSM_MAP_FRAGMENT = "history_with_map_fragment";
+    public static final String TAG_CHILD_OSM_MAP_FRAGMENT = "osm_map";
+    public static final String TAG_MOBILE_FRAGMENT = "mobile_fragment";
 
     //    wifi style
     public static final String WIFI_WEP = "WEP";
@@ -24,6 +26,7 @@ public class Constant {
     public static final String WIFI_CONNECT = "CONNECTED";
     public static final String WIFI_DISCONNECT = "DISCONNECTED";
 
-
+//    map
+    public static final int ZOOM = 14;
 }
 

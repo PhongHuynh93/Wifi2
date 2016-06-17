@@ -8,4 +8,5 @@
     <color name="dark_teal">#009688</color>
     <color name="dark_orange">#EF6C00</color>
     <color name="wifi_connect_dialog">@color/dark_teal</color>
+    <color name="indigo">#3F51B5</color>
 </resources>

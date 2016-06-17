@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.utils.Constant;
+import dhbk.android.wifi2.utils.NetworkDb;
 
 public class WifiFragment extends Fragment {
 
@@ -31,7 +33,6 @@ public class WifiFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_wifi, container, false);
     }
 
@@ -66,7 +67,7 @@ public class WifiFragment extends Fragment {
         if (wifiChildScanFragment == null) {
             getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.wifi_frag_container, WifiChildScanFragment.newInstance(mHasTurnOnGps), Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT)
+                    .add(R.id.wifi_frag_container, WifiChildScanFragment.newInstance(), Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT)
                     .commit();
         }
     }
@@ -84,13 +85,9 @@ public class WifiFragment extends Fragment {
         gpsChildTurnOnDialogFragment.show(getChildFragmentManager(), Constant.TAG_CHILD_GPS_FRAGMENT);
     }
 
-    //  a callback with para showing the gps has turn on or not
+    //  update gps button
     public void hasTurnOnGPS(boolean b) {
-        // pass this var to wifichildscan
-        Fragment childScanWifi = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT);
-        if (childScanWifi instanceof WifiChildScanFragment) {
-            ((WifiChildScanFragment)childScanWifi).setHasTurnOnGps(b);
-        }
+        mHasTurnOnGps = b;
     }
 
     //  call Dialog to to let user complete pass
@@ -102,10 +99,6 @@ public class WifiFragment extends Fragment {
 
     //  authen with pass at position in recyclerview at WifiChildTurnOnDialogFragment Fragment.
     public void onAuthen(String pass, int position) {
-        // correct pass and position
-        Log.i(TAG, "onAuthen: " + pass);
-        Log.i(TAG, "onAuthen: " + position);
-
         // : 6/16/2016 depend on position, get ssid and security
         Fragment wifiChildScanFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT);
         if (wifiChildScanFragment instanceof WifiChildScanFragment) {
@@ -113,11 +106,32 @@ public class WifiFragment extends Fragment {
         }
     }
 
-    // Fixme (not get location): 6/16/16 save wifi states to database
-    public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude) {
+    // FIXME (test again - get location): TODO 6/16/16 save wifi states to database
+    // isTurnOnGps = true => has location
+    public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude, boolean isTurnOnGps) {
+        int isTurnGpsInt = 0;
+        if (isTurnOnGps) {
+            isTurnGpsInt = 1;
+        } else {
+            isTurnGpsInt = 0;
+        }
+
         Log.i(TAG, "saveWifiHotspotToDb: " + networkSSID);
         Log.i(TAG, "saveWifiHotspotToDb: " + networkPass);
         Log.i(TAG, "saveWifiHotspotToDb: " + latitude);
         Log.i(TAG, "saveWifiHotspotToDb: " + longitude);
+        Log.i(TAG, "saveWifiHotspotToDb: " + isTurnGpsInt);
+
+        WifiHotsPotModel wifiHotsPotModel = new WifiHotsPotModel(networkSSID, networkPass, latitude, longitude, isTurnGpsInt);
+        NetworkDb networkDb = NetworkDb.getInstance(getActivity());
+        networkDb.addWifiHotspotWithLocation(wifiHotsPotModel);
+    }
+
+    public boolean isHasTurnOnGps() {
+        return mHasTurnOnGps;
+    }
+
+    public void setHasTurnOnGps(boolean hasTurnOnGps) {
+        mHasTurnOnGps = hasTurnOnGps;
     }
 }

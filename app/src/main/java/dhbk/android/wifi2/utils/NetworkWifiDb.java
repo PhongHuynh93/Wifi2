@@ -1,10 +1,12 @@
 package dhbk.android.wifi2.utils;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
+import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiModel;
 
 /**
@@ -33,23 +35,29 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_HOTSPOT_PASS = "key_wifi_hotspot_pass";
     public static final String KEY_WIFI_HOTSPOT_LAT = "key_wifi_hotspot_lat";
     public static final String KEY_WIFI_HOTSPOT_LONG = "key_wifi_hotspot_long";
+    public static final String KEY_WIFI_HOTSPOT_ISTURNONGPS = "key_wifi_hotspot_turn_on_gps";
 
     public static final String CREATE_TABLE_WIFI_HOTSPOT = "CREATE TABLE " + TABLE_WIFI_HOTSPOT + "("
             + KEY_WIFI_HOTSPOT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + KEY_WIFI_HOTSPOT_SSID + " TEXT NOT NULL, "
             + KEY_WIFI_HOTSPOT_PASS + " TEXT NOT NULL, "
             + KEY_WIFI_HOTSPOT_LAT + " REAL NOT NULL, "
-            + KEY_WIFI_HOTSPOT_LONG + " REAL NOT NULL);";
+            + KEY_WIFI_HOTSPOT_LONG + " REAL NOT NULL, "
+            + KEY_WIFI_HOTSPOT_ISTURNONGPS + " INTEGER NOT NULL);";
 
+
+    // FIXME: 6/17/2016 test name of create table
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.i(TAG, "onCreate: name of table syntax" + CREATE_TABLE);
+        Log.i(TAG, "onCreate: name of table syntax" + CREATE_TABLE_WIFI_HOTSPOT);
         db.execSQL(CREATE_TABLE);
+        db.execSQL(CREATE_TABLE_WIFI_HOTSPOT);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT);
         onCreate(db);
     }
 
@@ -61,5 +69,17 @@ public class NetworkWifiDb implements
     @Override
     public void onGetCursor(SQLiteDatabase db, Fragment fragment) {
         new GetWifiFromDbTask(db, fragment).execute();
+    }
+
+    // add wifi hotspot with location to db
+    @Override
+    public void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel) {
+        new AddWifiWithLocationToDbTask(db).execute(wifiHotsPotModel);
+    }
+
+    // get wifi hotspot to show on map
+    @Override
+    public void onGetWifiHotspot(SQLiteDatabase db, Context activityContext) {
+        new GetWifiHotspotFromDbTask(db, activityContext).execute();
     }
 }

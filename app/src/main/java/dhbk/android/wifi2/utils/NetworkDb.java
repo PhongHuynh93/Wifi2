@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import java.util.ArrayList;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
+import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiModel;
 
 /**
@@ -64,6 +65,25 @@ public class NetworkDb extends SQLiteOpenHelper{
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
                 ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onGetCursor(getReadableDatabase(), frag);
+            }
+        }
+    }
+
+    // add wifi hotspot with location to database
+    public void addWifiHotspotWithLocation(WifiHotsPotModel wifiHotsPotModel) {
+        for (int i = 0; i < listTable.size(); i++) {
+            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
+            if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
+                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onInsertWifiLocation(getWritableDatabase(), wifiHotsPotModel);
+            }
+        }
+    }
+
+    public void getWifiHotspot(Context activityContext) {
+        for (int i = 0; i < listTable.size(); i++) {
+            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
+            if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
+                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onGetWifiHotspot(getReadableDatabase(), activityContext);
             }
         }
     }

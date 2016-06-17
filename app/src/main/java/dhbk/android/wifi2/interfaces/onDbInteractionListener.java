@@ -1,8 +1,10 @@
 package dhbk.android.wifi2.interfaces;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 
+import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiModel;
 
 /**
@@ -19,6 +21,8 @@ public interface onDbInteractionListener {
     // method table wifi
     interface onDbWifiTableInteractionListener extends onDbTableInteractionListener{
         void onInsert(SQLiteDatabase db, WifiModel wifiModel);
-        void onGetCursor(SQLiteDatabase writableDatabase, Fragment fragment);
+        void onGetCursor(SQLiteDatabase db, Fragment fragment);
+        void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel);
+        void onGetWifiHotspot(SQLiteDatabase db, Context activityContext);
     }
 }

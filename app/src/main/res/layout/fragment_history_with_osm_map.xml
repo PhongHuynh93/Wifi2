@@ -1,0 +1,22 @@
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/map_coordinator"
+    tools:context="dhbk.android.wifi2.fragments.HistoryWithOsmMapFragment">
+
+    <!--osm map-->
+    <FrameLayout
+        android:id="@+id/map_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+    <!--TODO bottom sheets: change height -->
+    <FrameLayout
+        android:id="@+id/map_bottom_sheets"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"/>
+</android.support.design.widget.CoordinatorLayout>

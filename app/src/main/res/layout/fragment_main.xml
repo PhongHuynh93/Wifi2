@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--wifi-->
         <FrameLayout
             android:id="@+id/scan_wifi"
             android:layout_width="match_parent"
@@ -37,6 +38,7 @@
                 android:textColor="@android:color/white"/>
         </FrameLayout>
 
+        <!--text-->
         <FrameLayout
             android:id="@+id/tv_features"
             android:layout_width="match_parent"
@@ -54,20 +56,33 @@
                 android:textStyle="bold"/>
         </FrameLayout>
 
+        <!--telephony + history-->
         <LinearLayout
             android:id="@+id/scan_telephony"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/tv_features"
+            android:layout_marginBottom="@dimen/margin_between_two_box"
             android:orientation="horizontal">
 
+            <!--teplephony-->
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/margin_between_two_box"
                 android:layout_weight="1"
-                android:background="@color/deep_purple_medium"></FrameLayout>
+                android:background="@color/deep_purple_medium">
+                <TextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="MOBILE"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
+            </FrameLayout>
 
+            <!--history-->
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -85,6 +100,38 @@
                     android:textSize="40sp"/>
             </FrameLayout>
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/map_history"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@id/scan_telephony"
+            android:layout_marginTop="@dimen/margin_between_two_box"
+            android:background="@color/indigo">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="65dp"
+                android:text="WIFI HOTSPOTS"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:textSize="40sp"/>
+
+            <Button
+                android:id="@+id/button_show_map"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/bg_button"
+                android:text="find on map"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"/>
+        </FrameLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
 

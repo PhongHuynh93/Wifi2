@@ -51,13 +51,34 @@ public class MainFragment extends Fragment {
             Log.e(TAG, "onViewCreated: " + e.toString());
         }
 
-        // : 6/15/2016 listen when click textview
+        // : 6/15/2016 listen when click HISTORY textview
         TextView historyTextView = (TextView) view.findViewById(R.id.tv_history);
         historyTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
                     mListener.onHistoryFragReplace();
+                }
+            }
+        });
+
+        // : 6/15/2016 listen when click MOBILE textview
+        TextView mobileTextView = (TextView) view.findViewById(R.id.tv_mobile);
+        mobileTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onMobileFragReplace();
+                }
+            }
+        });
+
+        Button showWifiHotspotMap = (Button) view.findViewById(R.id.button_show_map);
+        showWifiHotspotMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onHistoryWithOsmMapFragReplace();
                 }
             }
         });

@@ -18,4 +18,7 @@
     <!--turn on gps dialog-->
     <string name="mes_turn_on_gps_title">Use location service?</string>
     <string name="mes_turn_on_gps_body">Let app get your current location to find out where the wifi hotspot is</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -40,27 +40,21 @@ import dhbk.android.wifi2.utils.ItemClickSupport;
 // show all of wifi around yet
 public class WifiChildScanFragment extends Fragment {
     private static final String TAG = WifiChildScanFragment.class.getSimpleName();
-    private static final String ARG_GPS = "turn_gps";
     private WifiScanReceiver mWifiReciever;
     private WifiManager mWifi;
     private RecyclerView mListWifiRecyclerView;
     ArrayList<WifiModel> wifiModels;
-    private boolean mHasTurnOnGps; // state of turn of GPS
 
     private boolean firstConnect = true;
-    private boolean firstDisconnect = true;
-    private Object mCurrentLocation;
     private String networkSSID;
     private String networkPass;
+    private WifiGetConnectionEstablished mWifiGetConnectionEstablished;
 
     public WifiChildScanFragment() {
     }
 
-    public static WifiChildScanFragment newInstance(boolean hasGpsTurnOn) {
+    public static WifiChildScanFragment newInstance() {
         WifiChildScanFragment fragment = new WifiChildScanFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(ARG_GPS, hasGpsTurnOn);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -71,14 +65,6 @@ public class WifiChildScanFragment extends Fragment {
         mWifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         mWifiReciever = new WifiScanReceiver();
         mWifi.startScan();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mHasTurnOnGps = getArguments().getBoolean(ARG_GPS);
-        }
     }
 
     @Override
@@ -97,20 +83,7 @@ public class WifiChildScanFragment extends Fragment {
 
         // : 6/16/2016 check to see GPS is enabled? if not, show a dialog
         // add a snackbar to let the user turn on location
-        LocationManager locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Snackbar.make(view.findViewById(R.id.wifi_scan_coordinator), getActivity().getResources().getString(R.string.let_user_turn_on_location), Snackbar.LENGTH_LONG)
-                    .setAction(getActivity().getResources().getString(R.string.turn_on_location), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Fragment fragment = getParentFragment();
-                            if (fragment instanceof WifiFragment) {
-                                ((WifiFragment) fragment).showGpsDialogToTurnOn();
-                            }
-                        }
-                    })
-                    .show();
-        }
+        checkGpsHasTurnOn();
 
         // add a placeholder for adapter in main thread
         mListWifiRecyclerView = (RecyclerView) view.findViewById(R.id.list_scan_wifi);
@@ -138,7 +111,8 @@ public class WifiChildScanFragment extends Fragment {
         });
     }
 
-    // TODO: 6/16/16
+
+
     // register broadcast to get wifi scans
     @Override
     public void onResume() {
@@ -195,15 +169,30 @@ public class WifiChildScanFragment extends Fragment {
             wifiManager.saveConfiguration();
         }
 
-        // TODO: 6/16/16 fix broadcast receiver to recieve wifi connect success
-        WifiGetConnectionEstablished WifiGetConnectionEstablished = new WifiGetConnectionEstablished();
-        getActivity().getApplicationContext().registerReceiver(WifiGetConnectionEstablished, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
+        // : 6/16/16  broadcast receiver to recieve wifi connect success
+        mWifiGetConnectionEstablished = new WifiGetConnectionEstablished();
+        getActivity().getApplicationContext().registerReceiver(mWifiGetConnectionEstablished, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
     }
 
-    // get location and save to datbase
-    private void saveWifiHotspotToDb(boolean hasTurnOnGps) {
+    // unregister broadcast success wifi, get location and save to datbase
+    private void saveWifiHotspotToDb() {
+        // : 6/16/16 unregister it
+        // : 6/16/16  broadcast receiver to recieve wifi connect success
+        getActivity().getApplicationContext().unregisterReceiver(mWifiGetConnectionEstablished);
+
         // : 6/16/16 get lat long
-        if (mHasTurnOnGps) {
+        Fragment parentFrag = getParentFragment();
+        boolean isTurnOnGps = false;
+
+        // TODO: 6/17/2016 check step by step how to call this method
+        checkGpsHasTurnOn();
+
+        if (parentFrag instanceof WifiFragment)
+        {
+            isTurnOnGps = ((WifiFragment)parentFrag).isHasTurnOnGps();
+        }
+
+        if (isTurnOnGps) {
             Location currentLocation = getCurrentLocation();
             if (currentLocation != null) {
                 Double latitude = currentLocation.getLatitude();
@@ -213,14 +202,14 @@ public class WifiChildScanFragment extends Fragment {
                 // : 6/16/16 save to datbase
                 Fragment parentFragment = getParentFragment();
                 if (parentFragment instanceof WifiFragment) {
-                    ((WifiFragment) parentFragment).saveWifiHotspotToDb(networkSSID, networkPass, currentLocation.getLatitude(), currentLocation.getLongitude());
+                    ((WifiFragment) parentFragment).saveWifiHotspotToDb(networkSSID, networkPass, currentLocation.getLatitude(), currentLocation.getLongitude(), isTurnOnGps);
                 }
             }
 
         } else {
             Fragment parentFragment = getParentFragment();
             if (parentFragment instanceof WifiFragment) {
-                ((WifiFragment) parentFragment).saveWifiHotspotToDb(networkSSID, networkPass, 0, 0);
+                ((WifiFragment) parentFragment).saveWifiHotspotToDb(networkSSID, networkPass, 0, 0, isTurnOnGps);
             }
         }
 
@@ -250,10 +239,30 @@ public class WifiChildScanFragment extends Fragment {
 
     }
 
-    public void setHasTurnOnGps(boolean hasTurnOnGps) {
-        mHasTurnOnGps = hasTurnOnGps;
+    //  call this method whenever app need to a gps location
+    private void checkGpsHasTurnOn() {
+        LocationManager locationManager = (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        // if not turn on gps, show a dialog
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Snackbar.make(getActivity().findViewById(R.id.wifi_scan_coordinator), getActivity().getResources().getString(R.string.let_user_turn_on_location), Snackbar.LENGTH_LONG)
+                    .setAction(getActivity().getResources().getString(R.string.turn_on_location), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Fragment fragment = getParentFragment();
+                            if (fragment instanceof WifiFragment) {
+                                ((WifiFragment) fragment).showGpsDialogToTurnOn();
+                            }
+                        }
+                    })
+                    .show();
+        } else {
+            // if already turn on gps, set var
+            Fragment fragment = getParentFragment();
+            if (fragment instanceof WifiFragment) {
+                ((WifiFragment) fragment).setHasTurnOnGps(true);
+            }
+        }
     }
-
 
     // get result when scan wifi hotspot around
     public class WifiScanReceiver extends BroadcastReceiver {
@@ -307,13 +316,12 @@ public class WifiChildScanFragment extends Fragment {
                     if (firstConnect) {
                         firstConnect = false;
                         // save to datbase
-                        saveWifiHotspotToDb(mHasTurnOnGps);
+                        saveWifiHotspotToDb();
                     }
                 } else {
                     firstConnect = true;
                 }
             }
-            // TODO: 6/16/16 unregister it
         }
     }
 
