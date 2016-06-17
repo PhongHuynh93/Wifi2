@@ -5,6 +5,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,49 @@ public class MobileFragment extends Fragment {
 
     private void showMobileProperty() {
         NetworkInfo info = Connectivity.getNetworkInfo(getActivity().getApplicationContext());
-        String mobileType = Integer.toString(info.getSubtype());
+        // get name of subtype
+        int mobileTypeInt = info.getSubtype();
+        String mobileType;
+        switch (mobileTypeInt) {
+            case TelephonyManager.NETWORK_TYPE_1xRTT:
+                mobileType = "1xRTT"; break;// ~ 50-100 kbps
+            case TelephonyManager.NETWORK_TYPE_CDMA:
+                mobileType = "CDMA"; break;// ~ 14-64 kbps
+            case TelephonyManager.NETWORK_TYPE_EDGE:
+                mobileType = "EDGE"; break;// ~ 50-100 kbps
+            case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                mobileType = "EVDO_0"; break;// ~ 400-1000 kbps
+            case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                mobileType = "EVDO_A"; break;// ~ 600-1400 kbps
+            case TelephonyManager.NETWORK_TYPE_GPRS:
+                mobileType = "GPRS"; break;// ~ 100 kbps
+            case TelephonyManager.NETWORK_TYPE_HSDPA:
+                mobileType = "HSDPA"; break;// ~ 2-14 Mbps
+            case TelephonyManager.NETWORK_TYPE_HSPA:
+                mobileType = "HSPA"; break;// ~ 700-1700 kbps
+            case TelephonyManager.NETWORK_TYPE_HSUPA:
+                mobileType = "HSUPA"; break;// ~ 1-23 Mbps
+            case TelephonyManager.NETWORK_TYPE_UMTS:
+                mobileType = "UMTS"; break;// ~ 400-7000 kbps
+            /*
+			 * Above API level 7, make sure to set android:targetSdkVersion
+			 * to appropriate level to use these
+			 */
+            case TelephonyManager.NETWORK_TYPE_EHRPD: // API level 11
+                mobileType = "EHRPD"; break;// ~ 1-2 Mbps
+            case TelephonyManager.NETWORK_TYPE_EVDO_B: // API level 9
+                mobileType = "EVDO_B"; break;// ~ 5 Mbps
+            case TelephonyManager.NETWORK_TYPE_HSPAP: // API level 13
+                mobileType = "HSPAP"; break;// ~ 10-20 Mbps
+            case TelephonyManager.NETWORK_TYPE_IDEN: // API level 8
+                mobileType = "IDEN"; break;// ~25 kbps
+            case TelephonyManager.NETWORK_TYPE_LTE: // API level 11
+                mobileType = "LTE"; break;// ~ 10+ Mbps
+                // Unknown
+            case TelephonyManager.NETWORK_TYPE_UNKNOWN:
+            default:
+                mobileType = "UNKNOWN";
+        }
         boolean isFast = Connectivity.isConnectedFast(getActivity().getApplicationContext());
 
         // set network type in textview
