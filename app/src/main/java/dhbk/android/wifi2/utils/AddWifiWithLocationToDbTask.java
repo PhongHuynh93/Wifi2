@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 
@@ -30,8 +29,7 @@ public class AddWifiWithLocationToDbTask extends AsyncTask<WifiHotsPotModel, Voi
         double longitude = wifiHotsPotModel.getLongitude();
         int isTurnOnGps = wifiHotsPotModel.isTurnOnGps();
 
-        // FIXME: 6/17/2016 test the see what field in wifihotspotmodel
-        Log.i(TAG, "doInBackground:  " + wifiHotsPotModel);
+        // : 6/17/2016 test the see what field in wifihotspotmodel
 
         mDb.beginTransaction();
         try {

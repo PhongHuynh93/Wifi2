@@ -105,7 +105,7 @@ public class WifiFragment extends Fragment {
         }
     }
 
-    // FIXME (test again - get location): TODO 6/16/16 save wifi states to database
+    //  (test again - get location):  6/16/16 save wifi states to database
     // isTurnOnGps = true => has location
     public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude, boolean isTurnOnGps) {
         int isTurnGpsInt = 0;
