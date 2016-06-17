@@ -21,6 +21,7 @@ import org.osmdroid.views.overlay.Marker;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.utils.Constant;
 
+// TODO: 6/17/16 when clcik marker, auto connect to that wifi hotspot.
 public class HistoryChildOsmMapFragment extends Fragment {
     private static final String TAG = HistoryChildOsmMapFragment.class.getSimpleName();
 
@@ -75,7 +76,7 @@ public class HistoryChildOsmMapFragment extends Fragment {
         Location wifiHpLoc = new Location("phong");
         wifiHpLoc.setLatitude(latitutude);
         wifiHpLoc.setLongitude(longitude);
-        setMarkerAtLocation(wifiHpLoc, R.drawable.ic_wifi_black_24dp, ssid);
+        setMarkerAtLocation(wifiHpLoc, R.drawable.ic_wifi_black, ssid);
     }
 
     // phong - add marker at a location with instruction
