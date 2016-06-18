@@ -11,4 +11,5 @@
     <color name="indigo">#3F51B5</color>
     <color name="grey_light">#E0E0E0</color>
     <color name="grey_light_darker">#BDBDBD</color>
+    <color name="grey_light_darker2">#616161</color>
 </resources>

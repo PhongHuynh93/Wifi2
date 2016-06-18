@@ -13,4 +13,5 @@
     <!--connect wifi dialog-->
     <dimen name="connect_wifi_dialog_margin_left">10dp</dimen>
     <dimen name="connect_wifi_dialog_authen_margin">20dp</dimen>
+    <dimen name="space_small">10dp</dimen>
 </resources>

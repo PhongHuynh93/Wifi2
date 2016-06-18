@@ -6,12 +6,36 @@
     android:background="@color/grey_light"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/mes_not_have_wifi"
-        android:background="@android:color/black"
-        android:textColor="@android:color/white"
-        android:text="Not turn on wifi yet"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_wifi_empty"/>
+
+        <TextView
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginBottom="@dimen/space_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/mes_not_have_wifi"
+            android:textColor="@color/grey_dark"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:text="@string/error.wifi.turnon"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey_light_darker2"
+            android:text="@string/action.wifi.retry.turnon"
+            android:id="@+id/retry_scan_wifi"/>
+    </LinearLayout>
+
 </FrameLayout>
