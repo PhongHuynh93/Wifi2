@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.utils.BitmapWorkerTask;
 import dhbk.android.wifi2.utils.Connectivity;
 
 // TODO: 6/17/2016 add feature to save to database
@@ -51,12 +53,18 @@ public class MobileFragment extends Fragment {
                 showMobileProperty();
             }
         });
+
+        // add image to scan mobile
+        ImageView bgImg = (ImageView) view.findViewById(R.id.bg_scan_mobile);
+        BitmapWorkerTask task = new BitmapWorkerTask(bgImg, getActivity().getApplicationContext(), 500, 500);
+        task.execute(R.drawable.mobile);
+
     }
 
     private void helpUserTurnOnMobileNetwork() {
         // set network type in textview
         TextView typeTv = (TextView) getActivity().findViewById(R.id.network_type);
-        typeTv.setText("You need to turn on mobile network.");
+        typeTv.setText("UNKNOWN");
     }
 
     private void showMobileProperty() {
@@ -112,9 +120,9 @@ public class MobileFragment extends Fragment {
 
         TextView speedTv = (TextView) getActivity().findViewById(R.id.network_speed);
         if (isFast) {
-            speedTv.setText("Speed: Fast");
+            speedTv.setText("SPEED: FAST");
         } else {
-            speedTv.setText("Speed: Slow");
+            speedTv.setText("SPEED: SLOW");
         }
     }
 

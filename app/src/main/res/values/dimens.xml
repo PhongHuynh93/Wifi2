@@ -14,4 +14,6 @@
     <dimen name="connect_wifi_dialog_margin_left">10dp</dimen>
     <dimen name="connect_wifi_dialog_authen_margin">20dp</dimen>
     <dimen name="space_small">10dp</dimen>
+    <dimen name="font_larger">25sp</dimen>
+    <dimen name="space_super_small">2dp</dimen>
 </resources>
