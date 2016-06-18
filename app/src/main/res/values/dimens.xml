@@ -16,4 +16,5 @@
     <dimen name="space_small">10dp</dimen>
     <dimen name="font_larger">25sp</dimen>
     <dimen name="space_super_small">2dp</dimen>
+    <dimen name="space_smaller">5dp</dimen>
 </resources>

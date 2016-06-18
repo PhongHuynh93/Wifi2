@@ -17,34 +17,41 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginBottom="@dimen/space_super_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/pink"
-            android:fontFamily="sans-serif-condensed"
-            android:text="CURRENT NETWORK:  "
-            android:textSize="@dimen/font_larger"
-            android:textStyle="bold"
-            />
-
-        <TextView
             android:layout_marginBottom="@dimen/space_super_small"
-            android:id="@+id/network_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/space_smaller"
+            android:paddingRight="@dimen/space_smaller"
             android:background="@color/pink"
             android:fontFamily="sans-serif-condensed"
-            android:text="UNKNOW"
+            android:text="CURRENT NETWORK"
             android:textSize="@dimen/font_larger"
             android:textStyle="bold"/>
 
+        <!--network type-->
+        <TextView
+            android:id="@+id/network_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_super_small"
+            android:paddingLeft="@dimen/space_smaller"
+            android:paddingRight="@dimen/space_smaller"
+            android:background="@color/pink"
+            android:fontFamily="sans-serif-condensed"
+            android:text="UNKNOWN"
+            android:textSize="@dimen/font_larger"
+            android:textStyle="bold"/>
+
+        <!--speed-->
         <TextView
             android:id="@+id/network_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/space_smaller"
+            android:paddingRight="@dimen/space_smaller"
             android:background="@color/pink"
             android:fontFamily="sans-serif-condensed"
-            android:text="SPEED"
+            android:text="SPEED: UNKNOWN"
             android:textSize="@dimen/font_larger"
             android:textStyle="bold"/>
 
