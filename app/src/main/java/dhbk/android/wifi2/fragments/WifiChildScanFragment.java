@@ -130,7 +130,9 @@ public class WifiChildScanFragment extends Fragment {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.turn_on_loc) {
+            // TODO: 6/18/16 turn on location if not
+            checkGpsHasTurnOn();
             return true;
         }
         return super.onOptionsItemSelected(item);
