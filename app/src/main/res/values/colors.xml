@@ -9,4 +9,6 @@
     <color name="dark_orange">#EF6C00</color>
     <color name="wifi_connect_dialog">@color/dark_teal</color>
     <color name="indigo">#3F51B5</color>
+    <color name="grey_light">#E0E0E0</color>
+    <color name="grey_light_darker">#BDBDBD</color>
 </resources>

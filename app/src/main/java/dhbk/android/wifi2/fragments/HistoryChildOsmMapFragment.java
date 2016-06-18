@@ -76,7 +76,7 @@ public class HistoryChildOsmMapFragment extends Fragment {
         Location wifiHpLoc = new Location("phong");
         wifiHpLoc.setLatitude(latitutude);
         wifiHpLoc.setLongitude(longitude);
-        setMarkerAtLocation(wifiHpLoc, R.drawable.ic_wifi_black, ssid);
+        setMarkerAtLocation(wifiHpLoc, R.drawable.ic_wifi_map, ssid);
     }
 
     // phong - add marker at a location with instruction
