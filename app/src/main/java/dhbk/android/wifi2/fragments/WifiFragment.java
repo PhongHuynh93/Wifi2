@@ -44,7 +44,7 @@ public class WifiFragment extends Fragment {
         retryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                // TODO: 6/18/16 call turn on wifi method
+//                // : 6/18/16 call turn on wifi method
                 turnOnWifi();
             }
         });
