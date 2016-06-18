@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import dhbk.android.wifi2.R;
@@ -39,6 +40,14 @@ public class WifiFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         TextView tv = (TextView) view.findViewById(R.id.mes_not_have_wifi);
+        Button retryBtn = (Button) view.findViewById(R.id.retry_scan_wifi);
+        retryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                // TODO: 6/18/16 call turn on wifi method
+                turnOnWifi();
+            }
+        });
     }
 
     // check if only when app start and restart app
