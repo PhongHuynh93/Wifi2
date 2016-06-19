@@ -20,7 +20,7 @@ public class NetworkDb extends SQLiteOpenHelper{
 
     private static NetworkDb sInstance;
     private static final String DATABASE_NAME = "database_network";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private ArrayList<onDbInteractionListener.onDbTableInteractionListener> listTable = new ArrayList<>();
     public static synchronized NetworkDb getInstance(Context context) {
@@ -107,4 +107,12 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
+    public void getCursorFromMobile(Fragment fragment) {
+        for (int i = 0; i < listTable.size(); i++) {
+            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
+            if (tableName instanceof onDbInteractionListener.onDbMobileTableInteractionListener) {
+                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).onGetCursor(getReadableDatabase(), fragment);
+            }
+        }
+    }
 }

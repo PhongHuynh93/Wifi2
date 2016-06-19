@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.HistoryMobileRecyclerViewAdapter;
-import dhbk.android.wifi2.adapters.HistoryWifiRecyclerViewAdapter;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.DividerItemDecoration;
 import dhbk.android.wifi2.utils.NetworkDb;
@@ -40,7 +39,7 @@ public class HistoryChildMobileFragment extends Fragment implements OnFragIntera
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HistoryMobileRecyclerViewAdapter adapter = new HistoryMobileRecyclerViewAdapter(getActivity(), null);
-        RecyclerView historyRcv = (RecyclerView) getActivity().findViewById(R.id.rcv_history);
+        RecyclerView historyRcv = (RecyclerView) view.findViewById(R.id.rcv_history_mobile);
         historyRcv.setAdapter(adapter);
         historyRcv.setLayoutManager(new LinearLayoutManager(getActivity()));
         historyRcv.setHasFixedSize(true);
@@ -49,15 +48,15 @@ public class HistoryChildMobileFragment extends Fragment implements OnFragIntera
 
         // : 6/15/2016 get the cursor (id, state, ssid, date)
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
-        networkDb.getCursorFromMobile(getActivity());
+        networkDb.getCursorFromMobile(this);
     }
 
     // : 6/15/2016 populate the cursor, check null when rotate the screen
     @Override
     public void populateCursorToRcv(Cursor cursor) {
         try {
-            RecyclerView historyRcv = (RecyclerView) getActivity().findViewById(R.id.rcv_history);
-            HistoryWifiRecyclerViewAdapter adapter = (HistoryWifiRecyclerViewAdapter) historyRcv.getAdapter();
+            RecyclerView historyRcv = (RecyclerView) getActivity().findViewById(R.id.rcv_history_mobile);
+            HistoryMobileRecyclerViewAdapter adapter = (HistoryMobileRecyclerViewAdapter) historyRcv.getAdapter();
             adapter.changeCursor(cursor);
 
         } catch (NullPointerException e) {

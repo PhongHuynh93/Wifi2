@@ -1,5 +1,7 @@
 package dhbk.android.wifi2.models;
 
+import android.database.Cursor;
+
 /**
  * Created by huynhducthanhphong on 6/19/16.
  */
@@ -24,5 +26,13 @@ public class MobileModel {
 
     public String getDate() {
         return date;
+    }
+
+    public static MobileModel fromCursor(Cursor cursor) {
+        // ko lay 0 ly do 0 là cột id_
+        String name = cursor.getString(1);
+        String speed = cursor.getString(2);
+        String date = cursor.getString(3);
+        return new MobileModel(name, speed, date);
     }
 }

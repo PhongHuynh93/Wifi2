@@ -15,7 +15,6 @@ import java.util.Locale;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.models.MobileModel;
-import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.TimeStampFormatter;
 
 /**
@@ -34,8 +33,8 @@ public class HistoryMobileRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
         MobileModel myListItem = MobileModel.fromCursor(cursor);
-        viewHolder.wifiStateHotspotTv.setText(myListItem.getNetworkName());
-        viewHolder.wifiSsidHotspotTv.setText(myListItem.getSpeed());
+        viewHolder.wifiStateHotspotTv.setText(myListItem.getSpeed());
+        viewHolder.wifiSsidHotspotTv.setText(myListItem.getNetworkName());
         viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
     }
 

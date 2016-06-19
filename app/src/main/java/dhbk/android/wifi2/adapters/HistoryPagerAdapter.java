@@ -11,6 +11,7 @@ import dhbk.android.wifi2.fragments.HistoryChildWifiFragment;
 /**
  * Created by huynhducthanhphong on 6/19/16.
  */
+// tạo 2 fragment là wifi va mobile list
 public class HistoryPagerAdapter extends FragmentPagerAdapter {
     private static final String[] TITLES = {"WIFI", "MOBILE"};
 

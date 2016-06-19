@@ -30,5 +30,6 @@ public interface onDbInteractionListener {
     // method table mobile
     interface onDbMobileTableInteractionListener extends onDbTableInteractionListener{
         void onInsert(SQLiteDatabase db, MobileModel model);
+        void onGetCursor(SQLiteDatabase readableDatabase, Fragment fragment);
     }
 }

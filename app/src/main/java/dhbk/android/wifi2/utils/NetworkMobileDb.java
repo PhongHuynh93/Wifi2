@@ -1,6 +1,7 @@
 package dhbk.android.wifi2.utils;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.MobileModel;
@@ -36,5 +37,10 @@ public class NetworkMobileDb implements onDbInteractionListener.onDbMobileTableI
     @Override
     public void onInsert(SQLiteDatabase db, MobileModel model) {
         new AddMobileToDbTask(db).execute(model);
+    }
+
+    @Override
+    public void onGetCursor(SQLiteDatabase db, Fragment fragment) {
+        new GetMobileFromDbTask(db, fragment).execute();
     }
 }
