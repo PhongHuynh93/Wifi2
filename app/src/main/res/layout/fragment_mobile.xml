@@ -35,6 +35,18 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"/>
 
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:layout_marginLeft="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Date"
+        android:textColor="@android:color/white"
+        android:textSize="50sp"
+        android:textStyle="bold"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,11 +94,11 @@
             android:textStyle="bold"/>
 
         <Button
-            android:layout_marginTop="@dimen/space_small"
-            android:layout_marginRight="@dimen/space_small"
             android:id="@+id/scan_mobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_small"
             android:background="@drawable/bg_button_border_pink"
             android:text="Scan now"
             android:textColor="@android:color/white"/>

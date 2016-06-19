@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.utils.BitmapWorkerTask;
 import dhbk.android.wifi2.utils.Connectivity;
@@ -59,6 +64,15 @@ public class MobileFragment extends Fragment {
         BitmapWorkerTask task = new BitmapWorkerTask(bgImg, getActivity().getApplicationContext(), 500, 500);
         task.execute(R.drawable.mobile);
 
+
+        // add date
+        Date now = new Date(System.currentTimeMillis());
+        DateFormat formatter = new SimpleDateFormat("dd.MM", Locale.UK);
+        String nowDate = formatter.format(now);
+
+        TextView dateText = (TextView) view.findViewById(R.id.date);
+        dateText.setText(nowDate);
+
     }
 
     private void helpUserTurnOnMobileNetwork() {
@@ -74,40 +88,55 @@ public class MobileFragment extends Fragment {
         String mobileType;
         switch (mobileTypeInt) {
             case TelephonyManager.NETWORK_TYPE_1xRTT:
-                mobileType = "1xRTT"; break;// ~ 50-100 kbps
+                mobileType = "1xRTT";
+                break;// ~ 50-100 kbps
             case TelephonyManager.NETWORK_TYPE_CDMA:
-                mobileType = "CDMA"; break;// ~ 14-64 kbps
+                mobileType = "CDMA";
+                break;// ~ 14-64 kbps
             case TelephonyManager.NETWORK_TYPE_EDGE:
-                mobileType = "EDGE"; break;// ~ 50-100 kbps
+                mobileType = "EDGE";
+                break;// ~ 50-100 kbps
             case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                mobileType = "EVDO_0"; break;// ~ 400-1000 kbps
+                mobileType = "EVDO_0";
+                break;// ~ 400-1000 kbps
             case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                mobileType = "EVDO_A"; break;// ~ 600-1400 kbps
+                mobileType = "EVDO_A";
+                break;// ~ 600-1400 kbps
             case TelephonyManager.NETWORK_TYPE_GPRS:
-                mobileType = "GPRS"; break;// ~ 100 kbps
+                mobileType = "GPRS";
+                break;// ~ 100 kbps
             case TelephonyManager.NETWORK_TYPE_HSDPA:
-                mobileType = "HSDPA"; break;// ~ 2-14 Mbps
+                mobileType = "HSDPA";
+                break;// ~ 2-14 Mbps
             case TelephonyManager.NETWORK_TYPE_HSPA:
-                mobileType = "HSPA"; break;// ~ 700-1700 kbps
+                mobileType = "HSPA";
+                break;// ~ 700-1700 kbps
             case TelephonyManager.NETWORK_TYPE_HSUPA:
-                mobileType = "HSUPA"; break;// ~ 1-23 Mbps
+                mobileType = "HSUPA";
+                break;// ~ 1-23 Mbps
             case TelephonyManager.NETWORK_TYPE_UMTS:
-                mobileType = "UMTS"; break;// ~ 400-7000 kbps
+                mobileType = "UMTS";
+                break;// ~ 400-7000 kbps
             /*
-			 * Above API level 7, make sure to set android:targetSdkVersion
+             * Above API level 7, make sure to set android:targetSdkVersion
 			 * to appropriate level to use these
 			 */
             case TelephonyManager.NETWORK_TYPE_EHRPD: // API level 11
-                mobileType = "EHRPD"; break;// ~ 1-2 Mbps
+                mobileType = "EHRPD";
+                break;// ~ 1-2 Mbps
             case TelephonyManager.NETWORK_TYPE_EVDO_B: // API level 9
-                mobileType = "EVDO_B"; break;// ~ 5 Mbps
+                mobileType = "EVDO_B";
+                break;// ~ 5 Mbps
             case TelephonyManager.NETWORK_TYPE_HSPAP: // API level 13
-                mobileType = "HSPAP"; break;// ~ 10-20 Mbps
+                mobileType = "HSPAP";
+                break;// ~ 10-20 Mbps
             case TelephonyManager.NETWORK_TYPE_IDEN: // API level 8
-                mobileType = "IDEN"; break;// ~25 kbps
+                mobileType = "IDEN";
+                break;// ~25 kbps
             case TelephonyManager.NETWORK_TYPE_LTE: // API level 11
-                mobileType = "LTE"; break;// ~ 10+ Mbps
-                // Unknown
+                mobileType = "LTE";
+                break;// ~ 10+ Mbps
+            // Unknown
             case TelephonyManager.NETWORK_TYPE_UNKNOWN:
             default:
                 mobileType = "UNKNOWN";
