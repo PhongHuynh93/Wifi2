@@ -19,4 +19,7 @@
     <dimen name="space_super_small">2dp</dimen>
     <dimen name="space_smaller">5dp</dimen>
     <dimen name="toolbar_height">80dp</dimen>
+
+    <!--navigation drawer-->
+    <dimen name="nav_header_height">160dp</dimen>
 </resources>

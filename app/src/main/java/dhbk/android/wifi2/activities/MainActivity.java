@@ -2,13 +2,18 @@ package dhbk.android.wifi2.activities;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.fragments.MainFragment;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryFragment;
 import dhbk.android.wifi2.fragments.historyOSMFragments.HistoryWithOsmMapFragment;
-import dhbk.android.wifi2.fragments.MainFragment;
 import dhbk.android.wifi2.fragments.mobileFragments.MobileFragment;
 import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
@@ -29,30 +34,72 @@ public class MainActivity extends AppCompatActivity implements
             mainFragment = MainFragment.newInstance();
             getSupportFragmentManager().beginTransaction().add(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
         }
+
+        // nav
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.main) {
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MAIN_FRAGMENT);
+                    if (mainFragment == null) {
+                        mainFragment = MainFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
+                    }
+
+                } else if (id == R.id.wifi) {
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    WifiFragment wifiFragment = (WifiFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_WIFI_FRAGMENT);
+                    if (wifiFragment == null) {
+                        wifiFragment = WifiFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, wifiFragment, Constant.TAG_WIFI_FRAGMENT).commit();
+                    }
+
+                } else if (id == R.id.mobile) {
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    MobileFragment mobileFragment = (MobileFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MOBILE_FRAGMENT);
+                    if (mobileFragment == null) {
+                        mobileFragment = MobileFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mobileFragment, Constant.TAG_MOBILE_FRAGMENT).commit();
+                    }
+
+                } else if (id == R.id.history) {
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    HistoryFragment historyFragment = (HistoryFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_FRAGMENT);
+                    if (historyFragment == null) {
+                        historyFragment = HistoryFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyFragment, Constant.TAG_HISTORY_FRAGMENT).commit();
+                    }
+                } else if (id == R.id.map) {
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    HistoryWithOsmMapFragment historyOSMFragment = (HistoryWithOsmMapFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT);
+                    if (historyOSMFragment == null) {
+                        historyOSMFragment = HistoryWithOsmMapFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyOSMFragment, Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT).commit();
+                    }
+
+                }
+                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
+    // When press "Back",
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+    }
 
     // replace with wifi fragment
     @Override
