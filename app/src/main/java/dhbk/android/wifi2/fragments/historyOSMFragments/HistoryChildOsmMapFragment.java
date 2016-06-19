@@ -89,7 +89,7 @@ public class HistoryChildOsmMapFragment extends Fragment {
             hereMarker.setPosition(userCurrentPoint);
             hereMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             hereMarker.setIcon(ContextCompat.getDrawable(getContext(), icon));
-            hereMarker.setTitle(title);
+            hereMarker.setTitle("SSID: " + title);
             mapView.getOverlays().add(hereMarker);
             mapView.invalidate();
         } else {
