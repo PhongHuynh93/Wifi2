@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import java.util.ArrayList;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
+import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiModel;
 
@@ -95,5 +96,15 @@ public class NetworkDb extends SQLiteOpenHelper{
     //##########################################################################################
     // METHOD MOBILE TABLE
 
+    public void addMobile(String mobileType, String speedText, String nowDate) {
+        MobileModel mobileModel = new MobileModel(mobileType, speedText, nowDate);
+
+        for (int i = 0; i < listTable.size(); i++) {
+            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
+            if (tableName instanceof onDbInteractionListener.onDbMobileTableInteractionListener) {
+                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).onInsert(getReadableDatabase(), mobileModel);
+            }
+        }
+    }
 
 }

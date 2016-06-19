@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 
+import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiModel;
 
@@ -28,6 +29,6 @@ public interface onDbInteractionListener {
 
     // method table mobile
     interface onDbMobileTableInteractionListener extends onDbTableInteractionListener{
-
+        void onInsert(SQLiteDatabase db, MobileModel model);
     }
 }

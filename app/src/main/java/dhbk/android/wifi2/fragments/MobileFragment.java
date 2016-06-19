@@ -21,6 +21,7 @@ import java.util.Locale;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.utils.BitmapWorkerTask;
 import dhbk.android.wifi2.utils.Connectivity;
+import dhbk.android.wifi2.utils.NetworkDb;
 
 public class MobileFragment extends Fragment {
     public MobileFragment() {
@@ -147,14 +148,22 @@ public class MobileFragment extends Fragment {
         typeTv.setText(mobileType);
 
         TextView speedTv = (TextView) getActivity().findViewById(R.id.network_speed);
+        String speedText;
         if (isFast) {
-            speedTv.setText("SPEED: FAST");
+            speedText = "SPEED: FAST";
+            speedTv.setText(speedText);
         } else {
-            speedTv.setText("SPEED: SLOW");
+            speedText = "SPEED: SLOW";
+            speedTv.setText(speedText);
         }
 
-        // TODO: 6/19/16 save to mobile db
+        Date now = new Date(System.currentTimeMillis());
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
+        String nowDate = formatter.format(now);
 
+        // TODO: 6/19/16 save to mobile db
+        NetworkDb db = NetworkDb.getInstance(getContext());
+        db.addMobile(mobileType, speedText, nowDate);
     }
 
 }

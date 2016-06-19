@@ -3,13 +3,14 @@ package dhbk.android.wifi2.utils;
 import android.database.sqlite.SQLiteDatabase;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
+import dhbk.android.wifi2.models.MobileModel;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.
  */
 public class NetworkMobileDb implements onDbInteractionListener.onDbMobileTableInteractionListener{
 
-    private static final String TABLE_MOBILE = "table_mobile";
+    public static final String TABLE_MOBILE = "table_mobile";
     public static final String KEY_MOBILE_ID = "_id";
     public static final String KEY_MOBILE_NAME = "key_mobile_name";
     public static final String KEY_MOBILE_SPEED = "key_mobile_speed";
@@ -30,5 +31,10 @@ public class NetworkMobileDb implements onDbInteractionListener.onDbMobileTableI
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MOBILE);
         onCreate(db);
+    }
+
+    @Override
+    public void onInsert(SQLiteDatabase db, MobileModel model) {
+        new AddMobileToDbTask(db).execute(model);
     }
 }
