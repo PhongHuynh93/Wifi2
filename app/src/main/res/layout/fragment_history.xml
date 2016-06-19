@@ -18,11 +18,11 @@
         <!--contentScrim là màu khi ta kéo thả image trên thanh toolbar, image khi biến mất sẽ ra màu đó-->
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="250dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="16dp"
-            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleMarginEnd="@dimen/activity_horizontal_margin"
+            app:expandedTitleMarginStart="@dimen/activity_horizontal_margin"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <android.support.percent.PercentFrameLayout
@@ -37,7 +37,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@null"
+                    android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     android:visibility="gone"
                     app:layout_widthPercent="120%"/>
@@ -47,7 +49,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@null"
+                    android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/leopard"
                     app:layout_widthPercent="120%"/>
@@ -67,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="bottom"
+            android:background="@color/grey_dark"
             app:layout_scrollFlags="scroll"/>
     </android.support.design.widget.AppBarLayout>
 
