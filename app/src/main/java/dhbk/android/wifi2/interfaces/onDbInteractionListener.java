@@ -25,4 +25,9 @@ public interface onDbInteractionListener {
         void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel);
         void onGetWifiHotspot(SQLiteDatabase db, Context activityContext);
     }
+
+    // method table mobile
+    interface onDbMobileTableInteractionListener extends onDbTableInteractionListener{
+
+    }
 }
