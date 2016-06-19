@@ -42,9 +42,11 @@ public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
     @Override
     protected void onPostExecute(Cursor cursor) {
         super.onPostExecute(cursor);
-        if (mActivityContext instanceof OnFragInteractionListener.OnMainFragInteractionListener) {
-            Log.i(TAG, "onPostExecute: WifiHotspot" + cursor);
-            ((OnFragInteractionListener.OnMainFragInteractionListener) mActivityContext).onReturnCursorWifiHotspot(cursor);
+        if (mActivityContext != null) {
+            if (mActivityContext instanceof OnFragInteractionListener.OnMainFragInteractionListener) {
+                Log.i(TAG, "onPostExecute: WifiHotspot" + cursor);
+                ((OnFragInteractionListener.OnMainFragInteractionListener) mActivityContext).onReturnCursorWifiHotspot(cursor);
+            }
         }
     }
 }

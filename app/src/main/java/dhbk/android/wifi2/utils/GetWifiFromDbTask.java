@@ -39,8 +39,11 @@ public class GetWifiFromDbTask extends AsyncTask<Void, Void, Cursor>{
     @Override
     protected void onPostExecute(Cursor cursor) {
         super.onPostExecute(cursor);
-        if (mFragment instanceof OnFragInteractionListener.OnHistoryFragInteractionListener) {
-            ((OnFragInteractionListener.OnHistoryFragInteractionListener) mFragment).populateCursorToRcv(cursor);
+        if (mFragment != null) {
+            if (mFragment instanceof OnFragInteractionListener.OnHistoryFragInteractionListener) {
+                ((OnFragInteractionListener.OnHistoryFragInteractionListener) mFragment).populateCursorToRcv(cursor);
+            }
         }
+
     }
 }
