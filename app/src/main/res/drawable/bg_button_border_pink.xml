@@ -1,0 +1,28 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    rectangle with white border and transparent background color.
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dip"/>
+            <stroke android:width="2dip" android:color="@color/pink"/>
+            <solid android:color="@android:color/transparent"/>
+            <!--<gradient android:angle="-90" android:endColor="#689a92" android:startColor="#345953"/>-->
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dip"/>
+            <stroke android:width="2dip" android:color="@color/pink"/>
+            <!--<solid android:color="#58857e"/>-->
+            <solid android:color="@android:color/transparent"/>
+
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="20dip"/>
+            <stroke android:width="2dip" android:color="@color/pink"/>
+            <solid android:color="@android:color/transparent"/>
+            <!--<gradient android:angle="-90" android:endColor="#58857e" android:startColor="#8dbab3"/>-->
+        </shape>
+    </item>
+</selector>
