@@ -33,6 +33,7 @@ public class NetworkDb extends SQLiteOpenHelper{
     private NetworkDb(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         listTable.add(new NetworkWifiDb());
+        listTable.add(new NetworkMobileDb());
     }
 
     // make table
@@ -49,6 +50,9 @@ public class NetworkDb extends SQLiteOpenHelper{
             listTable.get(i).onUpgrade(db, oldVersion, newVersion);
         }
     }
+
+    //##########################################################################################
+    // METHOD WIFI TABLE
 
     // insert wifi hotspot properties in datbase
     public void addWifiHotspot(WifiModel wifiModel) {
@@ -87,4 +91,9 @@ public class NetworkDb extends SQLiteOpenHelper{
             }
         }
     }
+
+    //##########################################################################################
+    // METHOD MOBILE TABLE
+
+
 }

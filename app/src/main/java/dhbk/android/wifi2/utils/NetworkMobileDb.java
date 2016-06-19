@@ -21,7 +21,6 @@ public class NetworkMobileDb implements onDbInteractionListener.onDbMobileTableI
             + KEY_MOBILE_DATE + " TEXT NOT NULL);";
 
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_MOBILE);
