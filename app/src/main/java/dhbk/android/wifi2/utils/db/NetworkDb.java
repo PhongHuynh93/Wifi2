@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.utils;
+package dhbk.android.wifi2.utils.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

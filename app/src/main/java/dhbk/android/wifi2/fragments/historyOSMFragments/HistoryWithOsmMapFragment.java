@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.historyOSMFragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.utils.Constant;
-import dhbk.android.wifi2.utils.NetworkDb;
+import dhbk.android.wifi2.utils.db.NetworkDb;
 
 public class HistoryWithOsmMapFragment extends Fragment {
 

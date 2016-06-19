@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.wifiFragments;
 
 //import android.app.Dialog;
 
@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 
 /**
  * Created by phongdth.ky on 6/13/2016.

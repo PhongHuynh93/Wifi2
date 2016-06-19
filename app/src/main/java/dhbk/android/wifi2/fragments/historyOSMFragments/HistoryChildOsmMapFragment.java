@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.historyOSMFragments;
 
 
 import android.location.Location;

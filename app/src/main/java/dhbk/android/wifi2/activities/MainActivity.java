@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.fragments.HistoryFragment;
-import dhbk.android.wifi2.fragments.HistoryWithOsmMapFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryFragment;
+import dhbk.android.wifi2.fragments.historyOSMFragments.HistoryWithOsmMapFragment;
 import dhbk.android.wifi2.fragments.MainFragment;
-import dhbk.android.wifi2.fragments.MobileFragment;
-import dhbk.android.wifi2.fragments.WifiFragment;
+import dhbk.android.wifi2.fragments.mobileFragments.MobileFragment;
+import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.Constant;
 

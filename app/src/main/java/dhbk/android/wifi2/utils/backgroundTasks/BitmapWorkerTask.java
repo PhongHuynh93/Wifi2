@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.utils;
+package dhbk.android.wifi2.utils.backgroundTasks;
 
 import android.content.Context;
 import android.content.res.Resources;

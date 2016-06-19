@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.historyFragments;
 
 
 import android.database.Cursor;
@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.adapters.HistoryMobileRecyclerViewAdapter;
+import dhbk.android.wifi2.adapters.historyAdapters.HistoryMobileRecyclerViewAdapter;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.DividerItemDecoration;
-import dhbk.android.wifi2.utils.NetworkDb;
+import dhbk.android.wifi2.utils.db.NetworkDb;
 
 public class HistoryChildMobileFragment extends Fragment implements OnFragInteractionListener.OnHistoryMobileFragInteractionListener{
 

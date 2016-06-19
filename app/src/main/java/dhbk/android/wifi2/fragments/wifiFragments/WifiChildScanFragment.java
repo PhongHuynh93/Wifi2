@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.wifiFragments;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.adapters.ScanWifiRecyclerviewAdapter;
+import dhbk.android.wifi2.adapters.wifiAdapters.ScanWifiRecyclerviewAdapter;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.ItemClickSupport;

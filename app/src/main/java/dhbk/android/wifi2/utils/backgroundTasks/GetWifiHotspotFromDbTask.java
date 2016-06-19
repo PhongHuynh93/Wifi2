@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.utils;
+package dhbk.android.wifi2.utils.backgroundTasks;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
+import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/17/2016.

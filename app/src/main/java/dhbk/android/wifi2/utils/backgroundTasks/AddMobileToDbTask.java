@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.utils;
+package dhbk.android.wifi2.utils.backgroundTasks;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
 import dhbk.android.wifi2.models.MobileModel;
+import dhbk.android.wifi2.utils.db.NetworkMobileDb;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.

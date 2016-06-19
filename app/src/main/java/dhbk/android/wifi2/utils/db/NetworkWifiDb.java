@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.utils;
+package dhbk.android.wifi2.utils.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +8,10 @@ import android.util.Log;
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.utils.backgroundTasks.AddWifiToDbTask;
+import dhbk.android.wifi2.utils.backgroundTasks.AddWifiWithLocationToDbTask;
+import dhbk.android.wifi2.utils.backgroundTasks.GetWifiFromDbTask;
+import dhbk.android.wifi2.utils.backgroundTasks.GetWifiHotspotFromDbTask;
 
 /**
  * Created by phongdth.ky on 6/15/2016.

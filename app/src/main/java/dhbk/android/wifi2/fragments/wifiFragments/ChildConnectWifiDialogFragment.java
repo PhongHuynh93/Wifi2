@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.wifiFragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

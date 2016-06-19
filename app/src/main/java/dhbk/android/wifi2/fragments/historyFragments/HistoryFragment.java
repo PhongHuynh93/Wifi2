@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.historyFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.adapters.HistoryPagerAdapter;
+import dhbk.android.wifi2.adapters.historyAdapters.HistoryPagerAdapter;
 
 public class HistoryFragment extends Fragment {
     private static final String TAG = HistoryFragment.class.getSimpleName();

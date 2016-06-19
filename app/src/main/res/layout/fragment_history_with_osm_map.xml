@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/map_coordinator"
-    tools:context="dhbk.android.wifi2.fragments.HistoryWithOsmMapFragment">
+    tools:context=".fragments.historyOSMFragments.HistoryWithOsmMapFragment">
 
     <!--osm map-->
     <FrameLayout

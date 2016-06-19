@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.adapters;
+package dhbk.android.wifi2.adapters.historyAdapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,27 +14,26 @@ import java.util.Date;
 import java.util.Locale;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.models.MobileModel;
+import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
+import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.TimeStampFormatter;
 
 /**
- * Created by huynhducthanhphong on 6/19/16.
+ * Created by phongdth.ky on 6/15/2016.
  */
-public class HistoryMobileRecyclerViewAdapter extends
-        CursorRecyclerViewAdapter<HistoryMobileRecyclerViewAdapter.ViewHolder>{
+public class HistoryWifiRecyclerViewAdapter extends
+        CursorRecyclerViewAdapter<HistoryWifiRecyclerViewAdapter.ViewHolder> {
 
     private TimeStampFormatter mTimeStampFormatter = new TimeStampFormatter();
-    
-    public HistoryMobileRecyclerViewAdapter(Context context, Cursor cursor) {
+    public HistoryWifiRecyclerViewAdapter(Context context, Cursor cursor) {
         super(context, cursor);
     }
 
-    // gan tinh chat cua mobile vao adapter giong nhu wifi vay
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
-        MobileModel myListItem = MobileModel.fromCursor(cursor);
-        viewHolder.wifiStateHotspotTv.setText(myListItem.getSpeed());
-        viewHolder.wifiSsidHotspotTv.setText(myListItem.getNetworkName());
+        WifiModel myListItem = WifiModel.fromCursor(cursor);
+        viewHolder.wifiStateHotspotTv.setText(myListItem.getState());
+        viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
         viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
     }
 

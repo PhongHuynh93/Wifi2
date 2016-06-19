@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.wifiFragments;
 
 import android.content.Context;
 import android.net.wifi.WifiManager;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.utils.Constant;
-import dhbk.android.wifi2.utils.NetworkDb;
+import dhbk.android.wifi2.utils.db.NetworkDb;
 
 public class WifiFragment extends Fragment {
 

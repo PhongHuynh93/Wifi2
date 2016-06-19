@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments;
+package dhbk.android.wifi2.fragments.mobileFragments;
 
 
 import android.net.NetworkInfo;
@@ -19,9 +19,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.utils.BitmapWorkerTask;
+import dhbk.android.wifi2.utils.backgroundTasks.BitmapWorkerTask;
 import dhbk.android.wifi2.utils.Connectivity;
-import dhbk.android.wifi2.utils.NetworkDb;
+import dhbk.android.wifi2.utils.db.NetworkDb;
 
 public class MobileFragment extends Fragment {
     public MobileFragment() {

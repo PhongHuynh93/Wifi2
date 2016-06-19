@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.adapters;
+package dhbk.android.wifi2.adapters.wifiAdapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -15,7 +15,7 @@ import java.util.Locale;
 
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
-import dhbk.android.wifi2.utils.NetworkDb;
+import dhbk.android.wifi2.utils.db.NetworkDb;
 
 /**
  * Created by phongdth.ky on 6/14/2016.

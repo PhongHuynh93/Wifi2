@@ -1,12 +1,12 @@
-package dhbk.android.wifi2.adapters;
+package dhbk.android.wifi2.adapters.historyAdapters;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import dhbk.android.wifi2.fragments.HistoryChildMobileFragment;
-import dhbk.android.wifi2.fragments.HistoryChildWifiFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryChildMobileFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryChildWifiFragment;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.

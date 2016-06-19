@@ -1,10 +1,12 @@
-package dhbk.android.wifi2.utils;
+package dhbk.android.wifi2.utils.db;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.MobileModel;
+import dhbk.android.wifi2.utils.backgroundTasks.AddMobileToDbTask;
+import dhbk.android.wifi2.utils.backgroundTasks.GetMobileFromDbTask;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.
