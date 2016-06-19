@@ -22,7 +22,6 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.utils.BitmapWorkerTask;
 import dhbk.android.wifi2.utils.Connectivity;
 
-// TODO: 6/17/2016 add feature to save to database
 public class MobileFragment extends Fragment {
     public MobileFragment() {
     }
@@ -153,6 +152,9 @@ public class MobileFragment extends Fragment {
         } else {
             speedTv.setText("SPEED: SLOW");
         }
+
+        // TODO: 6/19/16 save to mobile db
+
     }
 
 }
