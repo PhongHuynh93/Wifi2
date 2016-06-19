@@ -26,8 +26,7 @@ public class HistoryChildWifiFragment extends Fragment implements OnFragInteract
     }
 
     public static HistoryChildWifiFragment newInstance() {
-        HistoryChildWifiFragment fragment = new HistoryChildWifiFragment();
-        return fragment;
+        return new HistoryChildWifiFragment();
     }
 
     @Override

@@ -20,7 +20,12 @@ public interface OnFragInteractionListener {
         void onTeleFragReplace();
     }
 
+    // interface for wifi history
     interface OnHistoryFragInteractionListener {
+        void populateCursorToRcv(Cursor cursor);
+    }
+
+    interface OnHistoryMobileFragInteractionListener {
         void populateCursorToRcv(Cursor cursor);
     }
 
