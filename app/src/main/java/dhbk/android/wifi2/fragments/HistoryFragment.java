@@ -4,8 +4,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,13 @@ public class HistoryFragment extends Fragment implements OnFragInteractionListen
         // : 6/15/2016 get the cursor (id, state, ssid, date)
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
         networkDb.getCursor(this);
+
+        // TODO toolbar
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
+        toolbar.setTitle("History");
+
     }
 
     // : 6/15/2016 populate the cursor, check null when rotate the screen
