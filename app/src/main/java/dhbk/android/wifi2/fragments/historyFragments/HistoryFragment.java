@@ -10,9 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.historyAdapters.HistoryPagerAdapter;
+import dhbk.android.wifi2.utils.PageChangeListener;
 
 public class HistoryFragment extends Fragment {
     private static final String TAG = HistoryFragment.class.getSimpleName();
@@ -49,10 +51,14 @@ public class HistoryFragment extends Fragment {
 
         // TODO view pager
         // sử dụng viewpager kết hợp với tablayout
+        final ImageView toolbarImage = (ImageView) view.findViewById(R.id.toolbar_image);
+        final ImageView outgoingImage = (ImageView) view.findViewById(R.id.toolbar_image_outgoing);
+
         HistoryPagerAdapter historyPagerAdapter = new HistoryPagerAdapter(getChildFragmentManager());
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.container);
         viewPager.setAdapter(historyPagerAdapter);
+        viewPager.addOnPageChangeListener(PageChangeListener.newInstance(historyPagerAdapter, toolbarImage, outgoingImage));
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
