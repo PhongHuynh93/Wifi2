@@ -1,33 +1,27 @@
 package dhbk.android.wifi2.fragments;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.adapters.HistoryWifiRecyclerViewAdapter;
-import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
-import dhbk.android.wifi2.utils.DividerItemDecoration;
-import dhbk.android.wifi2.utils.NetworkDb;
+import dhbk.android.wifi2.adapters.HistoryPagerAdapter;
 
-public class HistoryFragment extends Fragment implements OnFragInteractionListener.OnHistoryFragInteractionListener{
+public class HistoryFragment extends Fragment {
     private static final String TAG = HistoryFragment.class.getSimpleName();
 
     public HistoryFragment() {
     }
 
     public static HistoryFragment newInstance() {
-        HistoryFragment fragment = new HistoryFragment();
-        return fragment;
+        return new HistoryFragment();
     }
 
     @Override
@@ -40,36 +34,24 @@ public class HistoryFragment extends Fragment implements OnFragInteractionListen
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HistoryWifiRecyclerViewAdapter adapter = new HistoryWifiRecyclerViewAdapter(getActivity(), null);
-        RecyclerView historyRcv = (RecyclerView) getActivity().findViewById(R.id.rcv_history);
-        historyRcv.setAdapter(adapter);
-        historyRcv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        historyRcv.setHasFixedSize(true);
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
-        historyRcv.addItemDecoration(itemDecoration);
 
-        // : 6/15/2016 get the cursor (id, state, ssid, date)
-        NetworkDb networkDb = NetworkDb.getInstance(getActivity());
-        networkDb.getCursor(this);
-
-        // TODO toolbar
+        //  toolbar
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
         toolbar.setTitle("History");
 
+        // TODO view pager
+        // sử dụng viewpager kết hợp với tablayout
+        HistoryPagerAdapter historyPagerAdapter = new HistoryPagerAdapter(getChildFragmentManager());
+
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.container);
+        viewPager.setAdapter(historyPagerAdapter);
+
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
-    // : 6/15/2016 populate the cursor, check null when rotate the screen
-    @Override
-    public void populateCursorToRcv(Cursor cursor) {
-        try {
-            RecyclerView historyRcv = (RecyclerView) getActivity().findViewById(R.id.rcv_history);
-            HistoryWifiRecyclerViewAdapter adapter = (HistoryWifiRecyclerViewAdapter) historyRcv.getAdapter();
-            adapter.changeCursor(cursor);
 
-        } catch (NullPointerException e) {
-            Log.e(TAG, "populateCursorToRcv: " + e.toString());
-        }
-    }
 }

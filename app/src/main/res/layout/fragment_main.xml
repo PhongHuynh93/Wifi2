@@ -4,14 +4,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <!--wifi-->
         <FrameLayout
+            android:fitsSystemWindows="true"
             android:id="@+id/scan_wifi"
             android:layout_width="match_parent"
             android:layout_height="350dp"
@@ -40,6 +41,7 @@
 
         <!--text-->
         <FrameLayout
+            android:fitsSystemWindows="true"
             android:id="@+id/tv_features"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -58,6 +60,7 @@
 
         <!--telephony + history-->
         <LinearLayout
+            android:fitsSystemWindows="true"
             android:id="@+id/scan_telephony"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -84,6 +87,8 @@
 
             <!--history-->
             <FrameLayout
+                android:fitsSystemWindows="true"
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_between_two_box"
@@ -102,6 +107,8 @@
         </LinearLayout>
 
         <FrameLayout
+            android:fitsSystemWindows="true"
+
             android:id="@+id/map_history"
             android:layout_width="match_parent"
             android:layout_height="250dp"

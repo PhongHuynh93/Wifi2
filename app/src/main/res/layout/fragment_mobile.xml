@@ -2,34 +2,36 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#66FFFFFF"
-
+        android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <TextView
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed"
-                android:gravity="center_horizontal"
-                android:text="NETWORK"
-                android:textColor="@color/grey_dark"
-                android:textSize="@dimen/font_larger"
-                android:textStyle="bold"/>
-        </android.support.v7.widget.Toolbar>
+                android:layout_height="@dimen/toolbar_height"
+                android:fitsSystemWindows="true"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:text="NETWORK"
+                    android:textColor="@color/grey_dark"
+                    android:textSize="@dimen/font_largerr"
+                    android:textStyle="bold"/>
+            </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <ImageView
+        android:fitsSystemWindows="true"
         android:id="@+id/bg_scan_mobile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,8 +41,8 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="53dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="53dp"
         android:fontFamily="sans-serif-condensed"
         android:text="Date"
         android:textColor="@android:color/white"
