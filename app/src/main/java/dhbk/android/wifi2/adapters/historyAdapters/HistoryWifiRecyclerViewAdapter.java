@@ -16,6 +16,7 @@ import java.util.Locale;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.TimeStampFormatter;
 
 /**
@@ -32,6 +33,11 @@ public class HistoryWifiRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
         WifiModel myListItem = WifiModel.fromCursor(cursor);
+        if (myListItem.getState().equals(Constant.WIFI_DISCONNECT)) {
+            viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_button_discnect);
+        } else {
+            viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_button_cnect);
+        }
         viewHolder.wifiStateHotspotTv.setText(myListItem.getState());
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
         viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));

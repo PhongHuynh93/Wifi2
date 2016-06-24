@@ -1,12 +1,16 @@
 package dhbk.android.wifi2.fragments.mobileFragments;
 
 
+import android.content.Context;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,11 +23,14 @@ import java.util.Date;
 import java.util.Locale;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.backgroundTasks.BitmapWorkerTask;
 import dhbk.android.wifi2.utils.Connectivity;
 import dhbk.android.wifi2.utils.db.NetworkDb;
 
 public class MobileFragment extends Fragment {
+    private OnFragInteractionListener.OnMainFragInteractionListener mListener;
+
     public MobileFragment() {
     }
 
@@ -42,6 +49,13 @@ public class MobileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //  toolbar
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        setHasOptionsMenu(true);
 
         if (Connectivity.isConnectedMobile(getActivity().getApplicationContext())) {
             showMobileProperty();
@@ -73,6 +87,23 @@ public class MobileFragment extends Fragment {
         TextView dateText = (TextView) view.findViewById(R.id.date);
         dateText.setText(nowDate);
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnFragInteractionListener.OnMainFragInteractionListener) {
+            mListener = (OnFragInteractionListener.OnMainFragInteractionListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnRageComicSelected.");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     private void helpUserTurnOnMobileNetwork() {
@@ -161,9 +192,20 @@ public class MobileFragment extends Fragment {
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
         String nowDate = formatter.format(now);
 
-        // TODO: 6/19/16 save to mobile db
+        // : 6/19/16 save to mobile db
         NetworkDb db = NetworkDb.getInstance(getContext());
         db.addMobile(mobileType, speedText, nowDate);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                mListener.onMainFragReplace();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 }

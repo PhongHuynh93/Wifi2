@@ -68,7 +68,7 @@ public class HistoryChildOsmMapFragment extends Fragment {
 
     // a callback after getting wifi hotspot from db, we draw it on osm map
     public void showWifiHotspotOnMap(String ssid, String pass, double latitutude, double longitude) {
-        // TODO: 6/17/2016 test this callback after getting from db
+        // : 6/17/2016 test this callback after getting from db
         Log.i(TAG, "showWifiHotspotOnMap: " + ssid);
         Log.i(TAG, "showWifiHotspotOnMap: " + pass);
         Log.i(TAG, "showWifiHotspotOnMap: " + latitutude);

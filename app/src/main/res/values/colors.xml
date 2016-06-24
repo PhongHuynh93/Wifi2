@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/dark_teal</color>
     <color name="colorPrimaryDark">@android:color/transparent</color>
-    <color name="colorAccent">@color/dark_teal</color>
+    <color name="colorAccent">@color/blue</color>
     <color name="grey_dark">#212121</color>
     <color name="deep_purple_medium">#673AB7</color>
     <color name="dark_teal">#009688</color>
@@ -10,7 +10,14 @@
     <color name="wifi_connect_dialog">@color/dark_teal</color>
     <color name="indigo">#3F51B5</color>
     <color name="grey_light">#E0E0E0</color>
+    <color name="grey_lighter">#EEEEEE</color>
     <color name="grey_light_darker">#BDBDBD</color>
     <color name="grey_light_darker2">#616161</color>
     <color name="pink">#F48FB1</color>
+    <color name="pink_darker">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="lime_dark">#C0CA33</color>
+    <color name="blue">#2196F3</color>
+    <color name="green_light">#64DD17</color>
 </resources>

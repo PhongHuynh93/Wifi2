@@ -36,8 +36,6 @@ public class WifiReceiver extends BroadcastReceiver {
             if (info != null && info.isConnected()) {
                 if (firstConnect) {
                     // Do your work.
-                    Log.i(TAG, "WifiReceiver onReceive: connected");
-
                     // e.g. To check the Network Name or other info:
                     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();

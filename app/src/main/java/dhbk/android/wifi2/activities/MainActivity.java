@@ -152,4 +152,15 @@ public class MainActivity extends AppCompatActivity implements
             ((HistoryWithOsmMapFragment) fragment).onReturnWifiHotspot(cursor);
         }
     }
+
+    // replace with main Fragment
+    @Override
+    public void onMainFragReplace() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MAIN_FRAGMENT);
+        if (mainFragment == null) {
+            mainFragment = MainFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
+        }
+    }
 }

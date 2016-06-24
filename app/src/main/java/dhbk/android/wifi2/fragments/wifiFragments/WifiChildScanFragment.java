@@ -131,7 +131,7 @@ public class WifiChildScanFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.turn_on_loc) {
-            // TODO: 6/18/16 turn on location if not
+            // : 6/18/16 turn on location if not
             checkGpsHasTurnOn();
             return true;
         }

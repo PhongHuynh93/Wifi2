@@ -1,5 +1,6 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -8,16 +9,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.historyAdapters.HistoryPagerAdapter;
+import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.PageChangeListener;
 
 public class HistoryFragment extends Fragment {
     private static final String TAG = HistoryFragment.class.getSimpleName();
+    private OnFragInteractionListener.OnMainFragInteractionListener mListener;
 
     public HistoryFragment() {
     }
@@ -46,15 +50,16 @@ public class HistoryFragment extends Fragment {
         //  toolbar
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         setHasOptionsMenu(true);
         toolbar.setTitle("History");
 
-        // TODO view pager
         // sử dụng viewpager kết hợp với tablayout
         final ImageView toolbarImage = (ImageView) view.findViewById(R.id.toolbar_image);
         final ImageView outgoingImage = (ImageView) view.findViewById(R.id.toolbar_image_outgoing);
 
-        HistoryPagerAdapter historyPagerAdapter = new HistoryPagerAdapter(getChildFragmentManager());
+        HistoryPagerAdapter historyPagerAdapter = new HistoryPagerAdapter(getActivity(), getChildFragmentManager());
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.container);
         viewPager.setAdapter(historyPagerAdapter);
@@ -62,8 +67,34 @@ public class HistoryFragment extends Fragment {
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragInteractionListener.OnMainFragInteractionListener) {
+            mListener = (OnFragInteractionListener.OnMainFragInteractionListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnRageComicSelected.");
+        }
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    // listen click on toolbar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                mListener.onMainFragReplace();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 }

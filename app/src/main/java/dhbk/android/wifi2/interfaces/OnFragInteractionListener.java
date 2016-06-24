@@ -14,6 +14,7 @@ public interface OnFragInteractionListener {
         void onHistoryWithOsmMapFragReplace();
         void onMobileFragReplace();
         void onReturnCursorWifiHotspot(Cursor cursor); // cursor containing wifi hotspot in db
+        void onMainFragReplace();
     }
 
     interface OnTeleFragInteractionListener {
