@@ -52,7 +52,7 @@
                     android:contentDescription="@null"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/leopard"
+                    android:src="@drawable/wifi1"
                     app:layout_widthPercent="120%"/>
             </android.support.percent.PercentFrameLayout>
 

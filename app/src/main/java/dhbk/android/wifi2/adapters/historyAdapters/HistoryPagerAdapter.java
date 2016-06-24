@@ -23,8 +23,8 @@ import dhbk.android.wifi2.models.HistoryPageModel;
 // tạo 2 fragment là wifi va mobile list
 public class HistoryPagerAdapter extends FragmentPagerAdapter {
     private static final HistoryPageModel[] TITLES = {
-            new HistoryPageModel(R.drawable.ic_wifi_24dp, R.drawable.leopard),
-            new HistoryPageModel(R.drawable.ic_phone_24dp, R.drawable.cat)
+            new HistoryPageModel(R.drawable.ic_wifi_24dp, R.drawable.wifi1),
+            new HistoryPageModel(R.drawable.ic_phone_24dp, R.drawable.mobile1)
     };
     private final Context mContext;
 
