@@ -47,7 +47,6 @@ public class AddWifiToDbTask extends AsyncTask<Void, Void, Boolean> {
             wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_LINK_SPEED, linkSpeed);
             wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_NETWORK_ID, networkId);
 
-            // TODO: 6/25/16 test this
             mDb.insertOrThrow(NetworkWifiDb.TABLE_WIFI, null, wifiHotspotValues);
             mDb.setTransactionSuccessful();
 

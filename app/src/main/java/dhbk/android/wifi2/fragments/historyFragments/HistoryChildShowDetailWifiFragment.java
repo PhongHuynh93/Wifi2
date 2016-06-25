@@ -21,7 +21,6 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     private static final String ARG_PARAM8 = "param8";
     private static final String ARG_PARAM9 = "param9";
 
-    // TODO: Rename and change types of parameters
     private WifiModel mWifiModel;
 
 
@@ -32,7 +31,6 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     public static HistoryChildShowDetailWifiFragment newInstance(WifiModel wifiModel) {
         HistoryChildShowDetailWifiFragment fragment = new HistoryChildShowDetailWifiFragment();
         Bundle args = new Bundle();
-        // TODO: 6/25/16 wifimodel to para and add to args
         String state = wifiModel.getState();
         String ssid = wifiModel.getSsid();
         String date = wifiModel.getDate();

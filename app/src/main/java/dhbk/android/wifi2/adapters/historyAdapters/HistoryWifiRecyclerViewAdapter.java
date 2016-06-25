@@ -51,7 +51,6 @@ public class HistoryWifiRecyclerViewAdapter extends
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
         viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
 
-        // TODO: 6/25/16 pass wifi model of a current row
         viewHolder.mImgArrowRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

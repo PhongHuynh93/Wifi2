@@ -86,7 +86,7 @@ public class WifiReceiver extends BroadcastReceiver {
 
                     // : save disconnect to database, state(disconnect), ssid and data
                     NetworkDb networkDb = NetworkDb.getInstance(context);
-                    WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
+                    WifiModel wifiModel = new WifiModel(Constant.WIFI_DISCONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
                     networkDb.addWifiHotspot(wifiModel);
                 }
             }

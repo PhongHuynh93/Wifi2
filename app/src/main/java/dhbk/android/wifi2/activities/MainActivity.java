@@ -166,7 +166,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    // TODO: add ssid and connected to para, replace with main HistoryChildShowDetailWifiFrag
     @Override
     public void onHistoryChildShowDetailWifiFragReplace(WifiModel wifiModel) {
         final HistoryChildShowDetailWifiFragment historyChildShowDetailWifiFragment = HistoryChildShowDetailWifiFragment.newInstance(wifiModel);

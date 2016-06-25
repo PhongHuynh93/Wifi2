@@ -46,7 +46,6 @@ public class GetWifiFromDbTask extends AsyncTask<Void, Void, Cursor>{
                     null,
                     null,
                     null, null,null);
-            // TODO: 6/25/16 test get enough
         } catch (SQLiteException e) {
             return null;
         }
