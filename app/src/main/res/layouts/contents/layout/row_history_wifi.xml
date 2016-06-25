@@ -13,7 +13,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:scaleType="fitXY"
-        android:src="@drawable/wifi"/>
+        android:src="@drawable/location_here_map"/>
 
     <!--ssid, max line for one row and when it's too long, truncate at the end -->
     <TextView
