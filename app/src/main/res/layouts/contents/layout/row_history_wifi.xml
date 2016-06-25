@@ -39,12 +39,13 @@
         <!--state-->
         <TextView
             android:id="@+id/row_state_wifi_history"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
+            android:gravity="center_horizontal"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:background="@drawable/bg_button_cnect"
             android:padding="4dp"
-            android:text="State"
+            android:text="DisConnected"
             android:textColor="@android:color/white"
             android:textSize="8sp"/>
 
