@@ -63,5 +63,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
+        android:id="@+id/img_arrow_right"
         android:src="@drawable/ic_keyboard_arrow_right"/>
 </LinearLayout>

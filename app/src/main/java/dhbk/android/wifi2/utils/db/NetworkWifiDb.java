@@ -26,11 +26,25 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_STATE = "key_wifi_state";
     public static final String KEY_WIFI_SSID = "key_wifi_ssid";
     public static final String KEY_WIFI_DATE = "key_wifi_date";
+
+    public static final String KEY_WIFI_BSSID = "key_wifi_bssid";
+    public static final String KEY_WIFI_RSSI = "key_wifi_rssi";
+    public static final String KEY_WIFI_MAC_ADDRESS = "key_wifi_mac_address";
+    public static final String KEY_WIFI_IP_ADDRESS = "key_wifi_ip_address";
+    public static final String KEY_WIFI_LINK_SPEED = "key_wifi_link_speed";
+    public static final String KEY_WIFI_NETWORK_ID = "key_wifi_network_id";
+
     public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_WIFI + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + KEY_WIFI_STATE + " TEXT NOT NULL, "
             + KEY_WIFI_SSID + " TEXT NOT NULL, "
-            + KEY_WIFI_DATE + " TEXT NOT NULL);";
+            + KEY_WIFI_DATE + " TEXT NOT NULL, "
+            + KEY_WIFI_BSSID + " TEXT NOT NULL, "
+            + KEY_WIFI_RSSI + " INTEGER NOT NULL, "
+            + KEY_WIFI_MAC_ADDRESS + " TEXT NOT NULL, "
+            + KEY_WIFI_IP_ADDRESS + " INTEGER NOT NULL, "
+            + KEY_WIFI_LINK_SPEED + " INTEGER NOT NULL, "
+            + KEY_WIFI_NETWORK_ID + " INTEGER NOT NULL);";
 
     // wifi hotspot table
     public static final String TABLE_WIFI_HOTSPOT = "table_wifi_hotspot";

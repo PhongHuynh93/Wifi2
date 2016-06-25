@@ -26,6 +26,13 @@ public class WifiReceiver extends BroadcastReceiver {
     private static boolean firstDisconnect = true;
 
     private static String mSsid;
+    private static String mBssid;
+    private static int mRssi;
+    private static String mMacAddress;
+    private static int mIpAddress;
+    private static int mLinkSpeed;
+    private static int mNetworkId;
+    private static String mEncryption;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -40,7 +47,15 @@ public class WifiReceiver extends BroadcastReceiver {
                     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     mSsid = wifiInfo.getSSID();
+                    mBssid = wifiInfo.getBSSID();
+                    mRssi = wifiInfo.getRssi();
+                    mMacAddress = wifiInfo.getMacAddress();
+                    mIpAddress = wifiInfo.getIpAddress();
+                    mLinkSpeed = wifiInfo.getLinkSpeed();
+                    mNetworkId = wifiInfo.getNetworkId();
 
+                    // TODO: 6/25/16 make encryption
+                    // 2 var to make this class run one time
                     firstDisconnect = true;
                     firstConnect = false;
 
@@ -51,9 +66,10 @@ public class WifiReceiver extends BroadcastReceiver {
                     String nowDate = formatter.format(now);
 
 
+                    // TODO: 6/25/16 chagne this
                     // : save connect to database, state(disconnect), ssid and data
                     NetworkDb networkDb = NetworkDb.getInstance(context);
-                    WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate);
+                    WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
                     networkDb.addWifiHotspot(wifiModel);
                 }
 
@@ -72,7 +88,7 @@ public class WifiReceiver extends BroadcastReceiver {
 
                     // : save disconnect to database, state(disconnect), ssid and data
                     NetworkDb networkDb = NetworkDb.getInstance(context);
-                    WifiModel wifiModel = new WifiModel(Constant.WIFI_DISCONNECT, mSsid, nowDate);
+                    WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
                     networkDb.addWifiHotspot(wifiModel);
                 }
             }

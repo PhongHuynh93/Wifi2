@@ -11,10 +11,23 @@ public class WifiModel {
     private String encryption;
     private String date;
 
-    public WifiModel(String state, String ssid, String date) {
+    private  String mBssid;
+    private  int mRssi;
+    private  String mMacAddress;
+    private  int mIpAddress;
+    private  int mLinkSpeed;
+    private  int mNetworkId;
+
+    public WifiModel(String state, String ssid, String date, String bssid, int rssi, String macAddress, int ipAddress, int linkSpeed, int networkId) {
         this.state = state;
         this.ssid = ssid;
         this.date = date;
+        mBssid = bssid;
+        mRssi = rssi;
+        mMacAddress = macAddress;
+        mIpAddress = ipAddress;
+        mLinkSpeed = linkSpeed;
+        mNetworkId = networkId;
     }
 
     public WifiModel(String ssid, String encryption) {
