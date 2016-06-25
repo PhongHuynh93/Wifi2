@@ -3,7 +3,6 @@ package dhbk.android.wifi2.adapters.historyAdapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,8 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.activities.MainActivity;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
@@ -30,15 +29,19 @@ import dhbk.android.wifi2.utils.TimeStampFormatter;
 public class HistoryWifiRecyclerViewAdapter extends
         CursorRecyclerViewAdapter<HistoryWifiRecyclerViewAdapter.ViewHolder> {
 
+    private final Context mActivityContext;
     private TimeStampFormatter mTimeStampFormatter = new TimeStampFormatter();
 
     public HistoryWifiRecyclerViewAdapter(Context context, Cursor cursor) {
         super(context, cursor);
+        this.mActivityContext = context;
+
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
-        WifiModel myListItem = WifiModel.fromCursor(cursor);
+        final WifiModel myListItem = WifiModel.fromCursor(cursor);
         if (myListItem.getState().equals(Constant.WIFI_DISCONNECT)) {
             viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_button_discnect);
         } else {
@@ -47,14 +50,23 @@ public class HistoryWifiRecyclerViewAdapter extends
         viewHolder.wifiStateHotspotTv.setText(myListItem.getState());
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
         viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
+
+        // TODO: 6/25/16 pass wifi model of a current row
+        viewHolder.mImgArrowRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mActivityContext instanceof MainActivity) {
+                    ((MainActivity)mActivityContext).onHistoryChildShowDetailWifiFragReplace(myListItem);
+                }
+            }
+        });
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_history_wifi, parent, false);
-        ViewHolder vh = new ViewHolder(itemView);
-        return vh;
+        return new ViewHolder(itemView);
     }
 
     private static Date date(String string) {
@@ -79,14 +91,6 @@ public class HistoryWifiRecyclerViewAdapter extends
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-        }
-
-        // TODO: 6/25/16 pass ssid and state of a row
-        @OnClick(R.id.img_arrow_right)
-        public void onClick() {
-            String ssid = wifiSsidHotspotTv.getText().toString();
-            String state = wifiStateHotspotTv.getText().toString();
-            Log.i("phong", "onClick: ");
         }
     }
 }

@@ -30,6 +30,7 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_BSSID = "key_wifi_bssid";
     public static final String KEY_WIFI_RSSI = "key_wifi_rssi";
     public static final String KEY_WIFI_MAC_ADDRESS = "key_wifi_mac_address";
+
     public static final String KEY_WIFI_IP_ADDRESS = "key_wifi_ip_address";
     public static final String KEY_WIFI_LINK_SPEED = "key_wifi_link_speed";
     public static final String KEY_WIFI_NETWORK_ID = "key_wifi_network_id";
