@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements
             Transition transition = TransitionInflater.from(this).
                     inflateTransition(R.transition.changebounds_with_arcmotion); // chuyển cái nút từ bên dưới đi lên trên
 
+
             // Setup enter transition on second fragment
             historyChildShowDetailWifiFragment.setSharedElementEnterTransition(transition);
 
@@ -198,8 +199,13 @@ public class MainActivity extends AppCompatActivity implements
                 // TODO: 6/12/16 8 start the Circular Reveal Animation.
                 @Override
                 public void onTransitionEnd(Transition transition) {
-//                    transition.removeListener(this);
-//                    animateRevealShow(mRlContainer);
+                    transition.removeListener(this);
+                    // chạy ham nay trong fragment show wifi detail
+                    Fragment topFrag = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
+                    if (topFrag instanceof HistoryChildShowDetailWifiFragment) {
+                        ((HistoryChildShowDetailWifiFragment)topFrag).animateRevealShow();
+                    }
+
                 }
 
                 @Override

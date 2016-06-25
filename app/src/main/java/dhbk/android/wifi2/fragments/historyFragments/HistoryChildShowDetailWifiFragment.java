@@ -1,14 +1,27 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.utils.GUIUtils;
 
 public class HistoryChildShowDetailWifiFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -20,6 +33,23 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     private static final String ARG_PARAM7 = "param7";
     private static final String ARG_PARAM8 = "param8";
     private static final String ARG_PARAM9 = "param9";
+
+    @BindView(R.id.activity_contact_fab)
+    FloatingActionButton mActivityContactFab;
+    @BindView(R.id.activity_contact_iv_twitter)
+    ImageView mActivityContactIvTwitter;
+    @BindView(R.id.activity_contact_iv_github)
+    ImageView mActivityContactIvGithub;
+    @BindView(R.id.activity_contact_iv_linkedin)
+    ImageView mActivityContactIvLinkedin;
+    @BindView(R.id.activity_contact_iv_email)
+    ImageView mActivityContactIvEmail;
+    @BindView(R.id.activity_contact_ll_container)
+    LinearLayout mActivityContactLlContainer;
+    @BindView(R.id.activity_contact_iv_close)
+    ImageView mActivityContactIvClose;
+    @BindView(R.id.activity_contact_rl_container)
+    RelativeLayout mActivityContactRlContainer;
 
     private WifiModel mWifiModel;
 
@@ -77,7 +107,50 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_child_show_detail_wifi, container, false);
+        View view = inflater.inflate(R.layout.fragment_history_child_show_detail_wifi, container, false);
+        ButterKnife.bind(this, view);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            setupEnterAnimation();
+        } else {
+            initViews();
+        }
+        return view;
     }
 
+    // TODO: 6/25/16 set visible to the rootlayout
+    public void animateRevealShow() {
+        int cx = (mActivityContactRlContainer.getLeft() + mActivityContactRlContainer.getRight()) / 2;
+        int cy = (mActivityContactRlContainer.getTop() + mActivityContactRlContainer.getBottom()) / 2;
+
+        GUIUtils.animateRevealShow(getActivity().getApplicationContext(), mActivityContactRlContainer, mActivityContactFab.getWidth() / 2, R.color.colorAccent,
+                cx, cy, new OnRevealAnimationListener() {
+                    @Override
+                    public void onRevealHide() {
+
+                    }
+
+                    // TODO: 6/12/16 12  When the animation has ended, we are informing the listener to fade the views in.
+                    @Override
+                    public void onRevealShow() {
+                        initViews();
+                    }
+                });
+    }
+
+    private void initViews() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Animation animation = AnimationUtils.loadAnimation(getContext().getApplicationContext(), android.R.anim.fade_in);
+                animation.setDuration(300);
+
+                // The mLLContainer and mIvClose are the LinearLayout with icons and ImageView with close action icon.
+                mActivityContactLlContainer.startAnimation(animation);
+                mActivityContactIvClose.startAnimation(animation);
+                mActivityContactLlContainer.setVisibility(View.VISIBLE);
+                mActivityContactIvClose.setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
 }
