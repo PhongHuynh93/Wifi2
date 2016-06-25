@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
 import dhbk.android.wifi2.models.WifiModel;
@@ -26,6 +28,7 @@ public class HistoryWifiRecyclerViewAdapter extends
         CursorRecyclerViewAdapter<HistoryWifiRecyclerViewAdapter.ViewHolder> {
 
     private TimeStampFormatter mTimeStampFormatter = new TimeStampFormatter();
+
     public HistoryWifiRecyclerViewAdapter(Context context, Cursor cursor) {
         super(context, cursor);
     }
@@ -51,23 +54,25 @@ public class HistoryWifiRecyclerViewAdapter extends
         return vh;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView wifiStateHotspotTv;
-        public TextView wifiSsidHotspotTv;
-        public TextView wifiDateHotspotTv;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            wifiStateHotspotTv = (TextView) itemView.findViewById(R.id.row_state_wifi_history);
-            wifiSsidHotspotTv = (TextView) itemView.findViewById(R.id.row_ssid_wifi_history);
-            wifiDateHotspotTv = (TextView) itemView.findViewById(R.id.row_date_wifi_history);
-        }
-    }
-
     private static Date date(String string) {
         try {
             return new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK).parse(string);
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
+        }
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+        @BindView(R.id.row_ssid_wifi_history)
+        TextView wifiSsidHotspotTv;
+        @BindView(R.id.row_state_wifi_history)
+        TextView wifiStateHotspotTv;
+        @BindView(R.id.row_date_wifi_history)
+        TextView wifiDateHotspotTv;
+
+        ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
     }
 }
