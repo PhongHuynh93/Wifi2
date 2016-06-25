@@ -51,9 +51,6 @@ public class HistoryChildWifiFragment extends Fragment implements OnFragInteract
         // : 6/15/2016 get the cursor (id, state, ssid, date)
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
         networkDb.getCursor(this);
-        
-        // check fab click, if clicked -> show reveal circular animation 
-        // TODO: 6/25/16  
 
     }
 

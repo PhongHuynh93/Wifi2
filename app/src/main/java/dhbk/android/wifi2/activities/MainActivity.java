@@ -163,4 +163,15 @@ public class MainActivity extends AppCompatActivity implements
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
         }
     }
+
+    // TODO: add ssid and connected to para, replace with main HistoryChildShowDetailWifiFrag
+    @Override
+    public void onHistoryChildShowDetailWifiFragReplace() {
+        final MobileFragment mobileFragment = MobileFragment.newInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, mobileFragment, Constant.TAG_MOBILE_FRAGMENT)
+                .addToBackStack(null)
+                .commit();
+    }
 }
