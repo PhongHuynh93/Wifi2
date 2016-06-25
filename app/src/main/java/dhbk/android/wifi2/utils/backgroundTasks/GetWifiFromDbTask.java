@@ -22,12 +22,27 @@ public class GetWifiFromDbTask extends AsyncTask<Void, Void, Cursor>{
         mDb = db;
         mFragment = fragment;
     }
+
     @Override
     protected Cursor doInBackground(Void... params) {
         Cursor cursor;
         try {
             cursor = mDb.query (NetworkWifiDb.TABLE_WIFI,
-                    new String[] {NetworkWifiDb.KEY_ID, NetworkWifiDb.KEY_WIFI_STATE, NetworkWifiDb.KEY_WIFI_SSID, NetworkWifiDb.KEY_WIFI_DATE},
+                    new String[] {
+                            NetworkWifiDb.KEY_ID,
+                            NetworkWifiDb.KEY_WIFI_STATE,
+                            NetworkWifiDb.KEY_WIFI_SSID,
+                            NetworkWifiDb.KEY_WIFI_DATE,
+
+
+                            NetworkWifiDb.KEY_WIFI_BSSID,
+                            NetworkWifiDb.KEY_WIFI_RSSI ,
+                            NetworkWifiDb.KEY_WIFI_MAC_ADDRESS ,
+
+                            NetworkWifiDb.KEY_WIFI_IP_ADDRESS,
+                            NetworkWifiDb.KEY_WIFI_LINK_SPEED ,
+                            NetworkWifiDb.KEY_WIFI_NETWORK_ID
+                    },
                     null,
                     null,
                     null, null,null);

@@ -2,6 +2,8 @@ package dhbk.android.wifi2.interfaces;
 
 import android.database.Cursor;
 
+import dhbk.android.wifi2.models.WifiModel;
+
 /**
  * Created by phongdth.ky on 6/13/2016.
  */
@@ -15,6 +17,7 @@ public interface OnFragInteractionListener {
         void onMobileFragReplace();
         void onReturnCursorWifiHotspot(Cursor cursor); // cursor containing wifi hotspot in db
         void onMainFragReplace();
+        void onHistoryChildShowDetailWifiFragReplace(WifiModel wifiModel);
     }
 
     interface OnTeleFragInteractionListener {

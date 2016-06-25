@@ -5,25 +5,32 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
+import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
  */
-public class AddWifiToDbTask extends AsyncTask<String, Void, Boolean> {
+public class AddWifiToDbTask extends AsyncTask<Void, Void, Boolean> {
+    private static final String TAG  = AddWifiToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
+    private final WifiModel mWifiModel;
 
-    public AddWifiToDbTask(SQLiteDatabase db) {
+    public AddWifiToDbTask(SQLiteDatabase db, WifiModel wifiModel) {
         this.mDb = db;
+        this.mWifiModel = wifiModel;
     }
     @Override
-    protected Boolean doInBackground(String... params) {
-        if (params.length != 3) {
-            return false;
-        }
-        String state = params[0];
-        String ssid = params[1];
-        String date = params[2];
+    protected Boolean doInBackground(Void... params) {
+        String state = mWifiModel.getState();
+        String ssid = mWifiModel.getSsid();
+        String date = mWifiModel.getDate();
+        String bssid = mWifiModel.getBssid();
+        int rssi = mWifiModel.getRssi();
+        String macAddress = mWifiModel.getMacAddress();
+        int ipAddress = mWifiModel.getIpAddress();
+        int linkSpeed = mWifiModel.getLinkSpeed();
+        int networkId = mWifiModel.getNetworkId();
 
         mDb.beginTransaction();
         try {
@@ -31,6 +38,14 @@ public class AddWifiToDbTask extends AsyncTask<String, Void, Boolean> {
             wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_STATE, state);
             wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_SSID, ssid);
             wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_DATE, date);
+
+            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_BSSID, bssid);
+            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_RSSI, rssi);
+            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_MAC_ADDRESS, macAddress);
+
+            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_IP_ADDRESS, ipAddress);
+            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_LINK_SPEED, linkSpeed);
+            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_NETWORK_ID, networkId);
 
             mDb.insertOrThrow(NetworkWifiDb.TABLE_WIFI, null, wifiHotspotValues);
             mDb.setTransactionSuccessful();
@@ -42,4 +57,5 @@ public class AddWifiToDbTask extends AsyncTask<String, Void, Boolean> {
         }
         return true;
     }
+
 }

@@ -12,11 +12,13 @@ import android.view.MenuItem;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.MainFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryChildShowDetailWifiFragment;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryFragment;
 import dhbk.android.wifi2.fragments.historyOSMFragments.HistoryWithOsmMapFragment;
 import dhbk.android.wifi2.fragments.mobileFragments.MobileFragment;
 import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
+import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
 
 
@@ -162,5 +164,15 @@ public class MainActivity extends AppCompatActivity implements
             mainFragment = MainFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
         }
+    }
+
+    @Override
+    public void onHistoryChildShowDetailWifiFragReplace(WifiModel wifiModel) {
+        final HistoryChildShowDetailWifiFragment historyChildShowDetailWifiFragment = HistoryChildShowDetailWifiFragment.newInstance(wifiModel);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container, historyChildShowDetailWifiFragment, Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT)
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:id="@+id/activity_contact_rl_container">
+
+    <!--TODO 2_1 declare this fab the same animation name, change this to layout 21-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/activity_contact_fab"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:transitionName="transition_reveal_contact"
+        app:fabSize="normal"
+        app:pressedTranslationZ="8dp"
+        app:elevation="0dp"
+        app:backgroundTint="@color/colorAccent"/>
+
+    <LinearLayout
+        android:id="@+id/activity_contact_ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:weightSum="4">
+
+        <ImageView
+            android:id="@+id/activity_contact_iv_twitter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/wifi"
+            android:background="?android:attr/selectableItemBackground"
+            />
+
+        <ImageView
+            android:id="@+id/activity_contact_iv_github"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/wifi"
+            android:background="?android:attr/selectableItemBackground"
+            />
+
+        <ImageView
+            android:id="@+id/activity_contact_iv_linkedin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/wifi"
+            android:background="?android:attr/selectableItemBackground"
+            />
+
+        <ImageView
+            android:id="@+id/activity_contact_iv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/wifi"
+            android:background="?android:attr/selectableItemBackground"
+            />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/activity_contact_iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:visibility="invisible"
+        android:src="@drawable/wifi"
+        android:background="?android:attr/selectableItemBackground"
+        />
+
+</RelativeLayout>
