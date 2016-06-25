@@ -1,13 +1,17 @@
 package dhbk.android.wifi2.activities;
 
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.MenuItem;
 
 import dhbk.android.wifi2.R;
@@ -166,9 +170,65 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    // TODO: 6/25/16 add animation when replace fragment
     @Override
     public void onHistoryChildShowDetailWifiFragReplace(WifiModel wifiModel) {
+        // get the fab of history top fragment
+        // Find the shared element (in Fragment A), lúc này History dang trên top nên ta sẽ kiếm dc ID của fab
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_reveal_detail_wifi);
+
         final HistoryChildShowDetailWifiFragment historyChildShowDetailWifiFragment = HistoryChildShowDetailWifiFragment.newInstance(wifiModel);
+
+        // add anim if >= Android 5
+        // Check that the device is running lollipop
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Inflate transitions to apply
+            Transition transition = TransitionInflater.from(this).
+                    inflateTransition(R.transition.changebounds_with_arcmotion); // chuyển cái nút từ bên dưới đi lên trên
+
+            // Setup enter transition on second fragment
+            historyChildShowDetailWifiFragment.setSharedElementEnterTransition(transition);
+
+            transition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+
+                }
+
+                // TODO: 6/12/16 8 start the Circular Reveal Animation.
+                @Override
+                public void onTransitionEnd(Transition transition) {
+//                    transition.removeListener(this);
+//                    animateRevealShow(mRlContainer);
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+
+            // chắc chắn phải tìm được nút fab mới animation được
+            if (fab != null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .addSharedElement(fab, fab.getTransitionName())
+                        .replace(R.id.main_container, historyChildShowDetailWifiFragment, Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        }
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_container, historyChildShowDetailWifiFragment, Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT)
