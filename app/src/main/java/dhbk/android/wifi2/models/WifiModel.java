@@ -11,12 +11,12 @@ public class WifiModel {
     private String encryption;
     private String date;
 
-    private  String mBssid;
-    private  int mRssi;
-    private  String mMacAddress;
-    private  int mIpAddress;
-    private  int mLinkSpeed;
-    private  int mNetworkId;
+    private String mBssid;
+    private int mRssi;
+    private String mMacAddress;
+    private int mIpAddress;
+    private int mLinkSpeed;
+    private int mNetworkId;
 
     public static final int LENGTH = 9; // this var to tell the db to insert enough params in this model
 
@@ -59,5 +59,29 @@ public class WifiModel {
         String ssid = cursor.getString(2);
         String date = cursor.getString(3);
         return new WifiModel(state, ssid, date);
+    }
+
+    public String getBssid() {
+        return mBssid;
+    }
+
+    public int getRssi() {
+        return mRssi;
+    }
+
+    public String getMacAddress() {
+        return mMacAddress;
+    }
+
+    public int getIpAddress() {
+        return mIpAddress;
+    }
+
+    public int getLinkSpeed() {
+        return mLinkSpeed;
+    }
+
+    public int getNetworkId() {
+        return mNetworkId;
     }
 }

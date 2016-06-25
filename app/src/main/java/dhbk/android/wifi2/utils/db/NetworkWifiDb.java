@@ -81,7 +81,7 @@ public class NetworkWifiDb implements
 
     @Override
     public void onInsert(SQLiteDatabase db, WifiModel wifiModel) {
-        new AddWifiToDbTask(db).execute(wifiModel.getState(), wifiModel.getSsid(), wifiModel.getDate());
+        new AddWifiToDbTask(db, wifiModel).execute();
     }
 
     @Override
