@@ -18,6 +18,8 @@ public class WifiModel {
     private  int mLinkSpeed;
     private  int mNetworkId;
 
+    public static final int LENGTH = 9; // this var to tell the db to insert enough params in this model
+
     public WifiModel(String state, String ssid, String date, String bssid, int rssi, String macAddress, int ipAddress, int linkSpeed, int networkId) {
         this.state = state;
         this.ssid = ssid;

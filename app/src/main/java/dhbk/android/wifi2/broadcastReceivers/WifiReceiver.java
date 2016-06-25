@@ -54,7 +54,6 @@ public class WifiReceiver extends BroadcastReceiver {
                     mLinkSpeed = wifiInfo.getLinkSpeed();
                     mNetworkId = wifiInfo.getNetworkId();
 
-                    // TODO: 6/25/16 make encryption
                     // 2 var to make this class run one time
                     firstDisconnect = true;
                     firstConnect = false;
@@ -66,7 +65,6 @@ public class WifiReceiver extends BroadcastReceiver {
                     String nowDate = formatter.format(now);
 
 
-                    // TODO: 6/25/16 chagne this
                     // : save connect to database, state(disconnect), ssid and data
                     NetworkDb networkDb = NetworkDb.getInstance(context);
                     WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
