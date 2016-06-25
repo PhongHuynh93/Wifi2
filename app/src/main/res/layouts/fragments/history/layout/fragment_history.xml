@@ -82,11 +82,15 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <!--TODO add this layout to layout-v21-->
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:tint="@color/white"
+        android:clickable="true"
+        android:id="@+id/fab"
+        android:transitionName="transition_reveal_contact"
         android:src="@drawable/ic_search_black_24dp"/>
 </android.support.design.widget.CoordinatorLayout>
