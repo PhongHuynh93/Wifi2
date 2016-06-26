@@ -9,27 +9,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <!--main contain-->
-    <LinearLayout
-        android:id="@+id/main_content_show_wifi_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
-        android:orientation="vertical"
-        android:visibility="invisible"></LinearLayout>
-
-    <!--icon close-->
-    <ImageView
-        android:id="@+id/action_close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="hello"
-        android:src="@drawable/ic_close_white_36dp"
-        android:visibility="invisible"/>
-
     <!--fab to reveal content-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_wifi_show_detail"
@@ -41,4 +20,98 @@
         app:elevation="0dp"
         app:fabSize="normal"
         app:pressedTranslationZ="8dp"/>
+
+    <!--main contain-->
+    <LinearLayout
+        android:id="@+id/main_content_show_wifi_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:textColor="@color/white"
+            android:text="SSID"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        
+        <GridLayout
+            android:background="@color/teal_light"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:columnCount="2"
+            android:layout_weight="3">
+
+            <!--wifi info-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_columnSpan="2"
+                android:text="Wifi Info"/>
+
+            <!--bssid + rssi-->
+            <TextView
+                android:text="Bssid"/>
+
+            <TextView
+                android:layout_gravity="right"
+                android:text="Rssi"/>
+
+            <!--mac add + ip add-->
+            <TextView
+                android:text="Mac address"/>
+
+            <TextView
+                android:layout_gravity="right"
+                android:text="Ip address"/>
+
+            <!--linkspeed + networkid-->
+            <TextView
+                android:text="Link speed"/>
+
+            <TextView
+                android:layout_gravity="right"
+                android:text="Network id"/>
+        </GridLayout>
+
+        <GridLayout
+            android:columnCount="2"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <!--date + state-->
+            <TextView
+                android:text="Date"/>
+
+            <TextView
+                android:text="State"/>
+        </GridLayout>
+
+        <Button
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <!--TODO show mapview-->
+        <org.osmdroid.views.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            tilesource="Mapnik" />
+    </LinearLayout>
+
+
 </android.support.design.widget.CoordinatorLayout>

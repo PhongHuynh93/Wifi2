@@ -14,12 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
@@ -36,8 +34,7 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     private static final String ARG_PARAM7 = "param7";
     private static final String ARG_PARAM8 = "param8";
     private static final String ARG_PARAM9 = "param9";
-    @BindView(R.id.action_close)
-    ImageView mActionClose;
+
     @BindView(R.id.fab_wifi_show_detail)
     FloatingActionButton mFabWifiShowDetail;
     @BindView(R.id.container_wifi_show_detail)
@@ -157,9 +154,9 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
 
                 // The mLLContainer and mIvClose are the LinearLayout with icons and ImageView with close action icon.
                 mMainContentShowWifiDetail.startAnimation(animation);
-                mActionClose.startAnimation(animation);
+//                mActionClose.startAnimation(animation);
                 mMainContentShowWifiDetail.setVisibility(View.VISIBLE);
-                mActionClose.setVisibility(View.VISIBLE);
+//                mActionClose.setVisibility(View.VISIBLE);
             }
         });
 
@@ -168,7 +165,7 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
 
     // call anim when close this fragment
     public void showAnimToClose() {
-        GUIUtils.animateRevealHide(getContext(), mContainerWifiShowDetail, R.color.colorAccent, mFabWifiShowDetail.getWidth() / 2,
+        GUIUtils.animateRevealHide(getContext(), mContainerWifiShowDetail, R.color.white, mFabWifiShowDetail.getWidth() / 2,
                 new OnRevealAnimationListener() {
                     // TODO: 6/12/16 16  When the animation ends, we have to inform the Activity with the OnRevealAnimationListener to call super.onBackPressed().
                     @Override
@@ -187,7 +184,6 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
         mListener.callSuperBackPress();
     }
 
-    @OnClick(R.id.action_close)
     public void onClick() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             showAnimToClose();
