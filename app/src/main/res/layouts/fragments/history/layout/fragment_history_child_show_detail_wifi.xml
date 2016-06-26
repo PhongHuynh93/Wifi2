@@ -10,24 +10,36 @@
     android:orientation="vertical">
 
     <!--TODO 2_1 declare this fab the same animation name, change this to layout 21-->
+    <include layout="@layout/toolbar"/>
 
+    <!--main contain-->
+    <LinearLayout
+        android:id="@+id/main_content_show_wifi_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:visibility="invisible"></LinearLayout>
+
+    <!--icon close-->
     <ImageView
         android:id="@+id/action_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_gravity="top|left"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="hello"
         android:src="@drawable/ic_close_white_36dp"
-        android:visibility="invisible"
-        android:contentDescription="hello"/>
+        android:visibility="invisible"/>
 
+    <!--fab to reveal content-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_wifi_show_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:transitionName="transition_reveal_contact"
         android:layout_gravity="bottom|right"
+        android:transitionName="transition_reveal_contact"
         app:backgroundTint="@color/colorAccent"
         app:elevation="0dp"
         app:fabSize="normal"

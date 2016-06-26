@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +39,8 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     FloatingActionButton mFabWifiShowDetail;
     @BindView(R.id.container_wifi_show_detail)
     CoordinatorLayout mContainerWifiShowDetail;
+    @BindView(R.id.main_content_show_wifi_detail)
+    LinearLayout mMainContentShowWifiDetail;
 
     private WifiModel mWifiModel;
 
@@ -133,9 +136,9 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
                 animation.setDuration(300);
 
                 // The mLLContainer and mIvClose are the LinearLayout with icons and ImageView with close action icon.
-                mContainerWifiShowDetail.startAnimation(animation);
+                mMainContentShowWifiDetail.startAnimation(animation);
                 mActionClose.startAnimation(animation);
-                mContainerWifiShowDetail.setVisibility(View.VISIBLE);
+                mMainContentShowWifiDetail.setVisibility(View.VISIBLE);
                 mActionClose.setVisibility(View.VISIBLE);
             }
         });
