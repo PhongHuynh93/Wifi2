@@ -9,6 +9,8 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <include layout="@layout/toolbar"/>
+
     <!--fab to reveal content-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_wifi_show_detail"
@@ -26,35 +28,44 @@
         android:id="@+id/main_content_show_wifi_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/white"
         android:orientation="vertical"
         android:visibility="invisible">
 
         <TextView
-            android:textColor="@color/white"
-            android:text="SSID"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/space_smaller_2"
+            android:layout_marginRight="@dimen/space_smaller_2"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="30sp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        
+            android:text="SSID"
+            android:textSize="30sp"/>
+
         <GridLayout
-            android:background="@color/teal_light"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/space_smaller_2"
+            android:layout_marginRight="@dimen/space_smaller_2"
+            android:layout_weight="3"
+            android:background="@color/grey_light"
             android:columnCount="2"
-            android:layout_weight="3">
+            android:padding="@dimen/space_smaller_2">
 
             <!--wifi info-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_columnSpan="2"
                 android:text="Wifi Info"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_columnSpan="2"
+                android:layout_marginBottom="@dimen/space_smaller_2"
+                android:layout_marginTop="@dimen/space_smaller_2"
+                android:background="@color/grey_light_darker"/>
 
             <!--bssid + rssi-->
             <TextView
@@ -82,35 +93,40 @@
         </GridLayout>
 
         <GridLayout
-            android:columnCount="2"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_margin="@dimen/space_smaller_2"
+            android:layout_weight="1"
+            android:background="@color/grey_light"
+            android:columnCount="2"
+            android:padding="@dimen/space_smaller_2">
 
             <!--date + state-->
             <TextView
                 android:text="Date"/>
 
             <TextView
+                android:layout_gravity="right"
                 android:text="State"/>
         </GridLayout>
 
         <Button
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
+            android:text="View Wifi Hotspots"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large"
+            android:background="@color/blue_light"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_margin="@dimen/space_smaller"
+            android:layout_weight="1.4"/>
 
         <!--TODO show mapview-->
         <org.osmdroid.views.MapView
             android:id="@+id/map"
+            tilesource="Mapnik"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
-            tilesource="Mapnik" />
+            android:layout_weight="4"/>
     </LinearLayout>
 
 

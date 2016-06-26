@@ -14,10 +14,12 @@
     <dimen name="connect_wifi_dialog_margin_left">10dp</dimen>
     <dimen name="connect_wifi_dialog_authen_margin">20dp</dimen>
     <dimen name="space_small">10dp</dimen>
+    <dimen name="font_large">20sp</dimen>
     <dimen name="font_larger">25sp</dimen>
     <dimen name="font_largerr">30sp</dimen>
     <dimen name="space_super_small">2dp</dimen>
     <dimen name="space_smaller">5dp</dimen>
+    <dimen name="space_smaller_2">9dp</dimen>
     <dimen name="toolbar_height">80dp</dimen>
 
     <!--navigation drawer-->

@@ -9,6 +9,9 @@ import android.os.Looper;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +44,8 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     CoordinatorLayout mContainerWifiShowDetail;
     @BindView(R.id.main_content_show_wifi_detail)
     LinearLayout mMainContentShowWifiDetail;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private WifiModel mWifiModel;
     private OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener mListener;
@@ -152,11 +157,16 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
                 Animation animation = AnimationUtils.loadAnimation(getContext().getApplicationContext(), android.R.anim.fade_in);
                 animation.setDuration(300);
 
-                // The mLLContainer and mIvClose are the LinearLayout with icons and ImageView with close action icon.
                 mMainContentShowWifiDetail.startAnimation(animation);
-//                mActionClose.startAnimation(animation);
                 mMainContentShowWifiDetail.setVisibility(View.VISIBLE);
-//                mActionClose.setVisibility(View.VISIBLE);
+
+                // set title
+                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                setHasOptionsMenu(true);
+                mToolbar.setTitle("Wifi Details");
+                mToolbar.setTitleTextColor(ContextCompat.getColor(getActivity(),R.color.black));
+                mToolbar.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.grey_light));
             }
         });
 
@@ -185,7 +195,7 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     }
 
     public void onClick() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             showAnimToClose();
         } else {
             backPressed();

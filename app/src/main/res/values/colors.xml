@@ -11,7 +11,7 @@
 
     <!--grey-->
     <color name="grey_dark">#212121</color>
-    <color name="grey_light">#E0E0E0</color>
+    <color name="grey_light">#EEEEEE</color>
     <color name="grey_lighter">#EEEEEE</color>
     <color name="grey_light_darker">#BDBDBD</color>
     <color name="grey_light_darker2">#616161</color>
@@ -22,5 +22,6 @@
     <color name="black">#000000</color>
     <color name="lime_dark">#C0CA33</color>
     <color name="blue">#2196F3</color>
+    <color name="blue_light">#42A5F5</color>
     <color name="green_light">#8BC34A</color>
 </resources>
