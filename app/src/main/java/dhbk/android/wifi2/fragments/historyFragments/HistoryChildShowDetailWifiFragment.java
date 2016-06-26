@@ -1,6 +1,7 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.GUIUtils;
@@ -43,6 +45,7 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     LinearLayout mMainContentShowWifiDetail;
 
     private WifiModel mWifiModel;
+    private OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener mListener;
 
 
     public HistoryChildShowDetailWifiFragment() {
@@ -74,6 +77,22 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
 
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener) {
+            mListener = (OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnRageComicSelected.");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
@@ -143,6 +162,28 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
             }
         });
 
+    }
+
+
+    // call anim when close this fragment
+    public void showAnimToClose() {
+        GUIUtils.animateRevealHide(getContext(), mContainerWifiShowDetail, R.color.colorAccent, mFabWifiShowDetail.getWidth() / 2,
+                new OnRevealAnimationListener() {
+                    // TODO: 6/12/16 16  When the animation ends, we have to inform the Activity with the OnRevealAnimationListener to call super.onBackPressed().
+                    @Override
+                    public void onRevealHide() {
+                        backPressed();
+                    }
+
+                    @Override
+                    public void onRevealShow() {
+
+                    }
+                });
+    }
+
+    private void backPressed() {
+        mListener.callSuperBackPress();
     }
 
 }

@@ -27,7 +27,8 @@ import dhbk.android.wifi2.utils.Constant;
 
 
 public class MainActivity extends AppCompatActivity implements
-        OnFragInteractionListener.OnMainFragInteractionListener {
+        OnFragInteractionListener.OnMainFragInteractionListener,
+        OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +104,13 @@ public class MainActivity extends AppCompatActivity implements
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+
+
+        // if top frag is HistoryChildShowDetailWifiFragment, call anim to close
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
+        if (fragment instanceof HistoryChildShowDetailWifiFragment) {
+            ((HistoryChildShowDetailWifiFragment)fragment).showAnimToClose();
         }
 
     }
@@ -240,7 +248,10 @@ public class MainActivity extends AppCompatActivity implements
                     .addToBackStack(null)
                     .commit();
         }
+    }
 
-
+    @Override
+    public void callSuperBackPress() {
+        super.onBackPressed();
     }
 }

@@ -9,7 +9,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <!--TODO change background color to grey_dark-->
     <!--TODO 2_1 declare this fab the same animation name, change this to layout 21-->
     <include layout="@layout/toolbar"/>
 
