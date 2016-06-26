@@ -233,12 +233,14 @@ public class MainActivity extends AppCompatActivity implements
                         .addToBackStack(null)
                         .commit();
             }
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_container, historyChildShowDetailWifiFragment, Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT)
+                    .addToBackStack(null)
+                    .commit();
         }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, historyChildShowDetailWifiFragment, Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT)
-                .addToBackStack(null)
-                .commit();
+
     }
 }

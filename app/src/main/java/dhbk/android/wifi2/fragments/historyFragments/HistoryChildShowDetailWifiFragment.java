@@ -153,4 +153,5 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
         });
 
     }
+
 }
