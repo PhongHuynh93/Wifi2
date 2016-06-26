@@ -5,10 +5,11 @@
     android:id="@+id/container_wifi_show_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@color/grey_dark"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
+    <!--TODO change background color to grey_dark-->
     <!--TODO 2_1 declare this fab the same animation name, change this to layout 21-->
     <include layout="@layout/toolbar"/>
 
@@ -38,7 +39,7 @@
         android:id="@+id/fab_wifi_show_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="center"
         android:transitionName="transition_reveal_contact"
         app:backgroundTint="@color/colorAccent"
         app:elevation="0dp"
