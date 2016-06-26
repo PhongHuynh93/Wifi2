@@ -1,5 +1,6 @@
 package dhbk.android.wifi2.activities;
 
+import android.annotation.TargetApi;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.MenuItem;
 
 import dhbk.android.wifi2.R;
@@ -201,10 +203,11 @@ public class MainActivity extends AppCompatActivity implements
             transition.addListener(new Transition.TransitionListener() {
                 @Override
                 public void onTransitionStart(Transition transition) {
-
+                    Log.i("hello", "onTransitionStart: ");
                 }
 
                 // TODO: 6/12/16 8 start the Circular Reveal Animation.
+                @TargetApi(Build.VERSION_CODES.KITKAT)
                 @Override
                 public void onTransitionEnd(Transition transition) {
                     transition.removeListener(this);

@@ -127,7 +127,7 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
         return view;
     }
 
-    // TODO: 6/25/16 set visible to the rootlayout
+    // : 6/25/16 set visible to the rootlayout
     public void animateRevealShow() {
         int cx = (mContainerWifiShowDetail.getLeft() + mContainerWifiShowDetail.getRight()) / 2;
         int cy = (mContainerWifiShowDetail.getTop() + mContainerWifiShowDetail.getBottom()) / 2;
@@ -186,4 +186,12 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
         mListener.callSuperBackPress();
     }
 
+//    @OnClick(R.id.action_close)
+//    public void onClick() {
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            showAnimToClose();
+//        } else {
+//            backPressed();
+//        }
+//    }
 }
