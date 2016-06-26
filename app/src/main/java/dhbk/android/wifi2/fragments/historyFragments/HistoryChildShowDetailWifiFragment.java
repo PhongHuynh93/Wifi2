@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
@@ -186,12 +187,12 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
         mListener.callSuperBackPress();
     }
 
-//    @OnClick(R.id.action_close)
-//    public void onClick() {
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            showAnimToClose();
-//        } else {
-//            backPressed();
-//        }
-//    }
+    @OnClick(R.id.action_close)
+    public void onClick() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            showAnimToClose();
+        } else {
+            backPressed();
+        }
+    }
 }
