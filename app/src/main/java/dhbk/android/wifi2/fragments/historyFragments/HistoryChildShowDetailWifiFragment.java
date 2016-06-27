@@ -1,14 +1,31 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
 
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
+import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.utils.GUIUtils;
 
 public class HistoryChildShowDetailWifiFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -21,7 +38,17 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     private static final String ARG_PARAM8 = "param8";
     private static final String ARG_PARAM9 = "param9";
 
+    @BindView(R.id.fab_wifi_show_detail)
+    FloatingActionButton mFabWifiShowDetail;
+    @BindView(R.id.container_wifi_show_detail)
+    CoordinatorLayout mContainerWifiShowDetail;
+    @BindView(R.id.main_content_show_wifi_detail)
+    LinearLayout mMainContentShowWifiDetail;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     private WifiModel mWifiModel;
+    private OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener mListener;
 
 
     public HistoryChildShowDetailWifiFragment() {
@@ -56,6 +83,22 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener) {
+            mListener = (OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnRageComicSelected.");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -77,7 +120,85 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_child_show_detail_wifi, container, false);
+        View view = inflater.inflate(R.layout.fragment_history_child_show_detail_wifi, container, false);
+        ButterKnife.bind(this, view);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            setupEnterAnimation();
+        } else {
+            initViews();
+        }
+        return view;
     }
 
+    // : 6/25/16 set visible to the rootlayout
+    public void animateRevealShow() {
+        int cx = (mContainerWifiShowDetail.getLeft() + mContainerWifiShowDetail.getRight()) / 2;
+        int cy = (mContainerWifiShowDetail.getTop() + mContainerWifiShowDetail.getBottom()) / 2;
+
+        GUIUtils.animateRevealShow(getActivity().getApplicationContext(), mContainerWifiShowDetail, mFabWifiShowDetail.getWidth() / 2, R.color.colorAccent,
+                cx, cy, new OnRevealAnimationListener() {
+                    @Override
+                    public void onRevealHide() {
+
+                    }
+
+                    // TODO: 6/12/16 12  When the animation has ended, we are informing the listener to fade the views in.
+                    @Override
+                    public void onRevealShow() {
+                        initViews();
+                    }
+                });
+    }
+
+    private void initViews() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Animation animation = AnimationUtils.loadAnimation(getContext().getApplicationContext(), android.R.anim.fade_in);
+                animation.setDuration(300);
+
+                mMainContentShowWifiDetail.startAnimation(animation);
+                mMainContentShowWifiDetail.setVisibility(View.VISIBLE);
+
+                // set title
+                ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                 ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                setHasOptionsMenu(true);
+                mToolbar.setTitle("Wifi Details");
+                mToolbar.setTitleTextColor(ContextCompat.getColor(getActivity(),R.color.black));
+                mToolbar.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.grey_light));
+            }
+        });
+
+    }
+
+
+    // call anim when close this fragment
+    public void showAnimToClose() {
+        GUIUtils.animateRevealHide(getContext(), mContainerWifiShowDetail, R.color.white, mFabWifiShowDetail.getWidth() / 2,
+                new OnRevealAnimationListener() {
+                    // TODO: 6/12/16 16  When the animation ends, we have to inform the Activity with the OnRevealAnimationListener to call super.onBackPressed().
+                    @Override
+                    public void onRevealHide() {
+                        backPressed();
+                    }
+
+                    @Override
+                    public void onRevealShow() {
+
+                    }
+                });
+    }
+
+    private void backPressed() {
+        mListener.callSuperBackPress();
+    }
+
+    public void onClick() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            showAnimToClose();
+        } else {
+            backPressed();
+        }
+    }
 }

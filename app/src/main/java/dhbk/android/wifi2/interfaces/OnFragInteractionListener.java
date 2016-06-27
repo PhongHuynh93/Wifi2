@@ -29,8 +29,13 @@ public interface OnFragInteractionListener {
         void populateCursorToRcv(Cursor cursor);
     }
 
+    // interface for wifi history
     interface OnHistoryMobileFragInteractionListener {
         void populateCursorToRcv(Cursor cursor);
     }
 
+
+    interface OnHistoryShowWifiDetailFragInteractionListener {
+        void callSuperBackPress();
+    }
 }
