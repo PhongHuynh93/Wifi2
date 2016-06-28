@@ -13,10 +13,15 @@
     <!--connect wifi dialog-->
     <dimen name="connect_wifi_dialog_margin_left">10dp</dimen>
     <dimen name="connect_wifi_dialog_authen_margin">20dp</dimen>
-    <dimen name="space_small">10dp</dimen>
+
+    <!--font size-->
+    <dimen name="font_smaller">8sp</dimen>
     <dimen name="font_large">20sp</dimen>
     <dimen name="font_larger">25sp</dimen>
     <dimen name="font_largerr">30sp</dimen>
+
+    <!--space between view-->
+    <dimen name="space_small">10dp</dimen>
     <dimen name="space_super_small">2dp</dimen>
     <dimen name="space_smaller">7dp</dimen>
     <dimen name="space_smaller_2">9dp</dimen>
