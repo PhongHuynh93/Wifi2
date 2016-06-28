@@ -35,13 +35,13 @@ public class HistoryWifiRecyclerViewAdapter extends
         CursorRecyclerViewAdapter<HistoryWifiRecyclerViewAdapter.ViewHolder> {
 
     private final Context mActivityContext;
+
+    // tthis obj can change the time into time like youtube comments, it makes the time more readable
     private TimeStampFormatter mTimeStampFormatter = new TimeStampFormatter();
 
     public HistoryWifiRecyclerViewAdapter(Context context, Cursor cursor) {
         super(context, cursor);
         this.mActivityContext = context;
-
-
     }
 
     @Override
@@ -49,10 +49,12 @@ public class HistoryWifiRecyclerViewAdapter extends
         final WifiModel myListItem = WifiModel.fromCursor(cursor);
         if (myListItem.getState().equals(Constant.WIFI_DISCONNECT)) {
             viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_view);
-            viewHolder.wifiStateHotspotTv.getBackground().setColorFilter(ContextCompat.getColor(mActivityContext,R.color.dark_orange), PorterDuff.Mode.SRC_ATOP); // White Tint
+            viewHolder.wifiStateHotspotTv.getBackground().setColorFilter(ContextCompat.getColor(mActivityContext,R.color.disconnected), PorterDuff.Mode.SRC_ATOP); // White Tint
         } else {
             viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_view);
+            viewHolder.wifiStateHotspotTv.getBackground().setColorFilter(ContextCompat.getColor(mActivityContext,R.color.connected), PorterDuff.Mode.SRC_ATOP); // White Tint
         }
+
         viewHolder.wifiStateHotspotTv.setText(myListItem.getState());
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
         viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
