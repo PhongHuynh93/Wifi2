@@ -22,7 +22,7 @@ public interface onDbInteractionListener {
     // method table wifi
     interface onDbWifiTableInteractionListener extends onDbTableInteractionListener{
         void onInsert(SQLiteDatabase db, WifiModel wifiModel);
-        void onGetCursor(SQLiteDatabase db, Fragment fragment);
+        void getWifiHistoryCursor(SQLiteDatabase db, Fragment fragment);
         void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel);
         void onGetWifiHotspot(SQLiteDatabase db, Context activityContext);
     }

@@ -18,15 +18,15 @@ import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.DividerItemDecoration;
 import dhbk.android.wifi2.utils.db.NetworkDb;
 
-public class HistoryChildMobileFragment extends Fragment implements OnFragInteractionListener.OnHistoryMobileFragInteractionListener{
+public class HistoryMobileFragment extends Fragment implements OnFragInteractionListener.OnHistoryMobileFragInteractionListener{
 
-    private static final String TAG = HistoryChildMobileFragment.class.getSimpleName();
+    private static final String TAG = HistoryMobileFragment.class.getSimpleName();
 
-    public HistoryChildMobileFragment() {
+    public HistoryMobileFragment() {
     }
 
-    public static HistoryChildMobileFragment newInstance() {
-        return new HistoryChildMobileFragment();
+    public static HistoryMobileFragment newInstance() {
+        return new HistoryMobileFragment();
     }
 
 

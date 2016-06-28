@@ -21,7 +21,6 @@ import org.osmdroid.views.overlay.Marker;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.utils.Constant;
 
-// TODO: 6/17/16 when clcik marker, auto connect to that wifi hotspot.
 public class HistoryChildOsmMapFragment extends Fragment {
     private static final String TAG = HistoryChildOsmMapFragment.class.getSimpleName();
 

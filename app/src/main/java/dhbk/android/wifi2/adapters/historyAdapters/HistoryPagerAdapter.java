@@ -13,8 +13,8 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryChildMobileFragment;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryChildWifiFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryMobileFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryWifiFragment;
 import dhbk.android.wifi2.models.HistoryPageModel;
 
 /**
@@ -38,9 +38,9 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return HistoryChildWifiFragment.newInstance();
+                return HistoryWifiFragment.newInstance();
             case 1:
-                return HistoryChildMobileFragment.newInstance();
+                return HistoryMobileFragment.newInstance();
         }
         return null;
     }

@@ -65,11 +65,11 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void getCursor(Fragment frag) {
+    public void getWifiHistory(Fragment frag) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
-                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onGetCursor(getReadableDatabase(), frag);
+                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).getWifiHistoryCursor(getReadableDatabase(), frag);
             }
         }
     }

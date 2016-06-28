@@ -20,17 +20,54 @@ import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
 //class contain animation when transction between fragment or activity
 public class GUIUtils {
 
-    // TODO: 6/12/16 15 After clicking back pressed button we have to make hiding circular reveal animation.
+    // We have context that is used to retrieve color from @ColorRes value, duration of the animation from resources.
+    // We have centerX and centerY parameter,
+    //  rootView that we are making circular reveal on
+    // custom listener to communicate between the AnimatorListener and our Activity.
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static void animateRevealShow(final Context ctx, final View view, final int startRadius,
+                                         @ColorRes final int color, int x, int y, final OnRevealAnimationListener listener) {
+        float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
+
+        // create the animator for this view
+        // the start radius is center point
+        // the final radius if full screen.
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, finalRadius);
+        anim.setDuration(ctx.getResources().getInteger(R.integer.animation_duration));
+        anim.setStartDelay(100);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                // the circular get bigger, we'll see this "color" background.
+                view.setBackgroundColor(ContextCompat.getColor(ctx, color));
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                // after anim ends, we dont see the "color" background anymore but see the color background of the view because it's now Visible
+                view.setVisibility(View.VISIBLE);
+                listener.onRevealShow();
+            }
+        });
+        anim.start();
+    }
+
+
+    // : 6/12/16 15 After clicking back pressed button I like to hide circular reveal animation.
     // The startRadius is a full width of view, the final radius is the FloatingActionButton width divided by 2.
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void animateRevealHide(final Context ctx, final View view, @ColorRes final int color,
+    public static void animateRevealHide(final Context ctx, final View parentView, @ColorRes final int color,
                                          final int finalRadius, final OnRevealAnimationListener listener) {
-        int cx = (view.getLeft() + view.getRight()) / 2;
-        int cy = (view.getTop() + view.getBottom()) / 2;
-        int initialRadius = view.getWidth();
+        int cx = (parentView.getLeft() + parentView.getRight()) / 2;
+        int cy = (parentView.getTop() + parentView.getBottom()) / 2;
+        int initialRadius = parentView.getWidth();
 
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, finalRadius);
+//        because this child view if not center so we use parentview to center it
+        final View view = parentView.findViewById(R.id.main_content_show_wifi_detail);
+
+//        make circular from full width to the width of fab
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, finalRadius);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -41,41 +78,12 @@ public class GUIUtils {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                listener.onRevealHide();
                 view.setVisibility(View.INVISIBLE);
+                listener.onRevealHide();
             }
         });
+
         anim.setDuration(ctx.getResources().getInteger(R.integer.animation_duration));
-        anim.start();
-    }
-
-    // TODO: 6/12/16 11
-    // We have context that is used to retrieve color from @ColorRes value, duration of the animation from resources.
-    // We have centerX and centerY parameter,
-    //  rootView that we are making circular reveal on
-    // custom listener to communicate between the AnimatorListener and our Activity.
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void animateRevealShow(final Context ctx, final View view, final int startRadius,
-                                         @ColorRes final int color, int x, int y, final OnRevealAnimationListener listener) {
-        float finalRadius = (float) Math.hypot(view.getWidth(), view.getHeight());
-
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(view, x, y, startRadius, finalRadius);
-        anim.setDuration(ctx.getResources().getInteger(R.integer.animation_duration));
-        anim.setStartDelay(100);
-        anim.setInterpolator(new AccelerateDecelerateInterpolator());
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                view.setBackgroundColor(ContextCompat.getColor(ctx, color));
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.VISIBLE);
-                listener.onRevealShow();
-            }
-        });
         anim.start();
     }
 

@@ -2,6 +2,9 @@ package dhbk.android.wifi2.adapters.historyAdapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +22,14 @@ import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.activities.MainActivity;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.TimeStampFormatter;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
+ * Show a history of wifi hotspots that a user has connected or disconected in a recyclerview.
  */
 public class HistoryWifiRecyclerViewAdapter extends
         CursorRecyclerViewAdapter<HistoryWifiRecyclerViewAdapter.ViewHolder> {
@@ -43,19 +48,24 @@ public class HistoryWifiRecyclerViewAdapter extends
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
         final WifiModel myListItem = WifiModel.fromCursor(cursor);
         if (myListItem.getState().equals(Constant.WIFI_DISCONNECT)) {
-            viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_button_discnect);
+            viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_view);
+            viewHolder.wifiStateHotspotTv.getBackground().setColorFilter(ContextCompat.getColor(mActivityContext,R.color.dark_orange), PorterDuff.Mode.SRC_ATOP); // White Tint
         } else {
-            viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_button_cnect);
+            viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_view);
         }
         viewHolder.wifiStateHotspotTv.setText(myListItem.getState());
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
         viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
 
+//      call history presenter method to replace with wifi details fragment.
         viewHolder.mImgArrowRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mActivityContext instanceof MainActivity) {
-                    ((MainActivity)mActivityContext).onHistoryChildShowDetailWifiFragReplace(myListItem);
+                    Fragment historyPresenterfragment = ((MainActivity)mActivityContext).getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
+                    if (historyPresenterfragment instanceof HistoryPresenterFragment) {
+                        ((HistoryPresenterFragment)historyPresenterfragment).replaceWithShowWifiDetailFrag(myListItem);
+                    }
                 }
             }
         });

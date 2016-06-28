@@ -34,6 +34,7 @@
         android:visibility="invisible">
 
         <TextView
+            android:id="@+id/ssid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="@dimen/space_smaller_2"
@@ -55,10 +56,10 @@
 
             <!--wifi info-->
             <TextView
+                android:id="@+id/tv_show_wifi_info"
                 android:layout_width="match_parent"
                 android:layout_columnSpan="2"
-                android:fontFamily="serif-monospace"
-                android:text="Wifi Info"/>
+                android:text="@string/show_message_wifiInfo"/>
 
             <View
                 android:layout_width="match_parent"
@@ -68,32 +69,41 @@
                 android:layout_marginTop="@dimen/space_smaller_2"
                 android:background="@color/grey_light_darker"/>
 
-            <!--bssid + rssi-->
+            <!--bssid + link speed-->
             <TextView
+                android:id="@+id/bssid"
                 android:layout_rowWeight="1"
                 android:text="Bssid"/>
 
             <TextView
+                android:id="@+id/linkspeed"
                 android:layout_gravity="right"
-                android:text="Rssi"/>
+                android:text="Link speed"/>
 
-            <!--mac add + ip add-->
+            <!--mac add + network id-->
             <TextView
-                android:layout_rowWeight="1"
+                android:id="@+id/mac_address"
                 android:text="Mac address"/>
 
             <TextView
-                android:layout_gravity="right"
-                android:text="Ip address"/>
-
-            <!--linkspeed + networkid-->
-            <TextView
-                android:layout_rowWeight="1"
-                android:text="Link speed"/>
-
-            <TextView
+                android:id="@+id/networkid"
                 android:layout_gravity="right"
                 android:text="Network id"/>
+
+            <!--ip add + wifi signal-->
+            <TextView
+                android:id="@+id/ip_address"
+                android:text="Ip address"/>
+
+            <TextView
+                android:id="@+id/rssi"
+                android:layout_gravity="right"
+                android:background="@drawable/bg_view"
+                android:padding="4dp"
+                android:text="Rssi"
+                android:textColor="@android:color/white"
+                android:textSize="8sp"/>
+
         </GridLayout>
 
         <GridLayout
@@ -107,25 +117,33 @@
 
             <!--date + state-->
             <TextView
+                android:id="@+id/date"
                 android:text="Date"/>
 
             <TextView
+                android:id="@+id/state"
                 android:layout_gravity="right"
-                android:text="State"/>
+                android:background="@drawable/bg_view"
+                android:padding="4dp"
+                android:text="connected"
+                android:textColor="@android:color/white"
+                android:textSize="8sp"/>
+
         </GridLayout>
 
         <Button
-            android:text="View Wifi Hotspots"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_large"
-            android:background="@drawable/round_corner"
-            android:backgroundTint="@color/blue_light"
+            android:id="@+id/btn_show_wifi_on_map"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/space_smaller"
-            android:layout_weight="1.4"/>
+            android:layout_weight="1.4"
+            android:background="@drawable/round_corner"
+            android:backgroundTint="@color/blue_light"
+            android:text="@string/show_message_viewWifiOnMap"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_large"/>
 
-        <!--TODO show mapview-->
         <org.osmdroid.views.MapView
             android:id="@+id/map"
             tilesource="Mapnik"
@@ -133,6 +151,4 @@
             android:layout_height="0dp"
             android:layout_weight="4"/>
     </LinearLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>

@@ -22,4 +22,10 @@
     <string name="action.wifi.retry.turnon">Retry</string>
     <string name="navigation_drawer_open">Navigation open</string>
     <string name="navigation_drawer_close">Navigation close</string>
+
+    <!-- detail wifi in history fragment-->
+    <string name="show_message_viewWifiOnMap">View Wifi Hotspots </string>
+    <string name="show_message_wifiInfo">Wifi Info</string>
+
+
 </resources>
