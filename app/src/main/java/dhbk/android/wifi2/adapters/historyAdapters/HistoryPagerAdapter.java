@@ -24,7 +24,7 @@ import dhbk.android.wifi2.models.HistoryPageModel;
  */
 // tạo 2 fragment là wifi va mobile list
 public class HistoryPagerAdapter extends FragmentPagerAdapter {
-    SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+    SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
     private static final HistoryPageModel[] TITLES = {
             new HistoryPageModel(R.drawable.ic_wifi_24dp, R.drawable.wifi1),
@@ -54,6 +54,7 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
         return TITLES.length;
     }
 
+    // rememeber fragment in viewpager to retrieve it's later (it likes findFragmentByTag)
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Fragment fragment = (Fragment) super.instantiateItem(container, position);
@@ -61,13 +62,16 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
+    // get the memory back
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        registeredFragments.remove(position);
+        super.destroyItem(container, position, object);
+    }
+
+    // get image icon in tablayaout instead of string
     @Override
     public CharSequence getPageTitle(int position) {
-//        if (position >= 0 && position < TITLES.length) {
-//            return TITLES[position].getTitle();
-//        }
-//        return null;
-
         Drawable image = ContextCompat.getDrawable(mContext, TITLES[position].getResTitleIcon());
         image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
         SpannableString sb = new SpannableString(" ");
@@ -81,7 +85,7 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
         return TITLES[position].getResImage();
     }
 
-    // get the current fragment
+    // get the current fragment depends on position
     public Fragment getRegisteredFragment(int position) {
         return registeredFragments.get(position);
     }
