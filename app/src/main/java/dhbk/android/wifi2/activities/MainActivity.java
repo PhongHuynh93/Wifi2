@@ -1,50 +1,44 @@
 package dhbk.android.wifi2.activities;
 
-import android.annotation.TargetApi;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
-import android.util.Log;
 import android.view.MenuItem;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.MainFragment;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryChildShowDetailWifiFragment;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryWifiMobileFragment;
 import dhbk.android.wifi2.fragments.historyOSMFragments.HistoryWithOsmMapFragment;
 import dhbk.android.wifi2.fragments.mobileFragments.MobileFragment;
 import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
-import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
 
-
+/*
+Show Main layout, implement navigation drawer and replace|add fragments.
+ */
 public class MainActivity extends AppCompatActivity implements
-        OnFragInteractionListener.OnMainFragInteractionListener,
-        OnFragInteractionListener.OnHistoryShowWifiDetailFragInteractionListener{
+        OnFragInteractionListener.OnMainFragInteractionListener {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
 
+        // add Main Layout
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MAIN_FRAGMENT);
         if (mainFragment == null) {
             mainFragment = MainFragment.newInstance();
             getSupportFragmentManager().beginTransaction().add(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
         }
 
-        // nav
+        // declare navigation drawer and actions when click one menu item.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -76,10 +70,10 @@ public class MainActivity extends AppCompatActivity implements
 
                 } else if (id == R.id.history) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    HistoryFragment historyFragment = (HistoryFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_FRAGMENT);
-                    if (historyFragment == null) {
-                        historyFragment = HistoryFragment.newInstance();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyFragment, Constant.TAG_HISTORY_FRAGMENT).commit();
+                    HistoryWifiMobileFragment historyWifiMobileFragment = (HistoryWifiMobileFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
+                    if (historyWifiMobileFragment == null) {
+                        historyWifiMobileFragment = HistoryWifiMobileFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyWifiMobileFragment, Constant.TAG_HISTORY_PRESENTER_FRAGMENT).commit();
                     }
                 } else if (id == R.id.map) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -98,25 +92,39 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    // When press "Back",
+    // When press "Back" button
     @Override
     public void onBackPressed() {
+        // call wifi presenter to pop ShowWifiDetailFrag out of backstack
+        Fragment presenterFragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
+        if (presenterFragment instanceof HistoryPresenterFragment && presenterFragment.getChildFragmentManager().getBackStackEntryCount() > 0) {
+            ((HistoryPresenterFragment)presenterFragment).popShowWifiDetailFragment();
+            return; // after pop out a nested fragment, not pop out again by run super.onBackPressed();
+        } else {
+            // pop out normal fragment by run super.onBackPressed
+        }
+
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-
-
-        // if top frag is HistoryChildShowDetailWifiFragment, call anim to close
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
-        if (fragment instanceof HistoryChildShowDetailWifiFragment) {
-            ((HistoryChildShowDetailWifiFragment)fragment).showAnimToClose();
-        }
-
     }
 
+    // replace with main Fragment
+    @Override
+    public void onMainFragReplace() {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MAIN_FRAGMENT);
+        if (mainFragment == null) {
+            mainFragment = MainFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // REPLACE FRAGMENT
     // replace with wifi fragment
     @Override
     public void onWifiFragReplace() {
@@ -128,13 +136,13 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    // replace top frag with history fragment
+    // replace top frag with history fragment to show history of wifi and mobile that the user has connected or disconnected
     @Override
     public void onHistoryFragReplace() {
-        final HistoryFragment historyFragment = HistoryFragment.newInstance();
+        final HistoryPresenterFragment historyPresenterFragment = HistoryPresenterFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, historyFragment, Constant.TAG_HISTORY_FRAGMENT)
+                .replace(R.id.main_container, historyPresenterFragment, Constant.TAG_HISTORY_PRESENTER_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -150,6 +158,7 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
+    // replace with mobile fragment
     @Override
     public void onMobileFragReplace() {
         final MobileFragment mobileFragment = MobileFragment.newInstance();
@@ -160,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // END REPLACE FRAGMENT
+
+    // FIXME: 6/28/2016 move this method to presenter
     // : 6/17/2016 check historywithosmfrag and transmit cursor to it
     @Override
     public void onReturnCursorWifiHotspot(Cursor cursor) {
@@ -169,92 +182,4 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    // replace with main Fragment
-    @Override
-    public void onMainFragReplace() {
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MAIN_FRAGMENT);
-        if (mainFragment == null) {
-            mainFragment = MainFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
-        }
-    }
-
-    // TODO: 6/25/16 add animation when replace fragment
-    @Override
-    public void onHistoryChildShowDetailWifiFragReplace(WifiModel wifiModel) {
-        // get the fab of history top fragment
-        // Find the shared element (in Fragment A), lúc này History dang trên top nên ta sẽ kiếm dc ID của fab
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_reveal_detail_wifi);
-
-        final HistoryChildShowDetailWifiFragment historyChildShowDetailWifiFragment = HistoryChildShowDetailWifiFragment.newInstance(wifiModel);
-
-        // add anim if >= Android 5
-        // Check that the device is running lollipop
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Inflate transitions to apply
-            Transition transition = TransitionInflater.from(this).
-                    inflateTransition(R.transition.changebounds_with_arcmotion); // chuyển cái nút từ bên dưới đi lên trên
-
-
-            // Setup enter transition on second fragment
-            historyChildShowDetailWifiFragment.setSharedElementEnterTransition(transition);
-
-            transition.addListener(new Transition.TransitionListener() {
-                @Override
-                public void onTransitionStart(Transition transition) {
-                    Log.i("hello", "onTransitionStart: ");
-                }
-
-                // TODO: 6/12/16 8 start the Circular Reveal Animation.
-                @TargetApi(Build.VERSION_CODES.KITKAT)
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    transition.removeListener(this);
-                    // chạy ham nay trong fragment show wifi detail
-                    Fragment topFrag = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
-                    if (topFrag instanceof HistoryChildShowDetailWifiFragment) {
-                        ((HistoryChildShowDetailWifiFragment)topFrag).animateRevealShow();
-                    }
-
-                }
-
-                @Override
-                public void onTransitionCancel(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionPause(Transition transition) {
-
-                }
-
-                @Override
-                public void onTransitionResume(Transition transition) {
-
-                }
-            });
-
-            // chắc chắn phải tìm được nút fab mới animation được
-            if (fab != null) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .addSharedElement(fab, fab.getTransitionName())
-                        .replace(R.id.main_container, historyChildShowDetailWifiFragment, Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        } else {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_container, historyChildShowDetailWifiFragment, Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT)
-                    .addToBackStack(null)
-                    .commit();
-        }
-    }
-
-    @Override
-    public void callSuperBackPress() {
-        super.onBackPressed();
-    }
 }

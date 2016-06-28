@@ -7,7 +7,7 @@ public class Constant {
     // replace fragment
     public static final String TAG_MAIN_FRAGMENT = "main_fragment";
     public static final String TAG_WIFI_FRAGMENT = "wifi_fragment";
-    public static final String TAG_HISTORY_FRAGMENT = "history_fragment";
+    public static final String TAG_HISTORY_PRESENTER_FRAGMENT = "history_fragment";
     public static final String TAG_CHILD_WIFI_DIALOG_FRAGMENT = "wifi_dialog";
     public static final String TAG_CHILD_SCAN_WIFI_FRAGMENT = "scan_wifi";
     public static final String TAG_CHILD_GPS_FRAGMENT = "gps_dialog";
@@ -16,6 +16,7 @@ public class Constant {
     public static final String TAG_CHILD_OSM_MAP_FRAGMENT = "osm_map";
     public static final String TAG_MOBILE_FRAGMENT = "mobile_fragment";
     public static final String TAG_HISTORY_WIFI_DETAIL_FRAGMENT = "wifi_detail_frag";
+    public static final String TAG_HISTORY_WIFI_MOBILE_FRAGMENT = "history_wifi_mobile_fragment";
 
 
     //    wifi style

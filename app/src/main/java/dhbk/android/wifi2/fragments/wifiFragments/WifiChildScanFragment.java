@@ -39,7 +39,6 @@ import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.ItemClickSupport;
 
-// TODO: 6/16/16 add animation when wait for wifi scan
 // show all of wifi around yet
 public class WifiChildScanFragment extends Fragment {
     private static final String TAG = WifiChildScanFragment.class.getSimpleName();

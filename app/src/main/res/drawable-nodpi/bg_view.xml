@@ -1,0 +1,9 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+   <!--make a background color shape rectangle and quite round at corner.-->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="2dip"/>
+            <solid android:color="@color/green_light"/>
+        </shape>
+    </item>
+</selector>

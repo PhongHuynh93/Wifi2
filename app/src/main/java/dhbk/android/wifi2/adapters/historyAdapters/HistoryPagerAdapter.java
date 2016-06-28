@@ -11,10 +11,12 @@ import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryChildMobileFragment;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryChildWifiFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryMobileFragment;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryWifiFragment;
 import dhbk.android.wifi2.models.HistoryPageModel;
 
 /**
@@ -22,6 +24,9 @@ import dhbk.android.wifi2.models.HistoryPageModel;
  */
 // tạo 2 fragment là wifi va mobile list
 public class HistoryPagerAdapter extends FragmentPagerAdapter {
+    SparseArray<Fragment> registeredFragments = new SparseArray<>();
+
+    // contain image and icon in tablayout
     private static final HistoryPageModel[] TITLES = {
             new HistoryPageModel(R.drawable.ic_wifi_24dp, R.drawable.wifi1),
             new HistoryPageModel(R.drawable.ic_phone_24dp, R.drawable.mobile1)
@@ -38,9 +43,9 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return HistoryChildWifiFragment.newInstance();
+                return HistoryWifiFragment.newInstance();
             case 1:
-                return HistoryChildMobileFragment.newInstance();
+                return HistoryMobileFragment.newInstance();
         }
         return null;
     }
@@ -50,13 +55,24 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
         return TITLES.length;
     }
 
+    // rememeber fragment in viewpager to retrieve it's later (it likes findFragmentByTag)
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        registeredFragments.put(position, fragment);
+        return fragment;
+    }
+
+    // get the memory back
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        registeredFragments.remove(position);
+        super.destroyItem(container, position, object);
+    }
+
+    // get image icon in tablayaout instead of string
     @Override
     public CharSequence getPageTitle(int position) {
-//        if (position >= 0 && position < TITLES.length) {
-//            return TITLES[position].getTitle();
-//        }
-//        return null;
-
         Drawable image = ContextCompat.getDrawable(mContext, TITLES[position].getResTitleIcon());
         image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
         SpannableString sb = new SpannableString(" ");
@@ -70,4 +86,8 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
         return TITLES[position].getResImage();
     }
 
+    // get the current fragment depends on position
+    public Fragment getRegisteredFragment(int position) {
+        return registeredFragments.get(position);
+    }
 }

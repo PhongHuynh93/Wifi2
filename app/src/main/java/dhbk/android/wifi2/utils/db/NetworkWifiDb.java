@@ -86,7 +86,7 @@ public class NetworkWifiDb implements
     }
 
     @Override
-    public void onGetCursor(SQLiteDatabase db, Fragment fragment) {
+    public void getWifiHistoryCursor(SQLiteDatabase db, Fragment fragment) {
         new GetWifiFromDbTask(db, fragment).execute();
     }
 
