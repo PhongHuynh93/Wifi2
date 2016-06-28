@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryMobileFragment;
@@ -22,6 +24,8 @@ import dhbk.android.wifi2.models.HistoryPageModel;
  */
 // tạo 2 fragment là wifi va mobile list
 public class HistoryPagerAdapter extends FragmentPagerAdapter {
+    SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
     private static final HistoryPageModel[] TITLES = {
             new HistoryPageModel(R.drawable.ic_wifi_24dp, R.drawable.wifi1),
             new HistoryPageModel(R.drawable.ic_phone_24dp, R.drawable.mobile1)
@@ -51,6 +55,13 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        registeredFragments.put(position, fragment);
+        return fragment;
+    }
+
+    @Override
     public CharSequence getPageTitle(int position) {
 //        if (position >= 0 && position < TITLES.length) {
 //            return TITLES[position].getTitle();
@@ -70,4 +81,8 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
         return TITLES[position].getResImage();
     }
 
+    // get the current fragment
+    public Fragment getRegisteredFragment(int position) {
+        return registeredFragments.get(position);
+    }
 }
