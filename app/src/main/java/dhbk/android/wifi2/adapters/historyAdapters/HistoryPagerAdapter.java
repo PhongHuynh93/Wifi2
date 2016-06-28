@@ -26,6 +26,7 @@ import dhbk.android.wifi2.models.HistoryPageModel;
 public class HistoryPagerAdapter extends FragmentPagerAdapter {
     SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
+    // contain image and icon in tablayout
     private static final HistoryPageModel[] TITLES = {
             new HistoryPageModel(R.drawable.ic_wifi_24dp, R.drawable.wifi1),
             new HistoryPageModel(R.drawable.ic_phone_24dp, R.drawable.mobile1)
