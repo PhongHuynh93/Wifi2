@@ -49,8 +49,9 @@ public class HistoryWifiRecyclerViewAdapter extends
         final WifiModel myListItem = WifiModel.fromCursor(cursor);
         if (myListItem.getState().equals(Constant.WIFI_DISCONNECT)) {
             viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_view);
-            viewHolder.wifiStateHotspotTv.getBackground().setColorFilter(ContextCompat.getColor(mActivityContext,R.color.dark_orange), PorterDuff.Mode.SRC_ATOP); // White Tint
+            viewHolder.wifiStateHotspotTv.getBackground().setColorFilter(ContextCompat.getColor(mActivityContext,R.color.disconnected), PorterDuff.Mode.SRC_ATOP); // White Tint
         } else {
+            viewHolder.wifiStateHotspotTv.getBackground().setColorFilter(ContextCompat.getColor(mActivityContext,R.color.connected), PorterDuff.Mode.SRC_ATOP); // White Tint
             viewHolder.wifiStateHotspotTv.setBackgroundResource(R.drawable.bg_view);
         }
         viewHolder.wifiStateHotspotTv.setText(myListItem.getState());

@@ -32,4 +32,8 @@
     <color name="good">@color/lime</color>
     <color name="fair">@color/yellow_medium</color>
     <color name="weak">@color/orange_red</color>
+
+    <!--wifi state-->
+    <color name="disconnected">@color/dark_orange</color>
+    <color name="connected">@color/green_light</color>
 </resources>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">WifiTeplePhone</string>
+    <string name="action_settings">Settings</string>
+
+    <!--main navigation-->
+    <string name="tv_main_nav">F e a t u r e</string>
+    <string name="wifi">wifi</string>
+    <string name="button_scan_wifi">scan now</string>
+
+    <!--turn on wifi dialog-->
+    <string name="mes_turn_on_wifi_title">Use wifi service?</string>
+    <string name="mes_turn_on_wifi_body">Let app scan the access points around you.</string>
+    <string name="mes_wifi_turn_on">AGREE</string>
+    <string name="mes_wifi_cancel">DISAGREE</string>
+    <string name="let_user_turn_on_location">Use location service.</string>
+    <string name="turn_on_location">TURN ON</string>
+
+    <!--turn on gps dialog-->
+    <string name="mes_turn_on_gps_title">Use location service?</string>
+    <string name="mes_turn_on_gps_body">Let app get your current location to find out where the wifi hotspot is</string>
+    <string name="error.wifi.turnon">not connect to wifi</string>
+    <string name="action.wifi.retry.turnon">Retry</string>
+    <string name="navigation_drawer_open">Navigation open</string>
+    <string name="navigation_drawer_close">Navigation close</string>
+
+    <!-- detail wifi in history fragment-->
+    <string name="show_message_viewWifiOnMap">View Wifi Hotspots </string>
+    <string name="show_message_wifiInfo">Wifi Info</string>
+
+
+</resources>

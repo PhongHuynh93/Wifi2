@@ -41,7 +41,6 @@
             android:layout_marginRight="@dimen/space_smaller_2"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="@string/message_ssid"
             android:textSize="30sp"/>
 
         <GridLayout
@@ -71,36 +70,29 @@
 
             <!--bssid + link speed-->
             <TextView
-                android:id="@+id/bssid"
-                android:layout_rowWeight="1"
-                android:text="Bssid"/>
+                android:id="@+id/bssid" />
 
             <TextView
                 android:id="@+id/linkspeed"
-                android:layout_gravity="right"
-                android:text="Link speed"/>
+                android:layout_gravity="right" />
 
             <!--mac add + network id-->
             <TextView
-                android:id="@+id/mac_address"
-                android:text="Mac address"/>
+                android:id="@+id/mac_address" />
 
             <TextView
                 android:id="@+id/networkid"
-                android:layout_gravity="right"
-                android:text="Network id"/>
+                android:layout_gravity="right" />
 
             <!--ip add + wifi signal-->
             <TextView
-                android:id="@+id/ip_address"
-                android:text="Ip address"/>
+                android:id="@+id/ip_address" />
 
             <TextView
                 android:id="@+id/rssi"
                 android:layout_gravity="right"
                 android:background="@drawable/bg_view"
                 android:padding="4dp"
-                android:text="Rssi"
                 android:textColor="@android:color/white"
                 android:textSize="8sp"/>
 
@@ -117,15 +109,13 @@
 
             <!--date + state-->
             <TextView
-                android:id="@+id/date"
-                android:text="Date"/>
+                android:id="@+id/date" />
 
             <TextView
                 android:id="@+id/state"
                 android:layout_gravity="right"
                 android:background="@drawable/bg_view"
                 android:padding="4dp"
-                android:text="connected"
                 android:textColor="@android:color/white"
                 android:textSize="8sp"/>
 
