@@ -51,6 +51,7 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
     private static final String ARG_PARAM7 = "param7";
     private static final String ARG_PARAM8 = "param8";
     private static final String ARG_PARAM9 = "param9";
+    private static final float TOOLBAR_HEIGHT_DP = 100;
 
     @BindView(R.id.fab_wifi_show_detail)
     FloatingActionButton mFabWifiShowDetail;
@@ -150,7 +151,9 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
 
         // declare toolbar
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         setHasOptionsMenu(true);
 
         // change attributes of toolbar
@@ -160,15 +163,17 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
 
         // set placehold with long height for toolbar
         AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) mToolbar.getLayoutParams();
-        layoutParams.height = 200;
+        layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TOOLBAR_HEIGHT_DP, getActivity().getResources().getDisplayMetrics());
         mToolbar.setLayoutParams(layoutParams);
 
-        // : 6/27/2016 change up button on toolbar from white to black
+        // : 6/27/2016 change up button n toolbar from white to black
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             // because if Androdi M, this drawable is changed with new name "abc_ic_ab_back_material"
-            final Drawable upArrow = getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-            upArrow.setColorFilter(getResources().getColor(R.color.grey_dark), PorterDuff.Mode.SRC_ATOP);
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
+            final Drawable upArrow = ContextCompat.getDrawable(getContext(), R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            upArrow.setColorFilter(ContextCompat.getColor(getContext(), R.color.grey_dark), PorterDuff.Mode.SRC_ATOP);
+            if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
+            }
         }
         return view;
     }
