@@ -61,7 +61,8 @@ public class HistoryWifiFragment extends HistoryBaseFragment {
         }
     }
 
-    //    a callback from presenter contain wifi data, so populate to recyclerview
+    // TODO: 6/28/2016 error make null recyclerview
+    //    a callback from presenter contain wifi data
     public void onPopulateWifiCursorToRcv(final Cursor cursor) {
         try {
             HistoryWifiRecyclerViewAdapter adapter = (HistoryWifiRecyclerViewAdapter) mRcvHistory.getAdapter();
