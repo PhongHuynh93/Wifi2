@@ -27,9 +27,9 @@ public interface onDbInteractionListener {
         void onGetWifiHotspot(SQLiteDatabase db, Context activityContext);
 
         // new method
-        void addWifiInfo(WifiModel wifiInfoModel);
-        void addWifiLocation(WifiModel wifiLocationModel);
-        void addWifiStateAndDate(WifiModel wifiStateAndDateModel);
+        void addWifiInfo(SQLiteDatabase db, WifiModel wifiInfoModel);
+        void addWifiLocation(SQLiteDatabase db, WifiModel wifiLocationModel);
+        void addWifiStateAndDate(SQLiteDatabase db, WifiModel wifiStateAndDateModel);
     }
 
     // method table mobile

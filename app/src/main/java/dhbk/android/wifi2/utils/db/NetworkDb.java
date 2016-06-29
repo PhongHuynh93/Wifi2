@@ -96,21 +96,21 @@ public class NetworkDb extends SQLiteOpenHelper{
     public void addWifiInfoToTable(WifiModel wifiInfoModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
         if (tableName != null) {
-            tableName.addWifiInfo(wifiInfoModel);
+            tableName.addWifiInfo(getWritableDatabase(), wifiInfoModel);
         }
     }
 
     public void addWifiLocationToTable(WifiModel wifiLocationModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
         if (tableName != null) {
-            tableName.addWifiLocation(wifiLocationModel);
+            tableName.addWifiLocation(getWritableDatabase(), wifiLocationModel);
         }
     }
 
     public void addStateAndDateWifiToTable(WifiModel wifiStateAndDateModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
         if (tableName != null) {
-            tableName.addWifiStateAndDate(wifiStateAndDateModel);
+            tableName.addWifiStateAndDate(getWritableDatabase(), wifiStateAndDateModel);
         }
     }
 
