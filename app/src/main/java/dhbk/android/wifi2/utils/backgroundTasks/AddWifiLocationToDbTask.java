@@ -14,6 +14,7 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  * add wifi info contains ssid, networkid, mLatitude, mLongitude, mIsHasLocation to db
  */
 public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
+    private static final String LOCATION = "location";
     private final SQLiteDatabase mDb;
     private final WifiModel mWifiModel;
 
@@ -50,7 +51,7 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
                 }
             }
 
-            String tableName = HelpUtils.getTableDbName(ssid, networkId);
+            String tableName = HelpUtils.getTableDbName(ssid, networkId, LOCATION);
             mDb.insertOrThrow(tableName, null, wifiLocationValues);
             mDb.setTransactionSuccessful();
 

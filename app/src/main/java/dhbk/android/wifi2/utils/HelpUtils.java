@@ -51,7 +51,7 @@ public class HelpUtils {
 
     //get table db name from ssid and networkId
     @NonNull
-    public static String getTableDbName(@NonNull String ssid, int networkId) {
-        return ssid + "_" + networkId;
+    public static String getTableDbName(@NonNull String ssid, int networkId, String addString) {
+        return ssid + "_" + networkId + "_" + addString;
     }
 }
