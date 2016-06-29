@@ -113,4 +113,17 @@ public class NetworkDb extends SQLiteOpenHelper{
             }
         }
     }
+
+    // TODO: 6/29/16 add new method to add to new table
+    public void addWifiInfoToTable(WifiModel wifiInfoModel) {
+
+    }
+
+    public void addWifiLocationToTable(WifiModel wifiLocationModel) {
+
+    }
+
+    public void addStateAndDateWifiToTable(WifiModel wifiStateAndDateModel) {
+
+    }
 }

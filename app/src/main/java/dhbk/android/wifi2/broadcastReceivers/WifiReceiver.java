@@ -68,13 +68,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
                     String nowDate = formatter.format(now);
 
-                    // : save connect to database, state(disconnect), ssid and data
-                    NetworkDb networkDb = NetworkDb.getInstance(context);
-//                    WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
-//                    networkDb.addWifiHotspot(wifiModel);
-
                     // TODO: 6/29/2016 check if user has turn on location, if has turn on, get current location
-                    // get wifi infor and save it to db
                     int isHasLocation = 0;
 
                     if (HelpUtils.isGpsHasTurnOn(context)) {
@@ -82,19 +76,31 @@ public class WifiReceiver extends BroadcastReceiver {
                     } else {
                         isHasLocation = 0;
                     }
+
+                    double latitude = 0;
+                    double longitude = 0;
                     if (isHasLocation == 1) {
                         // get gps and save to db
                         Location currentLocation = HelpUtils.getCurrentLocation(context);
-                        double latitude = currentLocation.getLatitude();
-                        double longitude = currentLocation.getLongitude();
-                        WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId, latitude, longitude, isHasLocation);
-                        networkDb.addWifiWithLocation(wifiModel);
-                    } else {
-                        double latitude = 0;
-                        double longitude = 0;
-                        WifiModel wifiModel = new WifiModel(Constant.WIFI_CONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId, latitude, longitude, isHasLocation);
-                        networkDb.addWifiWithLocation(wifiModel);
+                        if (currentLocation != null) {
+                            latitude = currentLocation.getLatitude();
+                            longitude = currentLocation.getLongitude();
+                        }
                     }
+
+                    NetworkDb networkDb = NetworkDb.getInstance(context);
+
+                    // add  wifi info
+                    WifiModel wifiInfoModel = new WifiModel(mSsid, mBssid, mMacAddress, mNetworkId);
+                    networkDb.addWifiInfoToTable(wifiInfoModel);
+
+                    // add location to wifi
+                    WifiModel wifiLocationModel = new WifiModel(latitude, longitude, isHasLocation);
+                    networkDb.addWifiLocationToTable(wifiLocationModel);
+
+                    // add state and date to db
+                    WifiModel wifiStateAndDateModel = new WifiModel(mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT);
+                    networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
                 }
 
             }
@@ -105,16 +111,15 @@ public class WifiReceiver extends BroadcastReceiver {
                     firstConnect = true;
                     firstDisconnect = false;
 
-                    Log.i(TAG, "WifiReceiver onReceive: disconnected");
                     // time now
                     Date now = new Date(System.currentTimeMillis());
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
                     String nowDate = formatter.format(now);
 
-                    // : save disconnect to database, state(disconnect), ssid and data
+                    // add state and date to db
+                    WifiModel wifiStateAndDateModel = new WifiModel(mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT);
                     NetworkDb networkDb = NetworkDb.getInstance(context);
-                    WifiModel wifiModel = new WifiModel(Constant.WIFI_DISCONNECT, mSsid, nowDate, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
-                    networkDb.addWifiHotspot(wifiModel);
+                    networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
                 }
             }
         }
