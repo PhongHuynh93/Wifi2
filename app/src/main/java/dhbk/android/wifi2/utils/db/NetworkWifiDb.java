@@ -316,5 +316,23 @@ public class NetworkWifiDb implements
     }
 
     // TODO: 6/29/2016 new method to deal with new table, after the program run, remove another method
+    // add wifi info to db
+    @Override
+    public void addWifiInfo(WifiModel wifiInfoModel) {
+
+    }
+
+    // add wifi location to db
+    @Override
+    public void addWifiLocation(WifiModel wifiLocationModel) {
+
+    }
+
+    // add wifi state and date to db
+    @Override
+    public void addWifiStateAndDate(WifiModel wifiStateAndDateModel) {
+
+    }
+
 
 }

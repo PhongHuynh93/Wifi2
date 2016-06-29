@@ -3,6 +3,7 @@ package dhbk.android.wifi2.utils.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
@@ -91,6 +92,28 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
+    // TODO: 6/29/16 add new method to add to new table
+    public void addWifiInfoToTable(WifiModel wifiInfoModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.addWifiInfo(wifiInfoModel);
+        }
+    }
+
+    public void addWifiLocationToTable(WifiModel wifiLocationModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.addWifiLocation(wifiLocationModel);
+        }
+    }
+
+    public void addStateAndDateWifiToTable(WifiModel wifiStateAndDateModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.addWifiStateAndDate(wifiStateAndDateModel);
+        }
+    }
+
     //##########################################################################################
     // METHOD MOBILE TABLE
 
@@ -114,16 +137,14 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    // TODO: 6/29/16 add new method to add to new table
-    public void addWifiInfoToTable(WifiModel wifiInfoModel) {
-
-    }
-
-    public void addWifiLocationToTable(WifiModel wifiLocationModel) {
-
-    }
-
-    public void addStateAndDateWifiToTable(WifiModel wifiStateAndDateModel) {
-
+    @Nullable
+    private onDbInteractionListener.onDbWifiTableInteractionListener getNetworkWifiDb() {
+        for (int i = 0; i < listTable.size(); i++) {
+            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
+            if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
+                return ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName);
+            }
+        }
+        return null;
     }
 }

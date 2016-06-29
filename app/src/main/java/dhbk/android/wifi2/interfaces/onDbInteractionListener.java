@@ -25,6 +25,11 @@ public interface onDbInteractionListener {
         void getWifiHistoryCursor(SQLiteDatabase db, Fragment fragment);
         void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel);
         void onGetWifiHotspot(SQLiteDatabase db, Context activityContext);
+
+        // new method
+        void addWifiInfo(WifiModel wifiInfoModel);
+        void addWifiLocation(WifiModel wifiLocationModel);
+        void addWifiStateAndDate(WifiModel wifiStateAndDateModel);
     }
 
     // method table mobile
