@@ -77,27 +77,27 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     @BindView(R.id.bssid)
     TextView mBssidTv;
     @BindView(R.id.rssi)
-    TextView mRssi;
+    TextView mRssiTv;
     @BindView(R.id.mac_address)
-    TextView mMacAddress;
+    TextView mMacAddressTv;
     @BindView(R.id.ip_address)
-    TextView mIpAddress;
+    TextView mIpAddressTv;
     @BindView(R.id.linkspeed)
-    TextView mLinkspeed;
+    TextView mLinkspeedTv;
     @BindView(R.id.networkid)
-    TextView mNetworkid;
+    TextView mNetworkidTv;
     @BindView(R.id.date)
-    TextView mDate;
+    TextView mDateTv;
     @BindView(R.id.state)
-    TextView mState;
+    TextView mStateTv;
     @BindView(R.id.map)
     MapView mMap;
     @BindView(R.id.ssid)
-    TextView mSsid;
+    TextView mSsidTv;
     @BindView(R.id.btn_show_wifi_on_map)
     Button mBtnShowWifiOnMap;
     @BindView(R.id.tv_show_wifi_info)
-    TextView mTvShowWifiInfo;
+    TextView mShowWifiInfoTv;
 
     private WifiModel mWifiModel;
 
@@ -111,9 +111,9 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         String ssid = wifiModel.getSsid();
         String date = wifiModel.getDate();
         String mBssidTv = wifiModel.getBssid();
-        int mRssi = wifiModel.getRssi();
-        String mMacAddress = wifiModel.getMacAddress();
-        int mIpAddress = wifiModel.getIpAddress();
+        int mRssiTv = wifiModel.getRssi();
+        String mMacAddressTv = wifiModel.getMacAddress();
+        int mIpAddressTv = wifiModel.getIpAddress();
         int mLinkSpeed = wifiModel.getLinkSpeed();
         int mNetworkId = wifiModel.getNetworkId();
 
@@ -121,9 +121,9 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         args.putString(ARG_PARAM2, ssid);
         args.putString(ARG_PARAM3, date);
         args.putString(ARG_PARAM4, mBssidTv);
-        args.putInt(ARG_PARAM5, mRssi);
-        args.putString(ARG_PARAM6, mMacAddress);
-        args.putInt(ARG_PARAM7, mIpAddress);
+        args.putInt(ARG_PARAM5, mRssiTv);
+        args.putString(ARG_PARAM6, mMacAddressTv);
+        args.putInt(ARG_PARAM7, mIpAddressTv);
         args.putInt(ARG_PARAM8, mLinkSpeed);
         args.putInt(ARG_PARAM9, mNetworkId);
 
@@ -139,13 +139,13 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
             String ssid = getArguments().getString(ARG_PARAM2);
             String date = getArguments().getString(ARG_PARAM3);
             String mBssidTv = getArguments().getString(ARG_PARAM4);
-            int mRssi = getArguments().getInt(ARG_PARAM5);
-            String mMacAddress = getArguments().getString(ARG_PARAM6);
-            int mIpAddress = getArguments().getInt(ARG_PARAM7);
+            int mRssiTv = getArguments().getInt(ARG_PARAM5);
+            String mMacAddressTv = getArguments().getString(ARG_PARAM6);
+            int mIpAddressTv = getArguments().getInt(ARG_PARAM7);
             int mLinkSpeed = getArguments().getInt(ARG_PARAM8);
             int mNetworkId = getArguments().getInt(ARG_PARAM9);
 
-            mWifiModel = new WifiModel(state, ssid, date, mBssidTv, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
+            mWifiModel = new WifiModel(state, ssid, date, mBssidTv, mRssiTv, mMacAddressTv, mIpAddressTv, mLinkSpeed, mNetworkId);
         }
     }
 
@@ -297,56 +297,53 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
 
         // set new font to textview
         setFontToTv(mBtnShowWifiOnMap, QUICKSAND_REGULAR);
-        setFontToTv(mTvShowWifiInfo, QUICKSAND_LIGHT);
+        setFontToTv(mShowWifiInfoTv, QUICKSAND_LIGHT);
 
         // set new font and change text in textview
 
 //        wifi info
         String ssid = HelpUtils.removeChar(mWifiModel.getSsid(), "\"");
-//        mSsid.setTypeface(font_quicksand_bold);
-//        mSsid.setText(ssid);
-
-        setFontAndTextToTv(mSsid, QUICKSAND_BOLD, ssid);
+        setFontAndTextToTv(mSsidTv, QUICKSAND_BOLD, ssid);
 
         String bssid = "<b>" + "Bssid: " + "</b> " + mWifiModel.getBssid();
         mBssidTv.setTypeface(font_quicksand_light);
         mBssidTv.setText(Html.fromHtml(bssid));
 
         String macAddress = "<b>" + "Mac add: " + "</b> " + mWifiModel.getMacAddress();
-        mMacAddress.setTypeface(font_quicksand_light);
-        mMacAddress.setText(Html.fromHtml(macAddress));
+        mMacAddressTv.setTypeface(font_quicksand_light);
+        mMacAddressTv.setText(Html.fromHtml(macAddress));
 
         String ipAddress = Formatter.formatIpAddress(mWifiModel.getIpAddress());
         ipAddress = "<b>" + "Ip add: " + "</b> " + ipAddress;
-        mIpAddress.setTypeface(font_quicksand_light);
-        mIpAddress.setText(Html.fromHtml(ipAddress));
+        mIpAddressTv.setTypeface(font_quicksand_light);
+        mIpAddressTv.setText(Html.fromHtml(ipAddress));
 
         String linkSpeed = "<b>" + "Link speed: " + "</b> " + mWifiModel.getLinkSpeed() + " " + WifiInfo.LINK_SPEED_UNITS;
-        mLinkspeed.setTypeface(font_quicksand_light);
-        mLinkspeed.setText(Html.fromHtml(linkSpeed));
+        mLinkspeedTv.setTypeface(font_quicksand_light);
+        mLinkspeedTv.setText(Html.fromHtml(linkSpeed));
 
         String networkId = "<b>" + "Network id: " + "</b> " + mWifiModel.getNetworkId();
-        mNetworkid.setTypeface(font_quicksand_light);
-        mNetworkid.setText(Html.fromHtml(networkId));
+        mNetworkidTv.setTypeface(font_quicksand_light);
+        mNetworkidTv.setText(Html.fromHtml(networkId));
 
         // : 6/27/2016 set text and change color depend on wifi signal
         int wifiLevel = WifiManager.calculateSignalLevel(mWifiModel.getRssi(), MAX_WIFI_SIGNAL_LEVEL);
         switch (wifiLevel) {
             case WIFI_SIGNAL_EXCELLENT:
-                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_excellent));
+                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_excellent));
                 break;
             case WIFI_SIGNAL_GOOD:
-                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_good));
-                mRssi.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.good), PorterDuff.Mode.SRC_ATOP); // White Tint
+                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_good));
+                mRssiTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.good), PorterDuff.Mode.SRC_ATOP); // White Tint
                 break;
             case WIFI_SIGNAL_FAIR:
-                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_fair));
-                mRssi.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.fair), PorterDuff.Mode.SRC_ATOP); // White Tint
+                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_fair));
+                mRssiTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.fair), PorterDuff.Mode.SRC_ATOP); // White Tint
                 break;
             case WIFI_SIGNAL_WEAK:
             case 0: // 0 belongs to wifi signal weak
-                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_weak));
-                mRssi.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.weak), PorterDuff.Mode.SRC_ATOP); // White Tint
+                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_weak));
+                mRssiTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.weak), PorterDuff.Mode.SRC_ATOP); // White Tint
                 break;
             default:
                 break;
@@ -356,14 +353,14 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     // set data and change background color depend on state in db.
     private void setDateStateWifi() {
 //        set date
-        mDate.setText(mWifiModel.getDate());
+        mDateTv.setText(mWifiModel.getDate());
 //        set state
         String state = mWifiModel.getState();
-        mState.setText(state);
+        mStateTv.setText(state);
 //        when disconnect, change background tint color
         if (state.equals(Constant.WIFI_DISCONNECT)) {
-            mState.setBackgroundResource(R.drawable.bg_view);
-            mState.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.dark_orange), PorterDuff.Mode.SRC_ATOP);
+            mStateTv.setBackgroundResource(R.drawable.bg_view);
+            mStateTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.dark_orange), PorterDuff.Mode.SRC_ATOP);
         }
     }
 
