@@ -296,17 +296,18 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         Typeface font_quicksand_light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Light.otf");
         Typeface font_quicksand_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf");
 
-//        mBtnShowWifiOnMap.setTypeface(font_quicksand_regular);
-//        mTvShowWifiInfo.setTypeface(font_quicksand_light);
-
         // set new font to textview
         setFontToTv(mBtnShowWifiOnMap, QUICKSAND_REGULAR);
         setFontToTv(mTvShowWifiInfo, QUICKSAND_LIGHT);
 
+        // set new font and change text in textview
+
 //        wifi info
         String ssid = HelpUtils.removeChar(mWifiModel.getSsid(), "\"");
-        mSsid.setTypeface(font_quicksand_bold);
-        mSsid.setText(ssid);
+//        mSsid.setTypeface(font_quicksand_bold);
+//        mSsid.setText(ssid);
+
+        setFontAndTextToTv(mSsid, QUICKSAND_BOLD, ssid);
 
         String bssid = "<b>" + "Bssid: " + "</b> " + mWifiModel.getBssid();
         mBssid.setTypeface(font_quicksand_light);

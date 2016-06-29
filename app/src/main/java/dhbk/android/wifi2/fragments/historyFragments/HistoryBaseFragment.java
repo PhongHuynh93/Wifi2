@@ -14,4 +14,9 @@ public abstract class HistoryBaseFragment extends Fragment{
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), fontPath);
         textView.setTypeface(typeface);
     }
+
+    public void setFontAndTextToTv(TextView textView, String fontPath, String message) {
+        setFontToTv(textView, fontPath);
+        textView.setText(message);
+    }
 }
