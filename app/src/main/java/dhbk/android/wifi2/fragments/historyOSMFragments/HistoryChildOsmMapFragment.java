@@ -3,10 +3,10 @@ package dhbk.android.wifi2.fragments.historyOSMFragments;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.utils.Constant;
 
 public class HistoryChildOsmMapFragment extends Fragment {
@@ -44,6 +45,8 @@ public class HistoryChildOsmMapFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // TODO: 6/29/2016 copy this method to draw a wifi hotspot into db
         MapView mapView = (MapView) getActivity().findViewById(R.id.map_child); // map
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
@@ -66,16 +69,11 @@ public class HistoryChildOsmMapFragment extends Fragment {
 
 
     // a callback after getting wifi hotspot from db, we draw it on osm map
-    public void showWifiHotspotOnMap(String ssid, String pass, double latitutude, double longitude) {
-        // : 6/17/2016 test this callback after getting from db
-        Log.i(TAG, "showWifiHotspotOnMap: " + ssid);
-        Log.i(TAG, "showWifiHotspotOnMap: " + pass);
-        Log.i(TAG, "showWifiHotspotOnMap: " + latitutude);
-        Log.i(TAG, "showWifiHotspotOnMap: " + longitude);
+    public void showWifiHotspotOnMap(@NonNull WifiHotsPotModel wifiHotsPotModel) {
         Location wifiHpLoc = new Location("phong");
-        wifiHpLoc.setLatitude(latitutude);
-        wifiHpLoc.setLongitude(longitude);
-        setMarkerAtLocation(wifiHpLoc, R.drawable.ic_wifi_map, ssid);
+        wifiHpLoc.setLatitude(wifiHotsPotModel.getLatitude());
+        wifiHpLoc.setLongitude(wifiHotsPotModel.getLongitude());
+        setMarkerAtLocation(wifiHpLoc, R.drawable.ic_wifi_map, wifiHotsPotModel.getNetworkSSID());
     }
 
     // phong - add marker at a location with instruction

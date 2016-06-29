@@ -42,7 +42,7 @@ public class NetworkMobileDb implements onDbInteractionListener.onDbMobileTableI
     }
 
     @Override
-    public void onGetCursor(SQLiteDatabase db, Fragment fragment) {
+    public void getMobileHistoryCursor(SQLiteDatabase db, Fragment fragment) {
         new GetMobileFromDbTask(db, fragment).execute();
     }
 }

@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -61,9 +60,7 @@ public class HistoryWifiMobileFragment extends HistoryBaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setHasOptionsMenu(true);
+        declareToolbar(mToolbar);
         mToolbar.setTitle("History");
 
         // declare viewpager with tablayout
@@ -103,6 +100,16 @@ public class HistoryWifiMobileFragment extends HistoryBaseFragment {
         }
     }
 
+    // call Presenter to get mobile data
+    public void callPresenterToGetMobileDataFromDb() {
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof HistoryPresenterFragment) {
+            ((HistoryPresenterFragment) parentFragment).getMobileDataFromDb();
+        }
+    }
+
+
+
     //        find the wifiFragment and pass cursor data to it.
     public void getWifiFragmentAndPassWifiCursor(Cursor cursor) {
         HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();
@@ -112,5 +119,12 @@ public class HistoryWifiMobileFragment extends HistoryBaseFragment {
         }
     }
 
-
+    //        find the wifiFragment and pass cursor data to it.
+    public void getMobileFragmentAndPassWifiCursor(Cursor cursor) {
+        HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();
+        Fragment mobileFragment = adapter.getRegisteredFragment(mViewPagerContainer.getCurrentItem());
+        if (mobileFragment instanceof HistoryMobileFragment) {
+            ((HistoryMobileFragment)mobileFragment).onPopulateMobileCursorToRcv(cursor);
+        }
+    }
 }

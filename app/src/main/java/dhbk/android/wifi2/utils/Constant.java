@@ -19,7 +19,7 @@ public class Constant {
     public static final String TAG_HISTORY_WIFI_MOBILE_FRAGMENT = "history_wifi_mobile_fragment";
 
 
-    //    wifi style
+    //    wifi encryption security
     public static final String WIFI_WEP = "WEP";
     public static final String WIFI_WPA2 = "WPA2";
     public static final String WIFI_WPA = "WPA";
@@ -30,6 +30,13 @@ public class Constant {
     public static final String WIFI_DISCONNECT = "DISCONNECTED";
 
 //    map
-    public static final int ZOOM = 14;
+    public static final int ZOOM = 10;
+    public static final int ZOOM_CLOSE = 14;
+    public static final double START_LATITUDE = 10.772241;
+    public static final double STATE_LONGITUDE = 106.657676;
+
+    // wifi and mobile list
+    public static final String WIFI_RECYCLERVIEW = "wifi_recyclerview";
+    public static final String MOBILE_RECYCLERVIEW = "mobile_recyclerview";
 }
 

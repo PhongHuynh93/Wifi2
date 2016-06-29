@@ -17,23 +17,9 @@ public interface OnFragInteractionListener {
         void onMainFragReplace();
     }
 
-    interface OnTeleFragInteractionListener {
-        void onTeleFragReplace();
-    }
-
-    // interface for wifi history
+    // interface for wifi and mobile history
     interface OnHistoryFragInteractionListener {
         void onGetWifiHistoryCursor(Cursor cursor);
+        void onGetMobileHistoryCursor(Cursor cursor);
     }
-
-    // interface for wifi history
-    interface OnHistoryMobileFragInteractionListener {
-        void populateCursorToRcv(Cursor cursor);
-    }
-
-    // interface for wifi presenter history fragment
-    interface OnHistoryPresenterFragListener {
-        void popHistoryChildShowDetailWifiFragment();
-    }
-
 }

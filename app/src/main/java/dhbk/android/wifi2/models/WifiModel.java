@@ -6,6 +6,10 @@ import android.database.Cursor;
  * Created by phongdth.ky on 6/14/2016.
  */
 public class WifiModel {
+
+    private int mIsHasLocation;
+    private double mLongitude;
+    private double mLatitude;
     private String state;
     private String ssid;
     private String encryption;
@@ -29,6 +33,23 @@ public class WifiModel {
         mLinkSpeed = linkSpeed;
         mNetworkId = networkId;
     }
+
+    public WifiModel(String state, String ssid, String date, String bssid, int rssi, String macAddress, int ipAddress, int linkSpeed, int networkId, double latitude, double longitude, int isHasLocation) {
+        this.state = state;
+        this.ssid = ssid;
+        this.date = date;
+        mBssid = bssid;
+        mRssi = rssi;
+        mMacAddress = macAddress;
+        mIpAddress = ipAddress;
+        mLinkSpeed = linkSpeed;
+        mNetworkId = networkId;
+        mLatitude = latitude;
+        mLongitude = longitude;
+        mIsHasLocation = isHasLocation;
+    }
+
+
 
     public WifiModel(String ssid, String encryption) {
         this.ssid = ssid;
@@ -87,5 +108,17 @@ public class WifiModel {
 
     public int getNetworkId() {
         return mNetworkId;
+    }
+
+    public int getIsHasLocation() {
+        return mIsHasLocation;
+    }
+
+    public double getLongitude() {
+        return mLongitude;
+    }
+
+    public double getLatitude() {
+        return mLatitude;
     }
 }

@@ -16,11 +16,9 @@ import dhbk.android.wifi2.models.WifiModel;
  * Created by phongdth.ky on 6/15/2016.
  */
 public class NetworkDb extends SQLiteOpenHelper{
-    private static final String TAG = NetworkDb.class.getSimpleName();
-
     private static NetworkDb sInstance;
     private static final String DATABASE_NAME = "database_network";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     private ArrayList<onDbInteractionListener.onDbTableInteractionListener> listTable = new ArrayList<>();
     public static synchronized NetworkDb getInstance(Context context) {
@@ -107,11 +105,11 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void getCursorFromMobile(Fragment fragment) {
+    public void getMobileHistory(Fragment fragment) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbMobileTableInteractionListener) {
-                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).onGetCursor(getReadableDatabase(), fragment);
+                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).getMobileHistoryCursor(getReadableDatabase(), fragment);
             }
         }
     }
