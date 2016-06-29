@@ -310,6 +310,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
 //        mBssidTv.setText(Html.fromHtml(bssid));
         setFontAndTextToTv(mBssidTv, QUICKSAND_LIGHT, getBoldPartOfMessage("Bssid: ", mWifiModel.getBssid()));
 
+        // FIXME: 6/29/16 change this to use method of parent class, and get the set the string to string xml
         String macAddress = "<b>" + "Mac add: " + "</b> " + mWifiModel.getMacAddress();
         mMacAddressTv.setTypeface(font_quicksand_light);
         mMacAddressTv.setText(Html.fromHtml(macAddress));
