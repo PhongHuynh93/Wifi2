@@ -103,11 +103,13 @@ public class NetworkWifiDb implements
     // column name and value
     public static final String KEY_WIFI_HOTSPOT_INFO_ID = "_id";
     public static final String KEY_WIFI_HOTSPOT_INFO_SSID = "column_ssid";
+    public static final String KEY_WIFI_HOTSPOT_INFO_BSSID = "column_bssid";
     public static final String KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS = "column_mac_address";
     public static final String KEY_WIFI_HOTSPOT_INFO_NETWORK_ID = "column_network_id";
 
     public static final String VALUE_WIFI_HOTSPOT_INFO_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_SSID = " TEXT NOT NULL, ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_BSSID = " TEXT NOT NULL, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS = " TEXT NOT NULL, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER NOT NULL UNIQUE);";
 
@@ -115,6 +117,7 @@ public class NetworkWifiDb implements
     public static final String[] COLUMN_TABLE_WIFI_HOTSPOT_INFO = new String[] {
             KEY_WIFI_HOTSPOT_INFO_ID,
             KEY_WIFI_HOTSPOT_INFO_SSID,
+            KEY_WIFI_HOTSPOT_INFO_BSSID,
             KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
             KEY_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
@@ -122,6 +125,7 @@ public class NetworkWifiDb implements
     public static final String[] VALUE_COLUMN_WIFI_HOTSPOT_INFO = new String[] {
             VALUE_WIFI_HOTSPOT_INFO_ID,
             VALUE_WIFI_HOTSPOT_INFO_SSID,
+            VALUE_WIFI_HOTSPOT_INFO_BSSID,
             VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
             VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
@@ -141,6 +145,10 @@ public class NetworkWifiDb implements
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
                     break;
                 case KEY_WIFI_HOTSPOT_INFO_SSID:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
+                case KEY_WIFI_HOTSPOT_INFO_BSSID:
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
                     break;
@@ -200,18 +208,23 @@ public class NetworkWifiDb implements
         createWifiTable.append("(");
 
         for (int i = 0; i < COLUMN_TABLE_WIFI_LOCATION.length; i++) {
-            if (COLUMN_TABLE_WIFI_LOCATION[i].equals(KEY_WIFI_LOCATION_ID)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
-            } else if (COLUMN_TABLE_WIFI_LOCATION[i].equals(KEY_WIFI_LOCATION_LAT)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
-            } else if (COLUMN_TABLE_WIFI_LOCATION[i].equals(KEY_WIFI_LOCATION_LONG)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
-            } else if (COLUMN_TABLE_WIFI_LOCATION[i].equals(KEY_WIFI_LOCATION_ISTURNONGPS)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
+            switch (COLUMN_TABLE_WIFI_LOCATION[i]) {
+                case KEY_WIFI_LOCATION_ID:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
+                    break;
+                case KEY_WIFI_LOCATION_LAT:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
+                    break;
+                case KEY_WIFI_LOCATION_LONG:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
+                    break;
+                case KEY_WIFI_LOCATION_ISTURNONGPS:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
+                    break;
             }
         }
         return createWifiTable.toString();
@@ -260,18 +273,27 @@ public class NetworkWifiDb implements
         createWifiTable.append("(");
 
         for (int i = 0; i < COLUMN_TABLE_WIFI_STATE_AND_DATE.length; i++) {
-            if (COLUMN_TABLE_WIFI_STATE_AND_DATE[i].equals(KEY_WIFI_STATE_AND_DATE_STATE)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
-            } else if (COLUMN_TABLE_WIFI_STATE_AND_DATE[i].equals(KEY_WIFI_STATE_AND_DATE_DATE)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
-            } else if (COLUMN_TABLE_WIFI_STATE_AND_DATE[i].equals(KEY_WIFI_STATE_AND_DATE_RSSI)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
-            } else if (COLUMN_TABLE_WIFI_STATE_AND_DATE[i].equals(KEY_WIFI_STATE_AND_DATE_LINK_SPEED)) {
-                createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
-                createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+            switch (COLUMN_TABLE_WIFI_STATE_AND_DATE[i]) {
+                case KEY_WIFI_STATE_AND_DATE_ID:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
+                case KEY_WIFI_STATE_AND_DATE_STATE:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
+                case KEY_WIFI_STATE_AND_DATE_DATE:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
+                case KEY_WIFI_STATE_AND_DATE_RSSI:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
+                case KEY_WIFI_STATE_AND_DATE_LINK_SPEED:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
             }
         }
         return createWifiTable.toString();
@@ -284,7 +306,7 @@ public class NetworkWifiDb implements
         db.execSQL(CREATE_TABLE);
         db.execSQL(CREATE_TABLE_WIFI_HOTSPOT);
 
-        // create table: wifi hotspot info
+        // create table: wifi hotspot info, but two table - one contains location and one contain state and date -  create if wifi hotspot info table already has a content.
         db.execSQL(createWifiHotspotInfoTable());
     }
 

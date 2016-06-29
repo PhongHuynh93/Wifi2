@@ -10,9 +10,9 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
+ * add wifi info contains ssid, bssid, macaddress, networkid to db
  */
 public class AddWifiInfoToDbTask extends AsyncTask<Void, Void, Boolean> {
-    private static final String TAG  = AddWifiInfoToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final WifiModel mWifiModel;
 
@@ -22,32 +22,35 @@ public class AddWifiInfoToDbTask extends AsyncTask<Void, Void, Boolean> {
     }
     @Override
     protected Boolean doInBackground(Void... params) {
-        String state = mWifiModel.getState();
         String ssid = mWifiModel.getSsid();
-        String date = mWifiModel.getDate();
         String bssid = mWifiModel.getBssid();
-        int rssi = mWifiModel.getRssi();
         String macAddress = mWifiModel.getMacAddress();
-        int ipAddress = mWifiModel.getIpAddress();
-        int linkSpeed = mWifiModel.getLinkSpeed();
         int networkId = mWifiModel.getNetworkId();
 
         mDb.beginTransaction();
         try {
-            ContentValues wifiHotspotValues = new ContentValues();
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_STATE, state);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_SSID, ssid);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_DATE, date);
+            ContentValues wifiInfoValues = new ContentValues();
 
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_BSSID, bssid);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_RSSI, rssi);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_MAC_ADDRESS, macAddress);
+            for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO.length; i++) {
+                switch (NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]) {
+                    case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_SSID:
+                        wifiInfoValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_SSID, ssid);
+                        break;
+                    case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_BSSID:
+                        wifiInfoValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_BSSID, bssid);
+                        break;
+                    case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS:
+                        wifiInfoValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS, macAddress);
+                        break;
+                    case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_NETWORK_ID:
+                        wifiInfoValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_NETWORK_ID, networkId);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_IP_ADDRESS, ipAddress);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_LINK_SPEED, linkSpeed);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_NETWORK_ID, networkId);
-
-            mDb.insertOrThrow(NetworkWifiDb.TABLE_WIFI, null, wifiHotspotValues);
+            mDb.insertOrThrow(NetworkWifiDb.TABLE_WIFI_HOTSPOT_INFO, null, wifiInfoValues);
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {
