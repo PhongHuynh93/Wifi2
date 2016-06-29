@@ -50,7 +50,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     public static final int WIFI_SIGNAL_FAIR = 2;
     public static final int WIFI_SIGNAL_WEAK = 1;
 
-    // TODO font path
+    // font path
     private static final String QUICKSAND_BOLD = "fonts/Quicksand-Bold.otf";
     private static final String QUICKSAND_LIGHT = "fonts/Quicksand-Light.otf";
     private static final String QUICKSAND_REGULAR = "fonts/Quicksand-Regular.otf";
@@ -75,7 +75,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.bssid)
-    TextView mBssid;
+    TextView mBssidTv;
     @BindView(R.id.rssi)
     TextView mRssi;
     @BindView(R.id.mac_address)
@@ -110,7 +110,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         String state = wifiModel.getState();
         String ssid = wifiModel.getSsid();
         String date = wifiModel.getDate();
-        String mBssid = wifiModel.getBssid();
+        String mBssidTv = wifiModel.getBssid();
         int mRssi = wifiModel.getRssi();
         String mMacAddress = wifiModel.getMacAddress();
         int mIpAddress = wifiModel.getIpAddress();
@@ -120,7 +120,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         args.putString(ARG_PARAM1, state);
         args.putString(ARG_PARAM2, ssid);
         args.putString(ARG_PARAM3, date);
-        args.putString(ARG_PARAM4, mBssid);
+        args.putString(ARG_PARAM4, mBssidTv);
         args.putInt(ARG_PARAM5, mRssi);
         args.putString(ARG_PARAM6, mMacAddress);
         args.putInt(ARG_PARAM7, mIpAddress);
@@ -138,14 +138,14 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
             String state = getArguments().getString(ARG_PARAM1);
             String ssid = getArguments().getString(ARG_PARAM2);
             String date = getArguments().getString(ARG_PARAM3);
-            String mBssid = getArguments().getString(ARG_PARAM4);
+            String mBssidTv = getArguments().getString(ARG_PARAM4);
             int mRssi = getArguments().getInt(ARG_PARAM5);
             String mMacAddress = getArguments().getString(ARG_PARAM6);
             int mIpAddress = getArguments().getInt(ARG_PARAM7);
             int mLinkSpeed = getArguments().getInt(ARG_PARAM8);
             int mNetworkId = getArguments().getInt(ARG_PARAM9);
 
-            mWifiModel = new WifiModel(state, ssid, date, mBssid, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
+            mWifiModel = new WifiModel(state, ssid, date, mBssidTv, mRssi, mMacAddress, mIpAddress, mLinkSpeed, mNetworkId);
         }
     }
 
@@ -291,7 +291,6 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     // change font, style of Wifi info textview
     private void setWifiInfo() {
         // change font
-        // TODO: 6/29/16 move this font path to constant
         Typeface font_quicksand_regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Regular.otf");
         Typeface font_quicksand_light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Light.otf");
         Typeface font_quicksand_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf");
@@ -310,8 +309,8 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         setFontAndTextToTv(mSsid, QUICKSAND_BOLD, ssid);
 
         String bssid = "<b>" + "Bssid: " + "</b> " + mWifiModel.getBssid();
-        mBssid.setTypeface(font_quicksand_light);
-        mBssid.setText(Html.fromHtml(bssid));
+        mBssidTv.setTypeface(font_quicksand_light);
+        mBssidTv.setText(Html.fromHtml(bssid));
 
         String macAddress = "<b>" + "Mac add: " + "</b> " + mWifiModel.getMacAddress();
         mMacAddress.setTypeface(font_quicksand_light);
