@@ -50,6 +50,11 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     public static final int WIFI_SIGNAL_FAIR = 2;
     public static final int WIFI_SIGNAL_WEAK = 1;
 
+    // TODO font path
+    private static final String QUICKSAND_BOLD = "fonts/Quicksand-Bold.otf";
+    private static final String QUICKSAND_LIGHT = "fonts/Quicksand-Light.otf";
+    private static final String QUICKSAND_REGULAR = "fonts/Quicksand-Regular.otf";
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
@@ -255,7 +260,6 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     }
 
     // when click up button, if version >= 5, show anim when close
-    // TODO: 6/28/2016 fix when press back button, fix anim when close fragment
     public void closeFragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             showAnimToClose();
@@ -287,12 +291,17 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     // change font, style of Wifi info textview
     private void setWifiInfo() {
         // change font
+        // TODO: 6/29/16 move this font path to constant
         Typeface font_quicksand_regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Regular.otf");
         Typeface font_quicksand_light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Light.otf");
         Typeface font_quicksand_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf");
 
-        mBtnShowWifiOnMap.setTypeface(font_quicksand_regular);
-        mTvShowWifiInfo.setTypeface(font_quicksand_light);
+//        mBtnShowWifiOnMap.setTypeface(font_quicksand_regular);
+//        mTvShowWifiInfo.setTypeface(font_quicksand_light);
+
+        // set new font to textview
+        setFontToTv(mBtnShowWifiOnMap, QUICKSAND_REGULAR);
+        setFontToTv(mTvShowWifiInfo, QUICKSAND_LIGHT);
 
 //        wifi info
         String ssid = HelpUtils.removeChar(mWifiModel.getSsid(), "\"");
