@@ -11,7 +11,7 @@ public class WifiModel {
     private double mLongitude;
     private double mLatitude;
     private String state;
-    private String ssid;
+    private String mSsid;
     private String encryption;
     private String date;
 
@@ -24,7 +24,7 @@ public class WifiModel {
 
     public WifiModel(String state, String ssid, String date, String bssid, int rssi, String macAddress, int ipAddress, int linkSpeed, int networkId) {
         this.state = state;
-        this.ssid = ssid;
+        this.mSsid = ssid;
         this.date = date;
         mBssid = bssid;
         mRssi = rssi;
@@ -36,7 +36,7 @@ public class WifiModel {
 
     public WifiModel(String state, String ssid, String date, String bssid, int rssi, String macAddress, int ipAddress, int linkSpeed, int networkId, double latitude, double longitude, int isHasLocation) {
         this.state = state;
-        this.ssid = ssid;
+        this.mSsid = ssid;
         this.date = date;
         mBssid = bssid;
         mRssi = rssi;
@@ -51,12 +51,12 @@ public class WifiModel {
 
 
     public WifiModel(String ssid, String encryption) {
-        this.ssid = ssid;
+        this.mSsid = ssid;
         this.encryption = encryption;
     }
 
     public WifiModel(String mSsid, String mBssid, String mMacAddress, int mNetworkId) {
-        this.ssid = mSsid;
+        this.mSsid = mSsid;
         this.mBssid = mBssid;
         this.mMacAddress = mMacAddress;
         this.mNetworkId = mNetworkId;
@@ -66,7 +66,7 @@ public class WifiModel {
         this.mLatitude = latitude;
         this.mLongitude = longitude;
         this.mIsHasLocation = isHasLocation;
-        this.ssid = mSsid;
+        this.mSsid = mSsid;
         this.mNetworkId = mNetworkId;
     }
 
@@ -75,7 +75,7 @@ public class WifiModel {
         this.mRssi = mRssi;
         this.date = nowDate;
         this.state = state;
-        this.ssid = mSsid;
+        this.mSsid = mSsid;
         this.mNetworkId = mNetworkId;
     }
 
@@ -88,7 +88,7 @@ public class WifiModel {
     }
 
     public String getSsid() {
-        return ssid;
+        return mSsid;
     }
 
     public String getEncryption() {

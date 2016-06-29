@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 
@@ -46,6 +47,11 @@ public class HelpUtils {
             }
         }
         return bestLocation;
+    }
 
+    //get table db name from ssid and networkId
+    @NonNull
+    public static String getTableDbName(@NonNull String ssid, int networkId) {
+        return ssid + "_" + networkId;
     }
 }

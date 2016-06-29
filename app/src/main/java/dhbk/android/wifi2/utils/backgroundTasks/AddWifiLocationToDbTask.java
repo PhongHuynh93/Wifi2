@@ -6,13 +6,14 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
+ * add wifi info contains ssid, networkid, mLatitude, mLongitude, mIsHasLocation to db
  */
 public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
-    private static final String TAG  = AddWifiLocationToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final WifiModel mWifiModel;
 
@@ -20,34 +21,37 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
         this.mDb = db;
         this.mWifiModel = wifiModel;
     }
+
     @Override
     protected Boolean doInBackground(Void... params) {
-        String state = mWifiModel.getState();
         String ssid = mWifiModel.getSsid();
-        String date = mWifiModel.getDate();
-        String bssid = mWifiModel.getBssid();
-        int rssi = mWifiModel.getRssi();
-        String macAddress = mWifiModel.getMacAddress();
-        int ipAddress = mWifiModel.getIpAddress();
-        int linkSpeed = mWifiModel.getLinkSpeed();
         int networkId = mWifiModel.getNetworkId();
+        double latitude = mWifiModel.getLatitude();
+        double longitude = mWifiModel.getLongitude();
+        int isHasLocation = mWifiModel.getIsHasLocation();
 
         mDb.beginTransaction();
         try {
-            ContentValues wifiHotspotValues = new ContentValues();
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_STATE, state);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_SSID, ssid);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_DATE, date);
+            ContentValues wifiLocationValues = new ContentValues();
 
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_BSSID, bssid);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_RSSI, rssi);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_MAC_ADDRESS, macAddress);
+            for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_LOCATION.length; i++) {
+                switch (NetworkWifiDb.COLUMN_TABLE_WIFI_LOCATION[i]) {
+                    case NetworkWifiDb.KEY_WIFI_LOCATION_LAT:
+                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_LAT, latitude);
+                        break;
+                    case NetworkWifiDb.KEY_WIFI_LOCATION_LONG:
+                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_LONG, longitude);
+                        break;
+                    case NetworkWifiDb.KEY_WIFI_LOCATION_ISTURNONGPS:
+                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_ISTURNONGPS, isHasLocation);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_IP_ADDRESS, ipAddress);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_LINK_SPEED, linkSpeed);
-            wifiHotspotValues.put(NetworkWifiDb.KEY_WIFI_NETWORK_ID, networkId);
-
-            mDb.insertOrThrow(NetworkWifiDb.TABLE_WIFI, null, wifiHotspotValues);
+            String tableName = HelpUtils.getTableDbName(ssid, networkId);
+            mDb.insertOrThrow(tableName, null, wifiLocationValues);
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {
