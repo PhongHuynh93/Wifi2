@@ -50,7 +50,6 @@ public class WifiModel {
     }
 
 
-
     public WifiModel(String ssid, String encryption) {
         this.ssid = ssid;
         this.encryption = encryption;
@@ -63,17 +62,21 @@ public class WifiModel {
         this.mNetworkId = mNetworkId;
     }
 
-    public WifiModel(double latitude, double longitude, int isHasLocation) {
+    public WifiModel(String mSsid, int mNetworkId, double latitude, double longitude, int isHasLocation) {
         this.mLatitude = latitude;
         this.mLongitude = longitude;
         this.mIsHasLocation = isHasLocation;
+        this.ssid = mSsid;
+        this.mNetworkId = mNetworkId;
     }
 
-    public WifiModel(int mLinkSpeed, int mRssi, String nowDate, String state) {
+    public WifiModel(String mSsid, int mNetworkId, int mLinkSpeed, int mRssi, String nowDate, String state) {
         this.mLinkSpeed = mLinkSpeed;
         this.mRssi = mRssi;
         this.date = nowDate;
         this.state = state;
+        this.ssid = mSsid;
+        this.mNetworkId = mNetworkId;
     }
 
     public String getState() {

@@ -7,7 +7,6 @@ import android.location.Location;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -95,11 +94,11 @@ public class WifiReceiver extends BroadcastReceiver {
                     networkDb.addWifiInfoToTable(wifiInfoModel);
 
                     // add location to wifi
-                    WifiModel wifiLocationModel = new WifiModel(latitude, longitude, isHasLocation);
+                    WifiModel wifiLocationModel = new WifiModel(mSsid, mNetworkId, latitude, longitude, isHasLocation);
                     networkDb.addWifiLocationToTable(wifiLocationModel);
 
                     // add state and date to db
-                    WifiModel wifiStateAndDateModel = new WifiModel(mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT);
+                    WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT);
                     networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
                 }
 
@@ -117,7 +116,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     String nowDate = formatter.format(now);
 
                     // add state and date to db
-                    WifiModel wifiStateAndDateModel = new WifiModel(mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT);
+                    WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT);
                     NetworkDb networkDb = NetworkDb.getInstance(context);
                     networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
                 }
