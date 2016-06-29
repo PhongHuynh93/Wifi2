@@ -12,7 +12,6 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 /**
  * Created by phongdth.ky on 6/15/2016.
  * * add wifi info contains ssid, networkid, state, date, linkspeed, wifisignal to db
- *
  */
 public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> {
     private static final String STATE_AND_DATE = "state_and_date";
