@@ -28,4 +28,9 @@
     <string name="show_message_wifiInfo">Wifi Info</string>
 
 
+    <!--wifi signal string-->
+    <string name="show_message_wifi_signal_excellent">Wifi Signal: Excellent</string>
+    <string name="show_message_wifi_signal_good">Wifi Signal: Good</string>
+    <string name="show_message_wifi_signal_fair">Wifi Signal: Fair</string>
+    <string name="show_message_wifi_signal_weak">Wifi Signal: Weak</string>
 </resources>

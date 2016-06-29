@@ -41,7 +41,15 @@ import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.GUIUtils;
 import dhbk.android.wifi2.utils.HelpUtils;
 
-public class HistoryChildShowDetailWifiFragment extends Fragment {
+public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
+    // set wifi signal max = 5, so system will get the strength of wifi signal from 0 -> 4
+    public static final int MAX_WIFI_SIGNAL_LEVEL = 5;
+    // from 0 -> 4 correspond to weak, fair, good, excellent wifi signal.
+    public static final int WIFI_SIGNAL_EXCELLENT = 4;
+    public static final int WIFI_SIGNAL_GOOD = 3;
+    public static final int WIFI_SIGNAL_FAIR = 2;
+    public static final int WIFI_SIGNAL_WEAK = 1;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_PARAM3 = "param3";
@@ -313,22 +321,22 @@ public class HistoryChildShowDetailWifiFragment extends Fragment {
         mNetworkid.setText(Html.fromHtml(networkId));
 
         // : 6/27/2016 set text and change color depend on wifi signal
-        int wifiLevel = WifiManager.calculateSignalLevel(mWifiModel.getRssi(), 5);
+        int wifiLevel = WifiManager.calculateSignalLevel(mWifiModel.getRssi(), MAX_WIFI_SIGNAL_LEVEL);
         switch (wifiLevel) {
-            case 4:
-                mRssi.setText("Wifi Signal: Excellent");
+            case WIFI_SIGNAL_EXCELLENT:
+                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_excellent));
                 break;
-            case 3:
-                mRssi.setText("Wifi Signal: Good");
+            case WIFI_SIGNAL_GOOD:
+                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_good));
                 mRssi.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.good), PorterDuff.Mode.SRC_ATOP); // White Tint
                 break;
-            case 2:
-                mRssi.setText("Wifi Signal: Fair");
+            case WIFI_SIGNAL_FAIR:
+                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_fair));
                 mRssi.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.fair), PorterDuff.Mode.SRC_ATOP); // White Tint
                 break;
-            case 1:
-            case 0:
-                mRssi.setText("Wifi Signal: Weak");
+            case WIFI_SIGNAL_WEAK:
+            case 0: // 0 belongs to wifi signal weak
+                mRssi.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_weak));
                 mRssi.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.weak), PorterDuff.Mode.SRC_ATOP); // White Tint
                 break;
             default:
