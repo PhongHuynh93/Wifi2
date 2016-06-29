@@ -302,12 +302,13 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         // set new font and change text in textview
 
 //        wifi info
-        String ssid = HelpUtils.removeChar(mWifiModel.getSsid(), "\"");
-        setFontAndTextToTv(mSsidTv, QUICKSAND_BOLD, ssid);
+        String ssidMes = HelpUtils.removeChar(mWifiModel.getSsid(), "\"");
+        setFontAndTextToTv(mSsidTv, QUICKSAND_BOLD, ssidMes);
 
-        String bssid = "<b>" + "Bssid: " + "</b> " + mWifiModel.getBssid();
-        mBssidTv.setTypeface(font_quicksand_light);
-        mBssidTv.setText(Html.fromHtml(bssid));
+//        String bssid = "<b>" + "Bssid: " + "</b> " + mWifiModel.getBssid();
+//        mBssidTv.setTypeface(font_quicksand_light);
+//        mBssidTv.setText(Html.fromHtml(bssid));
+        setFontAndTextToTv(mBssidTv, QUICKSAND_LIGHT, getBoldPartOfMessage("Bssid: ", mWifiModel.getBssid()));
 
         String macAddress = "<b>" + "Mac add: " + "</b> " + mWifiModel.getMacAddress();
         mMacAddressTv.setTypeface(font_quicksand_light);
