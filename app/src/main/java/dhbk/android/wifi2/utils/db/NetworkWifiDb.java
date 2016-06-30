@@ -201,7 +201,7 @@ public class NetworkWifiDb implements
 
 
     // create wifi table
-    private String createWifiLocationTable(String tableName) {
+    public static String createWifiLocationTable(String tableName) {
         StringBuilder createWifiTable = new StringBuilder();
         createWifiTable.append("CREATE TABLE ");
         createWifiTable.append(tableName);
@@ -266,7 +266,7 @@ public class NetworkWifiDb implements
 
 
     // create wifi table
-    private String createWifiStateAndDate(String tableName) {
+    public static String createWifiStateAndDate(String tableName) {
         StringBuilder createWifiTable = new StringBuilder();
         createWifiTable.append("CREATE TABLE ");
         createWifiTable.append(tableName);
@@ -315,6 +315,8 @@ public class NetworkWifiDb implements
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT_INFO);
+
+        // TODO: 6/30/16 remove table location and state that we dont have a name here
         onCreate(db);
     }
 

@@ -36,6 +36,7 @@ import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.GUIUtils;
+import dhbk.android.wifi2.utils.HelpUtils;
 
 public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     // set wifi signal max = 5, so system will get the strength of wifi signal from 0 -> 4
@@ -268,7 +269,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         setFontToTv(mShowWifiInfoTv, QUICKSAND_LIGHT);
 
         // set new font and change text in textview
-        String ssidMes = getStringAfterRemoveChar(mWifiModel.getSsid(), "\"");
+        String ssidMes = HelpUtils.getStringAfterRemoveChar(mWifiModel.getSsid(), "\"");
         setFontAndTextToTv(mSsidTv, QUICKSAND_BOLD, ssidMes);
         setFontAndTextToTv(mBssidTv, QUICKSAND_LIGHT, R.string.title_message_bssid, mWifiModel.getBssid());
         setFontAndTextToTv(mMacAddressTv, QUICKSAND_LIGHT, R.string.title_message_mac_add, mWifiModel.getMacAddress());

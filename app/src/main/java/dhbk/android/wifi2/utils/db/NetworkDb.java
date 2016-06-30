@@ -19,7 +19,7 @@ import dhbk.android.wifi2.models.WifiModel;
 public class NetworkDb extends SQLiteOpenHelper{
     private static NetworkDb sInstance;
     private static final String DATABASE_NAME = "database_network";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
 
     private ArrayList<onDbInteractionListener.onDbTableInteractionListener> listTable = new ArrayList<>();
     public static synchronized NetworkDb getInstance(Context context) {

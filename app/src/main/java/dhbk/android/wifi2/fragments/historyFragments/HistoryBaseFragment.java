@@ -3,7 +3,6 @@ package dhbk.android.wifi2.fragments.historyFragments;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.support.annotation.ColorRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
@@ -91,10 +90,6 @@ public abstract class HistoryBaseFragment extends Fragment {
         textView.setText(message);
     }
 
-    @NonNull
-    public String getStringAfterRemoveChar(@NonNull String textBeforeRemove, @NonNull String charRemove) {
-        return textBeforeRemove.replace(charRemove, "");
-    }
 
     //    set text and change background color of a textview
     public void setTextAndChangeBgColorTv(TextView textView, @StringRes int messageTv, @ColorRes int colorBg) {

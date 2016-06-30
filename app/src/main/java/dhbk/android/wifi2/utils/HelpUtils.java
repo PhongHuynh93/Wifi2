@@ -54,4 +54,9 @@ public class HelpUtils {
     public static String getTableDbName(@NonNull String ssid, int networkId, String addString) {
         return ssid + "_" + networkId + "_" + addString;
     }
+
+    @NonNull
+    public static String getStringAfterRemoveChar(@NonNull String textBeforeRemove, @NonNull String charRemove) {
+        return textBeforeRemove.replace(charRemove, "");
+    }
 }

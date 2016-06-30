@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.HelpUtils;
@@ -15,8 +16,10 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  */
 public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
     private static final String LOCATION = "location";
+    private static final String TAG = AddWifiLocationToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final WifiModel mWifiModel;
+    private String mTableName;
 
     public AddWifiLocationToDbTask(SQLiteDatabase db, WifiModel wifiModel) {
         this.mDb = db;
@@ -30,6 +33,9 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
         double latitude = mWifiModel.getLatitude();
         double longitude = mWifiModel.getLongitude();
         int isHasLocation = mWifiModel.getIsHasLocation();
+
+        // remove "" in ssid before make a table name, if not - we have a syntax in tablename which not containging ""
+        mTableName = HelpUtils.getTableDbName(ssid, networkId, LOCATION);
 
         mDb.beginTransaction();
         try {
@@ -51,11 +57,13 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
                 }
             }
 
-            String tableName = HelpUtils.getTableDbName(ssid, networkId, LOCATION);
-            mDb.insertOrThrow(tableName, null, wifiLocationValues);
+
+            mDb.insertOrThrow(mTableName, null, wifiLocationValues);
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {
+            // if we catch this exception, means that we have not already created table wifi location, so we create in here.
+            Log.e(TAG, "doInBackground: " + e);
             return false;
         } finally {
             mDb.endTransaction();
@@ -63,4 +71,20 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
         return true;
     }
 
+    @Override
+    protected void onPostExecute(Boolean correctDb) {
+        super.onPostExecute(correctDb);
+        if (!correctDb) {
+            mDb.beginTransaction();
+            try {
+                String createTableName = NetworkWifiDb.createWifiLocationTable(mTableName);
+                mDb.execSQL(createTableName);
+                mDb.setTransactionSuccessful();
+            } catch (SQLiteException errorCreateTable) {
+                Log.e(TAG, "doInBackground: " + errorCreateTable);
+            } finally {
+                mDb.endTransaction();
+            }
+        }
+    }
 }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.HelpUtils;
@@ -15,8 +16,10 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  */
 public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> {
     private static final String STATE_AND_DATE = "state_and_date";
+    private static final String TAG = AddWifiStateAndDateToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final WifiModel mWifiModel;
+    private String mTableName;
 
     public AddWifiStateAndDateToDbTask(SQLiteDatabase db, WifiModel wifiModel) {
         this.mDb = db;
@@ -28,6 +31,8 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
         // 2 var to create tablename
         String ssid = mWifiModel.getSsid();
         int networkId = mWifiModel.getNetworkId();
+
+        mTableName = HelpUtils.getTableDbName(ssid, networkId, STATE_AND_DATE);
 
         // save to db
         String state = mWifiModel.getState();
@@ -59,11 +64,12 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
                 }
             }
 
-            String tableName = HelpUtils.getTableDbName(ssid, networkId, STATE_AND_DATE);
-            mDb.insertOrThrow(tableName, null, wifiStateAndDateValues);
+            mDb.insertOrThrow(mTableName, null, wifiStateAndDateValues);
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {
+
+            Log.e(TAG, "doInBackground: " + e);
             return false;
         } finally {
             mDb.endTransaction();
@@ -71,4 +77,22 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
         return true;
     }
 
+    @Override
+    protected void onPostExecute(Boolean correctDb) {
+        super.onPostExecute(correctDb);
+        if (!correctDb) {
+            mDb.beginTransaction();
+            // if we catch this exception, means that we have not already created table wifi location, so we create in here.
+            try {
+                String createTableName = NetworkWifiDb.createWifiStateAndDate(mTableName);
+                mDb.execSQL(createTableName);
+                mDb.setTransactionSuccessful();
+                // TODO: 6/30/16 after created, add insert again
+            } catch (SQLiteException errorCreateTable) {
+                Log.e(TAG, "doInBackground: " + errorCreateTable);
+            } finally {
+                mDb.endTransaction();
+            }
+        }
+    }
 }

@@ -55,6 +55,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     mSsid = wifiInfo.getSSID();
+                    mSsid = HelpUtils.getStringAfterRemoveChar(mSsid, "\"");
                     mBssid = wifiInfo.getBSSID();
                     mRssi = wifiInfo.getRssi();
                     mMacAddress = wifiInfo.getMacAddress();
@@ -93,13 +94,17 @@ public class WifiReceiver extends BroadcastReceiver {
                     WifiModel wifiInfoModel = new WifiModel(mSsid, mBssid, mMacAddress, mNetworkId);
                     networkDb.addWifiInfoToTable(wifiInfoModel);
 
-                    // add location to wifi
-                    WifiModel wifiLocationModel = new WifiModel(mSsid, mNetworkId, latitude, longitude, isHasLocation);
-                    networkDb.addWifiLocationToTable(wifiLocationModel);
+                    // because wifiLocation table and wifi state and date table make a name that contain ssid, so we must check whether ssid is null or not.
+                    if (mSsid != null) {
+                        // add location to wifi
 
-                    // add state and date to db
-                    WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT);
-                    networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
+                        WifiModel wifiLocationModel = new WifiModel(mSsid, mNetworkId, latitude, longitude, isHasLocation);
+                        networkDb.addWifiLocationToTable(wifiLocationModel);
+
+                        // add state and date to db
+                        WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT);
+                        networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
+                    }
                 }
 
             }
@@ -115,10 +120,13 @@ public class WifiReceiver extends BroadcastReceiver {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
                     String nowDate = formatter.format(now);
 
-                    // add state and date to db
-                    WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT);
-                    NetworkDb networkDb = NetworkDb.getInstance(context);
-                    networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
+                    // because wifiLocation table and wifi state and date table make a name that contain ssid, so we must check whether ssid is null or not.
+                    if (mSsid != null) {
+                        // add state and date to db
+                        WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT);
+                        NetworkDb networkDb = NetworkDb.getInstance(context);
+                        networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
+                    }
                 }
             }
         }
