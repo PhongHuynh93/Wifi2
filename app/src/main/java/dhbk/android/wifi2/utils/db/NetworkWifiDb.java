@@ -108,11 +108,12 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS = "column_mac_address";
     public static final String KEY_WIFI_HOTSPOT_INFO_NETWORK_ID = "column_network_id";
 
+    // we want to show a unique wifi hotspot, bssid is a mac address of access points, it's unique so we want this value to create a list of wifi hotspot
     public static final String VALUE_WIFI_HOTSPOT_INFO_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_SSID = " TEXT NOT NULL, ";
-    public static final String VALUE_WIFI_HOTSPOT_INFO_BSSID = " TEXT NOT NULL, ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_BSSID = " TEXT NOT NULL UNIQUE, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS = " TEXT NOT NULL, ";
-    public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER NOT NULL UNIQUE);";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER NOT NULL);";
 
     // declare array of column and value
     public static final String[] COLUMN_TABLE_WIFI_HOTSPOT_INFO = new String[] {

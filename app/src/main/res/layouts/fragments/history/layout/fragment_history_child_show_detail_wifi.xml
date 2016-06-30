@@ -73,10 +73,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <!--<TextView-->
-            <!--android:id="@+id/linkspeed"-->
-            <!--android:layout_gravity="end" />-->
-
             <!--mac add + network id-->
             <TextView
                 android:id="@+id/mac_address"
@@ -88,42 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <!--&lt;!&ndash;ip add + wifi signal&ndash;&gt;-->
-            <!--<TextView-->
-            <!--android:id="@+id/ip_address" />-->
-
-            <!--<TextView-->
-            <!--android:id="@+id/rssi"-->
-            <!--android:layout_gravity="end"-->
-            <!--android:background="@drawable/bg_view"-->
-            <!--android:padding="4dp"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--android:textSize="@dimen/font_smaller"/>-->
-
         </LinearLayout>
-
-        <!--<GridLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_margin="@dimen/space_smaller_2"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/round_corner"-->
-        <!--android:columnCount="2"-->
-        <!--android:padding="@dimen/space_smaller_2">-->
-
-        <!--&lt;!&ndash;date + state&ndash;&gt;-->
-        <!--<TextView-->
-        <!--android:id="@+id/date" />-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/state"-->
-        <!--android:layout_gravity="end"-->
-        <!--android:background="@drawable/bg_view"-->
-        <!--android:padding="4dp"-->
-        <!--android:textColor="@android:color/white"-->
-        <!--android:textSize="@dimen/font_smaller"/>-->
-
-        <!--</GridLayout>-->
 
         <Button
             android:id="@+id/btn_show_wifi_on_map"
