@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiModel;
 
 /**
@@ -109,7 +110,7 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void addWifiLocationToTable(WifiModel wifiLocationModel) {
+    public void addWifiLocationToTable(WifiLocationModel wifiLocationModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
         if (tableName != null) {
             tableName.addWifiLocation(getWritableDatabase(), wifiLocationModel);

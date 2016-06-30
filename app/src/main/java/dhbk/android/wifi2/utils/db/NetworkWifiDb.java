@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiModel;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiInfoToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiLocationToDbTask;
@@ -369,7 +370,7 @@ public class NetworkWifiDb implements
 
     // add wifi location to db
     @Override
-    public void addWifiLocation(SQLiteDatabase db, WifiModel wifiLocationModel) {
+    public void addWifiLocation(SQLiteDatabase db, WifiLocationModel wifiLocationModel) {
         new AddWifiLocationToDbTask(db, wifiLocationModel).execute();
     }
 

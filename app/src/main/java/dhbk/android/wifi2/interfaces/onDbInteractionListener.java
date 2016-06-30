@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiModel;
 
 /**
@@ -29,7 +30,7 @@ public interface onDbInteractionListener {
 
         // new method
         void addWifiInfo(SQLiteDatabase db, WifiModel wifiInfoModel);
-        void addWifiLocation(SQLiteDatabase db, WifiModel wifiLocationModel);
+        void addWifiLocation(SQLiteDatabase db, WifiLocationModel wifiLocationModel);
         void addWifiStateAndDate(SQLiteDatabase db, WifiModel wifiStateAndDateModel);
 
     }

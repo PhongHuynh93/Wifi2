@@ -67,14 +67,7 @@ public class WifiModel {
         this.mNetworkId = mNetworkId;
     }
 
-    //    wifi with location
-    public WifiModel(String mSsid, int mNetworkId, double latitude, double longitude, int isHasLocation) {
-        this.mLatitude = latitude;
-        this.mLongitude = longitude;
-        this.mIsHasLocation = isHasLocation;
-        this.mSsid = mSsid;
-        this.mNetworkId = mNetworkId;
-    }
+
 
     //    wifi state and date
     public WifiModel(String mSsid, int mNetworkId, int mLinkSpeed, int mRssi, String nowDate, String state, int ipAddress) {

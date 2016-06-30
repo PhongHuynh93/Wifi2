@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
@@ -18,24 +18,23 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG = AddWifiLocationToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
-    private final WifiModel mWifiModel;
+    private final WifiLocationModel mWifiLocationModel;
     private String mTableName;
 
-    public AddWifiLocationToDbTask(SQLiteDatabase db, WifiModel wifiModel) {
+    public AddWifiLocationToDbTask(SQLiteDatabase db, WifiLocationModel wifiLocationModel) {
         this.mDb = db;
-        this.mWifiModel = wifiModel;
+        this.mWifiLocationModel = wifiLocationModel;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        String ssid = mWifiModel.getSsid();
-        int networkId = mWifiModel.getNetworkId();
-        double latitude = mWifiModel.getLatitude();
-        double longitude = mWifiModel.getLongitude();
-        int isHasLocation = mWifiModel.getIsHasLocation();
+        String bssid = mWifiLocationModel.getBssid();
+        double latitude = mWifiLocationModel.getLatitude();
+        double longitude = mWifiLocationModel.getLongitude();
+        int isHasLocation = mWifiLocationModel.getIsHasLocation();
 
         // remove "" in ssid before make a table name, if not - we have a syntax in tablename which not containging ""
-        mTableName = HelpUtils.getTableDbName(ssid, networkId, Constant.TABLE_LOCATION);
+        mTableName = HelpUtils.getTableDbName(bssid, Constant.TABLE_LOCATION);
 
         mDb.beginTransaction();
         try {
@@ -57,12 +56,11 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
                 }
             }
 
-
             mDb.insertOrThrow(mTableName, null, wifiLocationValues);
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {
-            // if we catch this exception, means that we have not already created table wifi location, so we create in here.
+            // if we catch this exception, means that we have not already created table wifi location, so we create a table in onPost.
             Log.e(TAG, "doInBackground: " + e);
             return false;
         } finally {
