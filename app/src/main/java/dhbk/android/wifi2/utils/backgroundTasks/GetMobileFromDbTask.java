@@ -41,8 +41,8 @@ public class GetMobileFromDbTask  extends AsyncTask<Void, Void, Cursor> {
     protected void onPostExecute(Cursor cursor) {
         super.onPostExecute(cursor);
         if (mFragment != null) {
-            if (mFragment instanceof OnFragInteractionListener.OnHistoryMobileFragInteractionListener) {
-                ((OnFragInteractionListener.OnHistoryMobileFragInteractionListener) mFragment).populateCursorToRcv(cursor);
+            if (mFragment instanceof OnFragInteractionListener.OnHistoryFragInteractionListener) {
+                ((OnFragInteractionListener.OnHistoryFragInteractionListener) mFragment).onGetMobileHistoryCursor(cursor);
             }
         }
 

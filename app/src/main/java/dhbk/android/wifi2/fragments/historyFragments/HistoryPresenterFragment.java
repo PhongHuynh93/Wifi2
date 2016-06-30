@@ -29,7 +29,8 @@ import dhbk.android.wifi2.utils.db.NetworkDb;
 contain tasks relating to background or get datas from db and show it to it's child fragment.
 replace|add|pop child fragment
  */
-public class HistoryPresenterFragment extends Fragment implements OnFragInteractionListener.OnHistoryFragInteractionListener{
+public class HistoryPresenterFragment extends Fragment implements
+        OnFragInteractionListener.OnHistoryFragInteractionListener{
     private static final String TAG = HistoryPresenterFragment.class.getSimpleName();
     private OnFragInteractionListener.OnMainFragInteractionListener mMainListener;
 
@@ -172,6 +173,12 @@ public class HistoryPresenterFragment extends Fragment implements OnFragInteract
         networkDb.getWifiHistory(this);
     }
 
+    // get mobile data from db
+    public void getMobileDataFromDb() {
+        NetworkDb networkDb = NetworkDb.getInstance(getActivity());
+        networkDb.getMobileHistory(this);
+    }
+
     // a callback from db with data wifi history result.
     @Override
     public void onGetWifiHistoryCursor(Cursor cursor) {
@@ -180,4 +187,15 @@ public class HistoryPresenterFragment extends Fragment implements OnFragInteract
             ((HistoryWifiMobileFragment)childFragment).getWifiFragmentAndPassWifiCursor(cursor);
         }
     }
+
+    // a callback from db with data mobile history result.
+    @Override
+    public void onGetMobileHistoryCursor(Cursor cursor) {
+        Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_MOBILE_FRAGMENT);
+        if (childFragment instanceof HistoryWifiMobileFragment) {
+            ((HistoryWifiMobileFragment)childFragment).getMobileFragmentAndPassWifiCursor(cursor);
+        }
+    }
+
+
 }

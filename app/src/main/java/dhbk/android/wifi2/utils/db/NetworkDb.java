@@ -3,6 +3,7 @@ package dhbk.android.wifi2.utils.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
@@ -16,11 +17,9 @@ import dhbk.android.wifi2.models.WifiModel;
  * Created by phongdth.ky on 6/15/2016.
  */
 public class NetworkDb extends SQLiteOpenHelper{
-    private static final String TAG = NetworkDb.class.getSimpleName();
-
     private static NetworkDb sInstance;
     private static final String DATABASE_NAME = "database_network";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 8;
 
     private ArrayList<onDbInteractionListener.onDbTableInteractionListener> listTable = new ArrayList<>();
     public static synchronized NetworkDb getInstance(Context context) {
@@ -93,6 +92,28 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
+    // TODO: 6/29/16 add new method to add to new table
+    public void addWifiInfoToTable(WifiModel wifiInfoModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.addWifiInfo(getWritableDatabase(), wifiInfoModel);
+        }
+    }
+
+    public void addWifiLocationToTable(WifiModel wifiLocationModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.addWifiLocation(getWritableDatabase(), wifiLocationModel);
+        }
+    }
+
+    public void addStateAndDateWifiToTable(WifiModel wifiStateAndDateModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.addWifiStateAndDate(getWritableDatabase(), wifiStateAndDateModel);
+        }
+    }
+
     //##########################################################################################
     // METHOD MOBILE TABLE
 
@@ -107,12 +128,23 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void getCursorFromMobile(Fragment fragment) {
+    public void getMobileHistory(Fragment fragment) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbMobileTableInteractionListener) {
-                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).onGetCursor(getReadableDatabase(), fragment);
+                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).getMobileHistoryCursor(getReadableDatabase(), fragment);
             }
         }
+    }
+
+    @Nullable
+    private onDbInteractionListener.onDbWifiTableInteractionListener getNetworkWifiDb() {
+        for (int i = 0; i < listTable.size(); i++) {
+            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
+            if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
+                return ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName);
+            }
+        }
+        return null;
     }
 }

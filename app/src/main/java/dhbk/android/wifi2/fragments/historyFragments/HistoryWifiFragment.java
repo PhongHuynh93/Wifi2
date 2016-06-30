@@ -4,8 +4,6 @@ package dhbk.android.wifi2.fragments.historyFragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.historyAdapters.HistoryWifiRecyclerViewAdapter;
-import dhbk.android.wifi2.utils.DividerItemDecoration;
+import dhbk.android.wifi2.utils.Constant;
 
 /*
 get wifi data trong db and populate to recyclerview
@@ -41,27 +39,15 @@ public class HistoryWifiFragment extends HistoryBaseFragment {
         return view;
     }
 
+    // declare recyclerview and get data from db to show to it
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HistoryWifiRecyclerViewAdapter adapter = new HistoryWifiRecyclerViewAdapter(getActivity(), null);
-
         mRcvHistory = (RecyclerView) getActivity().findViewById(R.id.rcv_history);
-        mRcvHistory.setAdapter(adapter);
-        mRcvHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRcvHistory.setHasFixedSize(true);
-        // add horizontal white divider between each row
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
-        mRcvHistory.addItemDecoration(itemDecoration);
-
-        // : 6/15/2016 get wifi data from database (id, state, ssid, date)
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof HistoryWifiMobileFragment) {
-            ((HistoryWifiMobileFragment) parentFragment).callPresenterToGetWifiDataFromDb();
-        }
+        declareRcvAndGetDataFromDb(mRcvHistory, adapter, Constant.WIFI_RECYCLERVIEW);
     }
 
-    // TODO: 6/28/2016 error make null recyclerview
     //    a callback from presenter contain wifi data
     public void onPopulateWifiCursorToRcv(final Cursor cursor) {
         try {

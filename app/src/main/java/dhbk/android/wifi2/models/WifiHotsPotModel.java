@@ -18,6 +18,15 @@ public class WifiHotsPotModel {
         this.isTurnOnGps = isTurnOnGps;
     }
 
+    public WifiHotsPotModel(String networkSSID, String networkPass, double latitude, double longitude) {
+        this.networkSSID = networkSSID;
+        this.networkPass = networkPass;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+
+
     public String getNetworkSSID() {
         return networkSSID;
     }

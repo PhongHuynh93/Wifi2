@@ -12,6 +12,7 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/17/2016.
+ * get wifi hotspot with location from db
  */
 public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
 
@@ -28,9 +29,9 @@ public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
     protected Cursor doInBackground(Void... params) {
         Cursor cursor;
         try {
-            //  (check this cursor): 6/17/2016 change column to get ssid, pass, lat/long
+            // get
             cursor = mDb.query (NetworkWifiDb.TABLE_WIFI_HOTSPOT,
-                    new String[] {NetworkWifiDb.KEY_WIFI_HOTSPOT_ID, NetworkWifiDb.KEY_WIFI_HOTSPOT_SSID, NetworkWifiDb.KEY_WIFI_HOTSPOT_PASS, NetworkWifiDb.KEY_WIFI_HOTSPOT_LAT, NetworkWifiDb.KEY_WIFI_HOTSPOT_LONG},
+                    NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION,
                     NetworkWifiDb.KEY_WIFI_HOTSPOT_ISTURNONGPS + " = ?",
                     new String[] {Integer.toString(1)},
                     null, null,null);

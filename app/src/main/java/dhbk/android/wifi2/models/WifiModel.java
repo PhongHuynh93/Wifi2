@@ -6,8 +6,12 @@ import android.database.Cursor;
  * Created by phongdth.ky on 6/14/2016.
  */
 public class WifiModel {
+
+    private int mIsHasLocation;
+    private double mLongitude;
+    private double mLatitude;
     private String state;
-    private String ssid;
+    private String mSsid;
     private String encryption;
     private String date;
 
@@ -20,7 +24,7 @@ public class WifiModel {
 
     public WifiModel(String state, String ssid, String date, String bssid, int rssi, String macAddress, int ipAddress, int linkSpeed, int networkId) {
         this.state = state;
-        this.ssid = ssid;
+        this.mSsid = ssid;
         this.date = date;
         mBssid = bssid;
         mRssi = rssi;
@@ -30,9 +34,49 @@ public class WifiModel {
         mNetworkId = networkId;
     }
 
+    public WifiModel(String state, String ssid, String date, String bssid, int rssi, String macAddress, int ipAddress, int linkSpeed, int networkId, double latitude, double longitude, int isHasLocation) {
+        this.state = state;
+        this.mSsid = ssid;
+        this.date = date;
+        mBssid = bssid;
+        mRssi = rssi;
+        mMacAddress = macAddress;
+        mIpAddress = ipAddress;
+        mLinkSpeed = linkSpeed;
+        mNetworkId = networkId;
+        mLatitude = latitude;
+        mLongitude = longitude;
+        mIsHasLocation = isHasLocation;
+    }
+
+
     public WifiModel(String ssid, String encryption) {
-        this.ssid = ssid;
+        this.mSsid = ssid;
         this.encryption = encryption;
+    }
+
+    public WifiModel(String mSsid, String mBssid, String mMacAddress, int mNetworkId) {
+        this.mSsid = mSsid;
+        this.mBssid = mBssid;
+        this.mMacAddress = mMacAddress;
+        this.mNetworkId = mNetworkId;
+    }
+
+    public WifiModel(String mSsid, int mNetworkId, double latitude, double longitude, int isHasLocation) {
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
+        this.mIsHasLocation = isHasLocation;
+        this.mSsid = mSsid;
+        this.mNetworkId = mNetworkId;
+    }
+
+    public WifiModel(String mSsid, int mNetworkId, int mLinkSpeed, int mRssi, String nowDate, String state) {
+        this.mLinkSpeed = mLinkSpeed;
+        this.mRssi = mRssi;
+        this.date = nowDate;
+        this.state = state;
+        this.mSsid = mSsid;
+        this.mNetworkId = mNetworkId;
     }
 
     public String getState() {
@@ -44,7 +88,7 @@ public class WifiModel {
     }
 
     public String getSsid() {
-        return ssid;
+        return mSsid;
     }
 
     public String getEncryption() {
@@ -87,5 +131,17 @@ public class WifiModel {
 
     public int getNetworkId() {
         return mNetworkId;
+    }
+
+    public int getIsHasLocation() {
+        return mIsHasLocation;
+    }
+
+    public double getLongitude() {
+        return mLongitude;
+    }
+
+    public double getLatitude() {
+        return mLatitude;
     }
 }

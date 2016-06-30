@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.db.NetworkDb;
+import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 public class HistoryWithOsmMapFragment extends Fragment {
 
@@ -59,14 +61,25 @@ public class HistoryWithOsmMapFragment extends Fragment {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_OSM_MAP_FRAGMENT);
         if (childFragment instanceof HistoryChildOsmMapFragment)  {
             if (cursor.moveToFirst()) {
+                // loop all row in cursor
                 do {
-                    String ssid = cursor.getString(1); // cot 0 la id
-                    String pass = cursor.getString(2);
-                    double latitutude = cursor.getDouble(3);
-                    double longitude = cursor.getDouble(4);
-
-                    // show on map
-                    ((HistoryChildOsmMapFragment) childFragment).showWifiHotspotOnMap(ssid, pass, latitutude, longitude);
+                    String ssid = "";
+                    String pass = "";
+                    double latitude = 0.0;
+                    double longitude = 0.0;
+                    for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION.length; i++) {
+                        if (NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[i].equals(NetworkWifiDb.KEY_WIFI_HOTSPOT_SSID)) {
+                            ssid = cursor.getString(i);
+                        } else if ((NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[i].equals(NetworkWifiDb.KEY_WIFI_HOTSPOT_PASS))) {
+                            pass = cursor.getString(i);
+                        } else if ((NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[i].equals(NetworkWifiDb.KEY_WIFI_HOTSPOT_LAT))) {
+                            latitude = cursor.getDouble(i);
+                        } else if ((NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[i].equals(NetworkWifiDb.KEY_WIFI_HOTSPOT_LONG))) {
+                            longitude = cursor.getDouble(i);
+                        }
+                    }
+                    WifiHotsPotModel wifiHotsPotModel = new WifiHotsPotModel(ssid, pass, latitude, longitude);
+                    ((HistoryChildOsmMapFragment) childFragment).showWifiHotspotOnMap(wifiHotsPotModel);
                 } while (cursor.moveToNext());
             }
         }

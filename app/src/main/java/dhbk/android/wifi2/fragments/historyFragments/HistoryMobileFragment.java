@@ -4,23 +4,23 @@ package dhbk.android.wifi2.fragments.historyFragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.historyAdapters.HistoryMobileRecyclerViewAdapter;
-import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
-import dhbk.android.wifi2.utils.DividerItemDecoration;
-import dhbk.android.wifi2.utils.db.NetworkDb;
+import dhbk.android.wifi2.utils.Constant;
 
-public class HistoryMobileFragment extends Fragment implements OnFragInteractionListener.OnHistoryMobileFragInteractionListener{
-
+// contains a recyclerview to show a list of wifi history that a user has connected or disconnected
+public class HistoryMobileFragment extends HistoryBaseFragment {
     private static final String TAG = HistoryMobileFragment.class.getSimpleName();
+    @BindView(R.id.rcv_history_mobile)
+    RecyclerView mRcvHistoryMobile;
 
     public HistoryMobileFragment() {
     }
@@ -33,36 +33,27 @@ public class HistoryMobileFragment extends Fragment implements OnFragInteraction
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_history_child_mobile, container, false);
+        View view = inflater.inflate(R.layout.fragment_history_child_mobile, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mRcvHistoryMobile = (RecyclerView) view.findViewById(R.id.rcv_history_mobile);
         HistoryMobileRecyclerViewAdapter adapter = new HistoryMobileRecyclerViewAdapter(getActivity(), null);
-        RecyclerView historyRcv = (RecyclerView) view.findViewById(R.id.rcv_history_mobile);
-        historyRcv.setAdapter(adapter);
-        historyRcv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        historyRcv.setHasFixedSize(true);
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
-        historyRcv.addItemDecoration(itemDecoration);
 
-        // : 6/15/2016 get the cursor (id, state, ssid, date)
-        NetworkDb networkDb = NetworkDb.getInstance(getActivity());
-        networkDb.getCursorFromMobile(this);
+        declareRcvAndGetDataFromDb(mRcvHistoryMobile, adapter, Constant.MOBILE_RECYCLERVIEW);
     }
 
-    // : 6/15/2016 populate the cursor, check null when rotate the screen
-    @Override
-    public void populateCursorToRcv(Cursor cursor) {
+    // populate data from db to recyclerview
+    public void onPopulateMobileCursorToRcv(Cursor cursor) {
         try {
-            RecyclerView historyRcv = (RecyclerView) getActivity().findViewById(R.id.rcv_history_mobile);
-            HistoryMobileRecyclerViewAdapter adapter = (HistoryMobileRecyclerViewAdapter) historyRcv.getAdapter();
+            HistoryMobileRecyclerViewAdapter adapter = (HistoryMobileRecyclerViewAdapter) mRcvHistoryMobile.getAdapter();
             adapter.changeCursor(cursor);
-
         } catch (NullPointerException e) {
             Log.e(TAG, "populateCursorToRcv: " + e.toString());
         }
     }
-
 }

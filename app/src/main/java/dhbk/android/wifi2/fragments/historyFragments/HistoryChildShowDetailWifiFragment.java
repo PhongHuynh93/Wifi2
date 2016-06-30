@@ -2,7 +2,6 @@ package dhbk.android.wifi2.fragments.historyFragments;
 
 
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -10,16 +9,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.format.Formatter;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +30,7 @@ import org.osmdroid.views.MapView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
 import dhbk.android.wifi2.models.WifiModel;
@@ -55,15 +52,15 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     private static final String QUICKSAND_LIGHT = "fonts/Quicksand-Light.otf";
     private static final String QUICKSAND_REGULAR = "fonts/Quicksand-Regular.otf";
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private static final String ARG_PARAM3 = "param3";
-    private static final String ARG_PARAM4 = "param4";
-    private static final String ARG_PARAM5 = "param5";
-    private static final String ARG_PARAM6 = "param6";
-    private static final String ARG_PARAM7 = "param7";
-    private static final String ARG_PARAM8 = "param8";
-    private static final String ARG_PARAM9 = "param9";
+    private static final String ARG_STATE = "state";
+    private static final String ARG_SSID = "ssid";
+    private static final String ARG_DATE = "date";
+    private static final String ARG_BSSID = "bssid";
+    private static final String ARG_RSSI = "rssi";
+    private static final String ARG_MAC_ADD = "mac_add";
+    private static final String ARG_IP_ADD = "ip_add";
+    private static final String ARG_LINK_SPEED = "link_speed";
+    private static final String ARG_NETWORK_ID = "network_id";
     private static final float TOOLBAR_HEIGHT_DP = 100;
 
     @BindView(R.id.fab_wifi_show_detail)
@@ -107,52 +104,43 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     public static HistoryChildShowDetailWifiFragment newInstance(WifiModel wifiModel) {
         HistoryChildShowDetailWifiFragment fragment = new HistoryChildShowDetailWifiFragment();
         Bundle args = new Bundle();
-        String state = wifiModel.getState();
-        String ssid = wifiModel.getSsid();
-        String date = wifiModel.getDate();
-        String mBssidTv = wifiModel.getBssid();
-        int mRssiTv = wifiModel.getRssi();
-        String mMacAddressTv = wifiModel.getMacAddress();
-        int mIpAddressTv = wifiModel.getIpAddress();
-        int mLinkSpeed = wifiModel.getLinkSpeed();
-        int mNetworkId = wifiModel.getNetworkId();
 
-        args.putString(ARG_PARAM1, state);
-        args.putString(ARG_PARAM2, ssid);
-        args.putString(ARG_PARAM3, date);
-        args.putString(ARG_PARAM4, mBssidTv);
-        args.putInt(ARG_PARAM5, mRssiTv);
-        args.putString(ARG_PARAM6, mMacAddressTv);
-        args.putInt(ARG_PARAM7, mIpAddressTv);
-        args.putInt(ARG_PARAM8, mLinkSpeed);
-        args.putInt(ARG_PARAM9, mNetworkId);
+        args.putString(ARG_STATE, wifiModel.getState());
+        args.putString(ARG_SSID, wifiModel.getSsid());
+        args.putString(ARG_DATE, wifiModel.getDate());
+        args.putString(ARG_BSSID, wifiModel.getBssid());
+        args.putInt(ARG_RSSI, wifiModel.getRssi());
+        args.putString(ARG_MAC_ADD, wifiModel.getMacAddress());
+        args.putInt(ARG_IP_ADD, wifiModel.getIpAddress());
+        args.putInt(ARG_LINK_SPEED, wifiModel.getLinkSpeed());
+        args.putInt(ARG_NETWORK_ID, wifiModel.getNetworkId());
 
         fragment.setArguments(args);
         return fragment;
     }
 
+    // get the para from HistoryWifiFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String state = getArguments().getString(ARG_PARAM1);
-            String ssid = getArguments().getString(ARG_PARAM2);
-            String date = getArguments().getString(ARG_PARAM3);
-            String mBssidTv = getArguments().getString(ARG_PARAM4);
-            int mRssiTv = getArguments().getInt(ARG_PARAM5);
-            String mMacAddressTv = getArguments().getString(ARG_PARAM6);
-            int mIpAddressTv = getArguments().getInt(ARG_PARAM7);
-            int mLinkSpeed = getArguments().getInt(ARG_PARAM8);
-            int mNetworkId = getArguments().getInt(ARG_PARAM9);
-
-            mWifiModel = new WifiModel(state, ssid, date, mBssidTv, mRssiTv, mMacAddressTv, mIpAddressTv, mLinkSpeed, mNetworkId);
+            mWifiModel = new WifiModel(
+                    getArguments().getString(ARG_STATE),
+                    getArguments().getString(ARG_SSID),
+                    getArguments().getString(ARG_DATE),
+                    getArguments().getString(ARG_BSSID),
+                    getArguments().getInt(ARG_RSSI),
+                    getArguments().getString(ARG_MAC_ADD),
+                    getArguments().getInt(ARG_IP_ADD),
+                    getArguments().getInt(ARG_LINK_SPEED),
+                    getArguments().getInt(ARG_NETWORK_ID)
+            );
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history_child_show_detail_wifi, container, false);
         ButterKnife.bind(this, view);
 
@@ -162,22 +150,13 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
             initViews();
         }
 
-        // declare toolbar
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        setHasOptionsMenu(true);
+        declareToolbar(mToolbar);
 
         // change attributes of toolbar
         mToolbar.setTitle("Wifi Details");
         mToolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.black));
         mToolbar.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grey_light));
-
-        // set placehold with long height for toolbar
-        AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) mToolbar.getLayoutParams();
-        layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TOOLBAR_HEIGHT_DP, getActivity().getResources().getDisplayMetrics());
-        mToolbar.setLayoutParams(layoutParams);
+        changeToolbarHeight(mToolbar, TOOLBAR_HEIGHT_DP, false);
 
         // : 6/27/2016 change up button n toolbar from white to black
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -191,7 +170,6 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         return view;
     }
 
-    // when press back button, close this fragment
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -255,6 +233,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
 //                set the text of textview in this layout
                 setWifiInfo();
                 setDateStateWifi();
+                setDefaultMapSetting(mMap);
             }
         });
     }
@@ -272,80 +251,47 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     private void backPressed() {
         Fragment fragment = getParentFragment();
         if (fragment instanceof HistoryPresenterFragment) {
-            ((HistoryPresenterFragment)fragment).popHistoryShowDetailWifiFragment();
+            ((HistoryPresenterFragment) fragment).popHistoryShowDetailWifiFragment();
         }
-
     }
 
     // set height for toolbar to default height
     private void setHeightForToolbarToDefault() {
-        AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) mToolbar.getLayoutParams();
-        TypedValue tv = new TypedValue();
-        getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
-        int actionBarHeight = getResources().getDimensionPixelSize(tv.resourceId);
-        layoutParams.height = actionBarHeight;
-        mToolbar.setLayoutParams(layoutParams);
+        changeToolbarHeight(mToolbar, 0, true); // 0 because not use custome toolbar height
     }
 
-    // TODO: 6/27/2016 where are many same template here, move this method to parent class
+    // Formatter.formatIpAddress(int) is predecated because it's not support ipv6 but we dont use it now.
     // change font, style of Wifi info textview
+    @SuppressWarnings("deprecation")
     private void setWifiInfo() {
-        // change font
-        Typeface font_quicksand_regular = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Regular.otf");
-        Typeface font_quicksand_light = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Light.otf");
-        Typeface font_quicksand_bold = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quicksand-Bold.otf");
-
         // set new font to textview
         setFontToTv(mBtnShowWifiOnMap, QUICKSAND_REGULAR);
         setFontToTv(mShowWifiInfoTv, QUICKSAND_LIGHT);
 
         // set new font and change text in textview
-
-//        wifi info
-        String ssidMes = HelpUtils.removeChar(mWifiModel.getSsid(), "\"");
+        String ssidMes = HelpUtils.getStringAfterRemoveChar(mWifiModel.getSsid(), "\"");
         setFontAndTextToTv(mSsidTv, QUICKSAND_BOLD, ssidMes);
+        setFontAndTextToTv(mBssidTv, QUICKSAND_LIGHT, R.string.title_message_bssid, mWifiModel.getBssid());
+        setFontAndTextToTv(mMacAddressTv, QUICKSAND_LIGHT, R.string.title_message_mac_add, mWifiModel.getMacAddress());
+        setFontAndTextToTv(mIpAddressTv, QUICKSAND_LIGHT, R.string.title_message_ip_add, Formatter.formatIpAddress(mWifiModel.getIpAddress()));
+        setFontAndTextToTv(mLinkspeedTv, QUICKSAND_LIGHT, R.string.title_message_link_speed, mWifiModel.getLinkSpeed() + " " + WifiInfo.LINK_SPEED_UNITS);
+        setFontAndTextToTv(mNetworkidTv, QUICKSAND_LIGHT, R.string.title_message_network_id, Integer.toString(mWifiModel.getNetworkId()));
 
-//        String bssid = "<b>" + "Bssid: " + "</b> " + mWifiModel.getBssid();
-//        mBssidTv.setTypeface(font_quicksand_light);
-//        mBssidTv.setText(Html.fromHtml(bssid));
-        setFontAndTextToTv(mBssidTv, QUICKSAND_LIGHT, getBoldPartOfMessage("Bssid: ", mWifiModel.getBssid()));
-
-        // FIXME: 6/29/16 change this to use method of parent class, and get the set the string to string xml
-        String macAddress = "<b>" + "Mac add: " + "</b> " + mWifiModel.getMacAddress();
-        mMacAddressTv.setTypeface(font_quicksand_light);
-        mMacAddressTv.setText(Html.fromHtml(macAddress));
-
-        String ipAddress = Formatter.formatIpAddress(mWifiModel.getIpAddress());
-        ipAddress = "<b>" + "Ip add: " + "</b> " + ipAddress;
-        mIpAddressTv.setTypeface(font_quicksand_light);
-        mIpAddressTv.setText(Html.fromHtml(ipAddress));
-
-        String linkSpeed = "<b>" + "Link speed: " + "</b> " + mWifiModel.getLinkSpeed() + " " + WifiInfo.LINK_SPEED_UNITS;
-        mLinkspeedTv.setTypeface(font_quicksand_light);
-        mLinkspeedTv.setText(Html.fromHtml(linkSpeed));
-
-        String networkId = "<b>" + "Network id: " + "</b> " + mWifiModel.getNetworkId();
-        mNetworkidTv.setTypeface(font_quicksand_light);
-        mNetworkidTv.setText(Html.fromHtml(networkId));
-
-        // : 6/27/2016 set text and change color depend on wifi signal
+        // 6/27/2016 set text and change color depend on wifi signal
         int wifiLevel = WifiManager.calculateSignalLevel(mWifiModel.getRssi(), MAX_WIFI_SIGNAL_LEVEL);
         switch (wifiLevel) {
             case WIFI_SIGNAL_EXCELLENT:
-                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_excellent));
+                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_excellent, R.color.excellent);
                 break;
             case WIFI_SIGNAL_GOOD:
-                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_good));
-                mRssiTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.good), PorterDuff.Mode.SRC_ATOP); // White Tint
+                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_good, R.color.good);
                 break;
             case WIFI_SIGNAL_FAIR:
-                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_fair));
-                mRssiTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.fair), PorterDuff.Mode.SRC_ATOP); // White Tint
+                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_fair, R.color.fair);
                 break;
             case WIFI_SIGNAL_WEAK:
             case 0: // 0 belongs to wifi signal weak
-                mRssiTv.setText(getActivity().getResources().getString(R.string.show_message_wifi_signal_weak));
-                mRssiTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.weak), PorterDuff.Mode.SRC_ATOP); // White Tint
+                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_weak, R.color.weak);
                 break;
             default:
                 break;
@@ -354,16 +300,20 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
 
     // set data and change background color depend on state in db.
     private void setDateStateWifi() {
-//        set date
-        mDateTv.setText(mWifiModel.getDate());
-//        set state
+        setFontAndTextToTv(mDateTv, QUICKSAND_LIGHT, mWifiModel.getDate());
+//        mDateTv.setText(mWifiModel.getDate());
         String state = mWifiModel.getState();
-        mStateTv.setText(state);
-//        when disconnect, change background tint color
         if (state.equals(Constant.WIFI_DISCONNECT)) {
-            mStateTv.setBackgroundResource(R.drawable.bg_view);
-            mStateTv.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.dark_orange), PorterDuff.Mode.SRC_ATOP);
+            setTextAndChangeBgColorTv(mStateTv, state, R.color.disconnected);
+        } else {
+            setTextAndChangeBgColorTv(mStateTv, state, R.color.connected);
         }
     }
 
+    // when click "View Wifi Hotspots" button, show a wifi hotspot on the map by go to db and get location
+    // seach db by "ssid"
+    @OnClick(R.id.btn_show_wifi_on_map)
+    public void onClick() {
+
+    }
 }

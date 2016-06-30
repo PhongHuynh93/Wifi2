@@ -33,4 +33,11 @@
     <string name="show_message_wifi_signal_good">Wifi Signal: Good</string>
     <string name="show_message_wifi_signal_fair">Wifi Signal: Fair</string>
     <string name="show_message_wifi_signal_weak">Wifi Signal: Weak</string>
+
+    <!--HistoryChildShowDetailWifiFragment-->
+    <string name="title_message_bssid">Bssid: </string>
+    <string name="title_message_mac_add">Mac add: </string>
+    <string name="title_message_ip_add">Ip add: </string>
+    <string name="title_message_link_speed">Link speed: </string>
+    <string name="title_message_network_id">Network id: </string>
 </resources>
