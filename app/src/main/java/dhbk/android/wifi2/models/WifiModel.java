@@ -10,7 +10,6 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  */
 public class WifiModel {
 
-    private static final String TAG = WifiModel.class.getSimpleName();
     private int mIsHasLocation;
     private double mLongitude;
     private double mLatitude;
@@ -67,18 +66,6 @@ public class WifiModel {
         this.mNetworkId = mNetworkId;
     }
 
-
-
-    //    wifi state and date
-    public WifiModel(String mSsid, int mNetworkId, int mLinkSpeed, int mRssi, String nowDate, String state, int ipAddress) {
-        this.mLinkSpeed = mLinkSpeed;
-        this.mRssi = mRssi;
-        this.date = nowDate;
-        this.state = state;
-        this.mSsid = mSsid;
-        this.mNetworkId = mNetworkId;
-        this.mIpAddress = ipAddress;
-    }
 
     public WifiModel(int linkSpeed, int rssi, String date, String state, int ipAddress) {
         this.mLinkSpeed = linkSpeed;
