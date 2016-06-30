@@ -14,6 +14,7 @@ import dhbk.android.wifi2.utils.backgroundTasks.AddWifiToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiWithLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiFromDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiHotspotFromDbTask;
+import dhbk.android.wifi2.utils.backgroundTasks.GetWifiStateAndDateFromDbTask;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
@@ -233,19 +234,20 @@ public class NetworkWifiDb implements
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // STATE AND DATE OF WIFI HOTSPOT
-
     // column name and value
     public static final String KEY_WIFI_STATE_AND_DATE_ID = "_id";
     public static final String KEY_WIFI_STATE_AND_DATE_STATE = "column_state";
     public static final String KEY_WIFI_STATE_AND_DATE_DATE = "column_date";
     public static final String KEY_WIFI_STATE_AND_DATE_RSSI = "column_rssi";
     public static final String KEY_WIFI_STATE_AND_DATE_LINK_SPEED = "column_link_speed";
+    public static final String KEY_WIFI_STATE_AND_DATE_IP_ADDRESS = "column_ip_address";
 
     public static final String VALUE_WIFI_STATE_AND_DATE_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
     public static final String VALUE_WIFI_STATE_AND_DATE_STATE = " TEXT NOT NULL, ";
     public static final String VALUE_WIFI_STATE_AND_DATE_DATE = " TEXT NOT NULL, ";
     public static final String VALUE_WIFI_STATE_AND_DATE_RSSI = " INTEGER, ";
-    public static final String VALUE_WIFI_STATE_AND_DATE_LINK_SPEED = " INTEGER);";
+    public static final String VALUE_WIFI_STATE_AND_DATE_LINK_SPEED = " INTEGER, ";
+    public static final String VALUE_WIFI_STATE_AND_DATE_IP_ADDRESS = " INTEGER);";
 
     // declare array of column and value
     public static final String[] COLUMN_TABLE_WIFI_STATE_AND_DATE = new String[] {
@@ -253,7 +255,8 @@ public class NetworkWifiDb implements
             KEY_WIFI_STATE_AND_DATE_STATE,
             KEY_WIFI_STATE_AND_DATE_DATE,
             KEY_WIFI_STATE_AND_DATE_RSSI,
-            KEY_WIFI_STATE_AND_DATE_LINK_SPEED
+            KEY_WIFI_STATE_AND_DATE_LINK_SPEED,
+            KEY_WIFI_STATE_AND_DATE_IP_ADDRESS
     };
 
     public static final String[] VALUE_COLUMN_WIFI_STATE_AND_DATE = new String[] {
@@ -261,7 +264,8 @@ public class NetworkWifiDb implements
             VALUE_WIFI_STATE_AND_DATE_STATE,
             VALUE_WIFI_STATE_AND_DATE_DATE,
             VALUE_WIFI_STATE_AND_DATE_RSSI,
-            VALUE_WIFI_STATE_AND_DATE_LINK_SPEED
+            VALUE_WIFI_STATE_AND_DATE_LINK_SPEED,
+            VALUE_WIFI_STATE_AND_DATE_IP_ADDRESS
     };
 
 
@@ -293,6 +297,12 @@ public class NetworkWifiDb implements
                 case KEY_WIFI_STATE_AND_DATE_LINK_SPEED:
                     createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
+                case KEY_WIFI_STATE_AND_DATE_IP_ADDRESS:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
+                default:
                     break;
             }
         }
@@ -330,6 +340,11 @@ public class NetworkWifiDb implements
         new GetWifiFromDbTask(db, fragment).execute();
     }
 
+    @Override
+    public void getWifiStateAndDateCursor(SQLiteDatabase db, Fragment frag, WifiModel wifiModel) {
+        new GetWifiStateAndDateFromDbTask(db, frag, wifiModel).execute();
+    }
+
     // add wifi hotspot with location to db
     @Override
     public void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel) {
@@ -341,6 +356,8 @@ public class NetworkWifiDb implements
     public void onGetWifiHotspot(SQLiteDatabase db, Context activityContext) {
         new GetWifiHotspotFromDbTask(db, activityContext).execute();
     }
+
+
 
     // TODO: 6/29/2016 new method to deal with new table, after the program run, remove another method
     // add wifi info to db

@@ -73,6 +73,15 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
+    public void getWifiStateAndDate(Fragment frag, WifiModel wifiModel) {
+        for (int i = 0; i < listTable.size(); i++) {
+            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
+            if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
+                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).getWifiStateAndDateCursor(getReadableDatabase(), frag, wifiModel);
+            }
+        }
+    }
+
     // add wifi hotspot with location to database
     public void addWifiHotspotWithLocation(WifiHotsPotModel wifiHotsPotModel) {
         for (int i = 0; i < listTable.size(); i++) {
@@ -147,4 +156,6 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
         return null;
     }
+
+
 }

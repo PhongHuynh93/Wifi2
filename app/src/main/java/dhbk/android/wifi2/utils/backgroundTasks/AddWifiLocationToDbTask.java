@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
@@ -15,7 +16,6 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  * add wifi info contains ssid, networkid, mLatitude, mLongitude, mIsHasLocation to db
  */
 public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
-    private static final String LOCATION = "location";
     private static final String TAG = AddWifiLocationToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final WifiModel mWifiModel;
@@ -35,7 +35,7 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
         int isHasLocation = mWifiModel.getIsHasLocation();
 
         // remove "" in ssid before make a table name, if not - we have a syntax in tablename which not containging ""
-        mTableName = HelpUtils.getTableDbName(ssid, networkId, LOCATION);
+        mTableName = HelpUtils.getTableDbName(ssid, networkId, Constant.TABLE_LOCATION);
 
         mDb.beginTransaction();
         try {

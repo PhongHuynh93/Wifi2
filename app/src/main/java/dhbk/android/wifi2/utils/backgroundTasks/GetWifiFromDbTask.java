@@ -12,7 +12,7 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
- * get wifi data detail (dont have location) from db
+ * get wifi data info in TABLE_WIFI_HOTSPOT_INFO table (dont have location) from db
  */
 public class GetWifiFromDbTask extends AsyncTask<Void, Void, Cursor>{
     private final SQLiteDatabase mDb;
@@ -29,9 +29,9 @@ public class GetWifiFromDbTask extends AsyncTask<Void, Void, Cursor>{
         Cursor cursor;
 
         try {
-            // get all of column from table wifi
-            cursor = mDb.query (NetworkWifiDb.TABLE_WIFI,
-                    NetworkWifiDb.COLUMN_TABLE_WIFI,
+            // get all of column from table
+            cursor = mDb.query (NetworkWifiDb.TABLE_WIFI_HOTSPOT_INFO,
+                    NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO,
                     null,
                     null,
                     null, null,null);

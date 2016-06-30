@@ -42,7 +42,7 @@ public class HistoryMobileRecyclerViewAdapter extends
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_history_wifi, parent, false);
+                .inflate(R.layout.row_history_mobile, parent, false);
         ViewHolder vh = new ViewHolder(itemView);
         return vh;
     }

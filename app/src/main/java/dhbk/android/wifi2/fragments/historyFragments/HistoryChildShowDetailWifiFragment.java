@@ -1,21 +1,20 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
 
+import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,19 +38,6 @@ import dhbk.android.wifi2.utils.GUIUtils;
 import dhbk.android.wifi2.utils.HelpUtils;
 
 public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
-    // set wifi signal max = 5, so system will get the strength of wifi signal from 0 -> 4
-    public static final int MAX_WIFI_SIGNAL_LEVEL = 5;
-    // from 0 -> 4 correspond to weak, fair, good, excellent wifi signal.
-    public static final int WIFI_SIGNAL_EXCELLENT = 4;
-    public static final int WIFI_SIGNAL_GOOD = 3;
-    public static final int WIFI_SIGNAL_FAIR = 2;
-    public static final int WIFI_SIGNAL_WEAK = 1;
-
-    // font path
-    private static final String QUICKSAND_BOLD = "fonts/Quicksand-Bold.otf";
-    private static final String QUICKSAND_LIGHT = "fonts/Quicksand-Light.otf";
-    private static final String QUICKSAND_REGULAR = "fonts/Quicksand-Regular.otf";
-
     private static final String ARG_STATE = "state";
     private static final String ARG_SSID = "ssid";
     private static final String ARG_DATE = "date";
@@ -62,39 +48,28 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     private static final String ARG_LINK_SPEED = "link_speed";
     private static final String ARG_NETWORK_ID = "network_id";
     private static final float TOOLBAR_HEIGHT_DP = 100;
-
-    @BindView(R.id.fab_wifi_show_detail)
-    FloatingActionButton mFabWifiShowDetail;
-    @BindView(R.id.container_wifi_show_detail)
-    CoordinatorLayout mContainerWifiShowDetail;
-    @BindView(R.id.main_content_show_wifi_detail)
-    LinearLayout mMainContentShowWifiDetail;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.bssid)
-    TextView mBssidTv;
-    @BindView(R.id.rssi)
-    TextView mRssiTv;
-    @BindView(R.id.mac_address)
-    TextView mMacAddressTv;
-    @BindView(R.id.ip_address)
-    TextView mIpAddressTv;
-    @BindView(R.id.linkspeed)
-    TextView mLinkspeedTv;
-    @BindView(R.id.networkid)
-    TextView mNetworkidTv;
-    @BindView(R.id.date)
-    TextView mDateTv;
-    @BindView(R.id.state)
-    TextView mStateTv;
-    @BindView(R.id.map)
-    MapView mMap;
+    @BindView(R.id.fab_wifi_show_detail)
+    FloatingActionButton mFabWifiShowDetail;
     @BindView(R.id.ssid)
     TextView mSsidTv;
-    @BindView(R.id.btn_show_wifi_on_map)
-    Button mBtnShowWifiOnMap;
     @BindView(R.id.tv_show_wifi_info)
     TextView mShowWifiInfoTv;
+    @BindView(R.id.bssid)
+    TextView mBssidTv;
+    @BindView(R.id.mac_address)
+    TextView mMacAddressTv;
+    @BindView(R.id.networkid)
+    TextView mNetworkidTv;
+    @BindView(R.id.btn_show_wifi_on_map)
+    Button mBtnShowWifiOnMap;
+    @BindView(R.id.map)
+    MapView mMap;
+    @BindView(R.id.main_content_show_wifi_detail)
+    LinearLayout mMainContentShowWifiDetail;
+    @BindView(R.id.container_wifi_show_detail)
+    CoordinatorLayout mContainerWifiShowDetail;
 
     private WifiModel mWifiModel;
 
@@ -105,14 +80,14 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         HistoryChildShowDetailWifiFragment fragment = new HistoryChildShowDetailWifiFragment();
         Bundle args = new Bundle();
 
-        args.putString(ARG_STATE, wifiModel.getState());
+//        args.putString(ARG_STATE, wifiModel.getState());
         args.putString(ARG_SSID, wifiModel.getSsid());
-        args.putString(ARG_DATE, wifiModel.getDate());
+//        args.putString(ARG_DATE, wifiModel.getDate());
         args.putString(ARG_BSSID, wifiModel.getBssid());
-        args.putInt(ARG_RSSI, wifiModel.getRssi());
+//        args.putInt(ARG_RSSI, wifiModel.getRssi());
         args.putString(ARG_MAC_ADD, wifiModel.getMacAddress());
-        args.putInt(ARG_IP_ADD, wifiModel.getIpAddress());
-        args.putInt(ARG_LINK_SPEED, wifiModel.getLinkSpeed());
+//        args.putInt(ARG_IP_ADD, wifiModel.getIpAddress());
+//        args.putInt(ARG_LINK_SPEED, wifiModel.getLinkSpeed());
         args.putInt(ARG_NETWORK_ID, wifiModel.getNetworkId());
 
         fragment.setArguments(args);
@@ -125,14 +100,14 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mWifiModel = new WifiModel(
-                    getArguments().getString(ARG_STATE),
+//                    getArguments().getString(ARG_STATE),
                     getArguments().getString(ARG_SSID),
-                    getArguments().getString(ARG_DATE),
+//                    getArguments().getString(ARG_DATE),
                     getArguments().getString(ARG_BSSID),
-                    getArguments().getInt(ARG_RSSI),
+//                    getArguments().getInt(ARG_RSSI),
                     getArguments().getString(ARG_MAC_ADD),
-                    getArguments().getInt(ARG_IP_ADD),
-                    getArguments().getInt(ARG_LINK_SPEED),
+//                    getArguments().getInt(ARG_IP_ADD),
+//                    getArguments().getInt(ARG_LINK_SPEED),
                     getArguments().getInt(ARG_NETWORK_ID)
             );
         }
@@ -167,6 +142,13 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
                 ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(upArrow);
             }
         }
+
+        // add a bottom sheet
+        BottomSheetShowHistoryWifiFragment bottomSheetFragment = BottomSheetShowHistoryWifiFragment.newInstance();
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.history_wifi_bottom_sheets, bottomSheetFragment, Constant.TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE)
+                .commit();
         return view;
     }
 
@@ -232,7 +214,7 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
 
 //                set the text of textview in this layout
                 setWifiInfo();
-                setDateStateWifi();
+//                setDateStateWifi();
                 setDefaultMapSetting(mMap);
             }
         });
@@ -265,55 +247,76 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     @SuppressWarnings("deprecation")
     private void setWifiInfo() {
         // set new font to textview
-        setFontToTv(mBtnShowWifiOnMap, QUICKSAND_REGULAR);
-        setFontToTv(mShowWifiInfoTv, QUICKSAND_LIGHT);
+        setFontToTv(mBtnShowWifiOnMap, Constant.QUICKSAND_REGULAR);
+        setFontToTv(mShowWifiInfoTv, Constant.QUICKSAND_LIGHT);
 
         // set new font and change text in textview
         String ssidMes = HelpUtils.getStringAfterRemoveChar(mWifiModel.getSsid(), "\"");
-        setFontAndTextToTv(mSsidTv, QUICKSAND_BOLD, ssidMes);
-        setFontAndTextToTv(mBssidTv, QUICKSAND_LIGHT, R.string.title_message_bssid, mWifiModel.getBssid());
-        setFontAndTextToTv(mMacAddressTv, QUICKSAND_LIGHT, R.string.title_message_mac_add, mWifiModel.getMacAddress());
-        setFontAndTextToTv(mIpAddressTv, QUICKSAND_LIGHT, R.string.title_message_ip_add, Formatter.formatIpAddress(mWifiModel.getIpAddress()));
-        setFontAndTextToTv(mLinkspeedTv, QUICKSAND_LIGHT, R.string.title_message_link_speed, mWifiModel.getLinkSpeed() + " " + WifiInfo.LINK_SPEED_UNITS);
-        setFontAndTextToTv(mNetworkidTv, QUICKSAND_LIGHT, R.string.title_message_network_id, Integer.toString(mWifiModel.getNetworkId()));
+        setFontAndTextToTv(mSsidTv, Constant.QUICKSAND_BOLD, ssidMes);
+        setFontAndTextToTv(mBssidTv, Constant.QUICKSAND_LIGHT, R.string.title_message_bssid, mWifiModel.getBssid());
+        setFontAndTextToTv(mMacAddressTv, Constant.QUICKSAND_LIGHT, R.string.title_message_mac_add, mWifiModel.getMacAddress());
+//        setFontAndTextToTv(mIpAddressTv, QUICKSAND_LIGHT, R.string.title_message_ip_add, Formatter.formatIpAddress(mWifiModel.getIpAddress()));
+//        setFontAndTextToTv(mLinkspeedTv, QUICKSAND_LIGHT, R.string.title_message_link_speed, mWifiModel.getLinkSpeed() + " " + WifiInfo.LINK_SPEED_UNITS);
+        setFontAndTextToTv(mNetworkidTv, Constant.QUICKSAND_LIGHT, R.string.title_message_network_id, Integer.toString(mWifiModel.getNetworkId()));
 
         // 6/27/2016 set text and change color depend on wifi signal
-        int wifiLevel = WifiManager.calculateSignalLevel(mWifiModel.getRssi(), MAX_WIFI_SIGNAL_LEVEL);
-        switch (wifiLevel) {
-            case WIFI_SIGNAL_EXCELLENT:
-                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_excellent, R.color.excellent);
-                break;
-            case WIFI_SIGNAL_GOOD:
-                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_good, R.color.good);
-                break;
-            case WIFI_SIGNAL_FAIR:
-                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_fair, R.color.fair);
-                break;
-            case WIFI_SIGNAL_WEAK:
-            case 0: // 0 belongs to wifi signal weak
-                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_weak, R.color.weak);
-                break;
-            default:
-                break;
-        }
+//        int wifiLevel = WifiManager.calculateSignalLevel(mWifiModel.getRssi(), MAX_WIFI_SIGNAL_LEVEL);
+//        switch (wifiLevel) {
+//            case WIFI_SIGNAL_EXCELLENT:
+//                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_excellent, R.color.excellent);
+//                break;
+//            case WIFI_SIGNAL_GOOD:
+//                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_good, R.color.good);
+//                break;
+//            case WIFI_SIGNAL_FAIR:
+//                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_fair, R.color.fair);
+//                break;
+//            case WIFI_SIGNAL_WEAK:
+//            case 0: // 0 belongs to wifi signal weak
+//                setTextAndChangeBgColorTv(mRssiTv, R.string.show_message_wifi_signal_weak, R.color.weak);
+//                break;
+//            default:
+//                break;
+//        }
     }
 
     // set data and change background color depend on state in db.
-    private void setDateStateWifi() {
-        setFontAndTextToTv(mDateTv, QUICKSAND_LIGHT, mWifiModel.getDate());
-//        mDateTv.setText(mWifiModel.getDate());
-        String state = mWifiModel.getState();
-        if (state.equals(Constant.WIFI_DISCONNECT)) {
-            setTextAndChangeBgColorTv(mStateTv, state, R.color.disconnected);
-        } else {
-            setTextAndChangeBgColorTv(mStateTv, state, R.color.connected);
-        }
-    }
+//    private void setDateStateWifi() {
+//        setFontAndTextToTv(mDateTv, QUICKSAND_LIGHT, mWifiModel.getDate());
+////        mDateTv.setText(mWifiModel.getDate());
+//        String state = mWifiModel.getState();
+//        if (state.equals(Constant.WIFI_DISCONNECT)) {
+//            setTextAndChangeBgColorTv(mStateTv, state, R.color.disconnected);
+//        } else {
+//            setTextAndChangeBgColorTv(mStateTv, state, R.color.connected);
+//        }
+//    }
 
     // when click "View Wifi Hotspots" button, show a wifi hotspot on the map by go to db and get location
     // seach db by "ssid"
+    // TODO: 6/30/2016 when click, show a bottom sheet to show a list of history
     @OnClick(R.id.btn_show_wifi_on_map)
     public void onClick() {
+        View bottomSheetFragment = getActivity().findViewById(R.id.history_wifi_bottom_sheets);
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetFragment); //bottomSheetFragment.getBottomSheetBehavior();
+        // if bottom is hiding - STATE_COLLAPSED, we show t part of it
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+    }
 
+    public void callPresenterToGetWifiStateAndDateFromDb() {
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof HistoryPresenterFragment) {
+            ((HistoryPresenterFragment) parentFragment).getWifiStateAndDateFromDb(mWifiModel);
+        }
+    }
+
+    // a callback from db with data wifi state and date history result.
+    public void passWifiStateAndDateToBottomSheetCursor(Cursor cursor) {
+        Fragment fragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE);
+        if (fragment instanceof BottomSheetShowHistoryWifiFragment) {
+            ((BottomSheetShowHistoryWifiFragment) fragment).populateDateToRecyclerView(cursor);
+        }
     }
 }

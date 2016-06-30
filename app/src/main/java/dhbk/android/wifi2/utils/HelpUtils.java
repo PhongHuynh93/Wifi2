@@ -9,7 +9,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by phongdth.ky on 6/29/2016.
@@ -58,5 +62,15 @@ public class HelpUtils {
     @NonNull
     public static String getStringAfterRemoveChar(@NonNull String textBeforeRemove, @NonNull String charRemove) {
         return textBeforeRemove.replace(charRemove, "");
+    }
+
+
+    // translate the para string that was retrieved from db to data format
+    public static Date date(String string) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK).parse(string);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 }

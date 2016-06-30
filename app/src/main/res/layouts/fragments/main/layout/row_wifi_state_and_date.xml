@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/space_large"
+    android:layout_marginEnd="@dimen/space_smaller_2"
+    android:layout_marginStart="@dimen/space_smaller_2"
+    android:layout_marginTop="@dimen/space_large"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_smaller"
+        android:orientation="horizontal">
+
+        <!--date-->
+        <TextView
+            android:id="@+id/date_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textBottomSheetColor"/>
+
+        <!--state-->
+        <TextView
+            android:id="@+id/state_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="@color/textBottomSheetColor"/>
+    </LinearLayout>
+
+    <!--ip address-->
+    <TextView
+        android:id="@+id/ip_add_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_smaller"
+        android:textColor="@color/textBottomSheetColor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--linkspeed-->
+        <TextView
+            android:id="@+id/linkSpeed_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textBottomSheetColor"/>
+
+        <!--rssi-->
+        <TextView
+            android:id="@+id/rssi_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="@color/textBottomSheetColor"/>
+    </LinearLayout>
+</LinearLayout>

@@ -173,10 +173,16 @@ public class HistoryPresenterFragment extends Fragment implements
         networkDb.getWifiHistory(this);
     }
 
+    // TODO: 6/30/2016 change this to get the new table
     // get mobile data from db
     public void getMobileDataFromDb() {
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
         networkDb.getMobileHistory(this);
+    }
+
+    public void getWifiStateAndDateFromDb(WifiModel wifiModel) {
+        NetworkDb networkDb = NetworkDb.getInstance(getActivity());
+        networkDb.getWifiStateAndDate(this, wifiModel);
     }
 
     // a callback from db with data wifi history result.
@@ -197,5 +203,12 @@ public class HistoryPresenterFragment extends Fragment implements
         }
     }
 
-
+    // a callback from db with data wifi state and date history result.
+    @Override
+    public void onGetWifiStateAndDateCursor(Cursor cursor) {
+        Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
+        if (childFragment instanceof HistoryChildShowDetailWifiFragment) {
+            ((HistoryChildShowDetailWifiFragment)childFragment).passWifiStateAndDateToBottomSheetCursor(cursor);
+        }
+    }
 }
