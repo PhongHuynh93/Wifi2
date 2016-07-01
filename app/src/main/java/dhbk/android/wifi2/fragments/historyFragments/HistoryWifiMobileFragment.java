@@ -108,8 +108,6 @@ public class HistoryWifiMobileFragment extends HistoryBaseFragment {
         }
     }
 
-
-
     //        find the wifiFragment and pass cursor data to it.
     public void getWifiFragmentAndPassWifiCursor(Cursor cursor) {
         HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();

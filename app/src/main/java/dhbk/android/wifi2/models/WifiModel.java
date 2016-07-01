@@ -1,6 +1,9 @@
 package dhbk.android.wifi2.models;
 
 import android.database.Cursor;
+import android.support.annotation.Nullable;
+
+import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/14/2016.
@@ -55,6 +58,7 @@ public class WifiModel {
         this.encryption = encryption;
     }
 
+    //    wifi info
     public WifiModel(String mSsid, String mBssid, String mMacAddress, int mNetworkId) {
         this.mSsid = mSsid;
         this.mBssid = mBssid;
@@ -62,22 +66,7 @@ public class WifiModel {
         this.mNetworkId = mNetworkId;
     }
 
-    public WifiModel(String mSsid, int mNetworkId, double latitude, double longitude, int isHasLocation) {
-        this.mLatitude = latitude;
-        this.mLongitude = longitude;
-        this.mIsHasLocation = isHasLocation;
-        this.mSsid = mSsid;
-        this.mNetworkId = mNetworkId;
-    }
 
-    public WifiModel(String mSsid, int mNetworkId, int mLinkSpeed, int mRssi, String nowDate, String state) {
-        this.mLinkSpeed = mLinkSpeed;
-        this.mRssi = mRssi;
-        this.date = nowDate;
-        this.state = state;
-        this.mSsid = mSsid;
-        this.mNetworkId = mNetworkId;
-    }
 
     public String getState() {
         return state;
@@ -95,19 +84,38 @@ public class WifiModel {
         return encryption;
     }
 
+    // get wifi info from cursor
+    @Nullable
     public static WifiModel fromCursor(Cursor cursor) {
-        // ko lay 0 ly do 0 là cột id_
-        String state = cursor.getString(1);
-        String ssid = cursor.getString(2);
-        String date = cursor.getString(3);
-        String bssid = cursor.getString(4);
-        int rssi = cursor.getInt(5);
-        String macAddress = cursor.getString(6);
-        int ipAddress = cursor.getInt(7);
-        int linkSpeed = cursor.getInt(8);
-        int networkId = cursor.getInt(9);
-        return new WifiModel(state, ssid, date, bssid, rssi, macAddress, ipAddress, linkSpeed, networkId);
+        String ssid = null;
+        String bssid = null;
+        String mac_address = null;
+        int network_id = 0;
+        for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO.length; i++) {
+            switch (NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]) {
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_SSID:
+                    ssid = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_BSSID:
+                    bssid = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS:
+                    mac_address = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_NETWORK_ID:
+                    network_id = cursor.getInt(i);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (ssid != null) {
+            return new WifiModel(ssid, bssid, mac_address, network_id);
+        }
+        return null;
     }
+
 
     public String getBssid() {
         return mBssid;
@@ -133,15 +141,4 @@ public class WifiModel {
         return mNetworkId;
     }
 
-    public int getIsHasLocation() {
-        return mIsHasLocation;
-    }
-
-    public double getLongitude() {
-        return mLongitude;
-    }
-
-    public double getLatitude() {
-        return mLatitude;
-    }
 }

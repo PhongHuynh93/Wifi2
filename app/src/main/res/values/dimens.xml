@@ -25,6 +25,7 @@
     <dimen name="space_super_small">2dp</dimen>
     <dimen name="space_smaller">7dp</dimen>
     <dimen name="space_smaller_2">9dp</dimen>
+    <dimen name="space_large">30dp</dimen>
     <dimen name="toolbar_height">80dp</dimen>
 
     <!--navigation drawer-->

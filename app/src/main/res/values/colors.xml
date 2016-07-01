@@ -15,6 +15,8 @@
     <color name="grey_lighter">#EEEEEE</color>
     <color name="grey_light_darker">#BDBDBD</color>
     <color name="grey_light_darker2">#616161</color>
+    <color name="grey_dark_alpha">#CC000000</color>
+
 
     <color name="pink">#F48FB1</color>
     <color name="pink_darker">#FF4081</color>
@@ -36,4 +38,10 @@
     <!--wifi state-->
     <color name="disconnected">@color/dark_orange</color>
     <color name="connected">@color/green_light</color>
+
+    <!--bottom sheet color-->
+    <color name="textBottomSheetColor">@color/grey_lighter</color>
+    <color name="colorBackgroundBottomSheet">@color/grey_dark_alpha</color>
+    <color name="colorBottomSheetDivider">@color/grey_light_darker2</color>
+
 </resources>

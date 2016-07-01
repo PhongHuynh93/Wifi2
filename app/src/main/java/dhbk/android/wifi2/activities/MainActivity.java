@@ -14,7 +14,7 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.MainFragment;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryWifiMobileFragment;
-import dhbk.android.wifi2.fragments.historyOSMFragments.HistoryWithOsmMapFragment;
+import dhbk.android.wifi2.fragments.mapFragments.MapPresenterFragment;
 import dhbk.android.wifi2.fragments.mobileFragments.MobileFragment;
 import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
@@ -77,9 +77,9 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 } else if (id == R.id.map) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    HistoryWithOsmMapFragment historyOSMFragment = (HistoryWithOsmMapFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT);
+                    MapPresenterFragment historyOSMFragment = (MapPresenterFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT);
                     if (historyOSMFragment == null) {
-                        historyOSMFragment = HistoryWithOsmMapFragment.newInstance();
+                        historyOSMFragment = MapPresenterFragment.newInstance();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyOSMFragment, Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT).commit();
                     }
 
@@ -147,13 +147,13 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    // replace top frag with HistoryWithOsmMapFragment
+    // replace top frag with MapPresenterFragment
     @Override
     public void onHistoryWithOsmMapFragReplace() {
-        final HistoryWithOsmMapFragment historyWithOsmMapFragment = HistoryWithOsmMapFragment.newInstance();
+        final MapPresenterFragment mapPresenterFragment = MapPresenterFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, historyWithOsmMapFragment, Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT)
+                .replace(R.id.main_container, mapPresenterFragment, Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -177,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onReturnCursorWifiHotspot(Cursor cursor) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT);
-        if (fragment instanceof HistoryWithOsmMapFragment) {
-            ((HistoryWithOsmMapFragment) fragment).onReturnWifiHotspot(cursor);
+        if (fragment instanceof MapPresenterFragment) {
+            ((MapPresenterFragment) fragment).onReturnWifiHotspot(cursor);
         }
     }
 

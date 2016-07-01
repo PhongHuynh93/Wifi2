@@ -45,10 +45,16 @@ public abstract class HistoryBaseFragment extends Fragment {
             layoutParams.height = (int) tv.applyDimension(TypedValue.COMPLEX_UNIT_DIP, toolbarHeightDp, getActivity().getResources().getDisplayMetrics());
         } else {
             // get the default height depends on device
-            getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
-            layoutParams.height = getResources().getDimensionPixelSize(tv.resourceId);
+            layoutParams.height = getToolbarHeightInPixel();
         }
         toolbar.setLayoutParams(layoutParams);
+    }
+
+    // get the height of toolbar in pixel
+    public int getToolbarHeightInPixel() {
+        TypedValue tv = new TypedValue();
+        getActivity().getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true);
+        return getResources().getDimensionPixelSize(tv.resourceId);
     }
 
     // TODO: 6/29/2016 add mobile to this
@@ -68,6 +74,12 @@ public abstract class HistoryBaseFragment extends Fragment {
                 ((HistoryWifiMobileFragment) parentFragment).callPresenterToGetWifiDataFromDb();
             } else if (wifiOrMobile.equals(Constant.MOBILE_RECYCLERVIEW)){
                 ((HistoryWifiMobileFragment) parentFragment).callPresenterToGetMobileDataFromDb();
+            }
+        }
+        // get the state and date
+        else if (parentFragment instanceof HistoryChildShowDetailWifiFragment) {
+            if (wifiOrMobile.equals(Constant.BOTTOMSHEET_WIFI_RECYCLERVIEW)) {
+                ((HistoryChildShowDetailWifiFragment)parentFragment).callPresenterToGetWifiStateAndDateFromDb();
             }
         }
     }
@@ -90,12 +102,13 @@ public abstract class HistoryBaseFragment extends Fragment {
         textView.setText(message);
     }
 
-
     //    set text and change background color of a textview
     public void setTextAndChangeBgColorTv(TextView textView, @StringRes int messageTv, @ColorRes int colorBg) {
         textView.setText(getActivity().getResources().getString(messageTv));
         textView.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), colorBg), PorterDuff.Mode.SRC_ATOP);
     }
+
+
 
     //    set text and change background color of a textview
     public void setTextAndChangeBgColorTv(TextView textView, String messageTv, @ColorRes int colorBg) {

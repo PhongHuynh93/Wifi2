@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.adapters.historyAdapters.HistoryWifiRecyclerViewAdapter;
+import dhbk.android.wifi2.adapters.historyAdapters.WifiInfoRcvAdapter;
 import dhbk.android.wifi2.utils.Constant;
 
 /*
@@ -43,7 +43,7 @@ public class HistoryWifiFragment extends HistoryBaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HistoryWifiRecyclerViewAdapter adapter = new HistoryWifiRecyclerViewAdapter(getActivity(), null);
+        WifiInfoRcvAdapter adapter = new WifiInfoRcvAdapter(getActivity(), null);
         mRcvHistory = (RecyclerView) getActivity().findViewById(R.id.rcv_history);
         declareRcvAndGetDataFromDb(mRcvHistory, adapter, Constant.WIFI_RECYCLERVIEW);
     }
@@ -51,7 +51,7 @@ public class HistoryWifiFragment extends HistoryBaseFragment {
     //    a callback from presenter contain wifi data
     public void onPopulateWifiCursorToRcv(final Cursor cursor) {
         try {
-            HistoryWifiRecyclerViewAdapter adapter = (HistoryWifiRecyclerViewAdapter) mRcvHistory.getAdapter();
+            WifiInfoRcvAdapter adapter = (WifiInfoRcvAdapter) mRcvHistory.getAdapter();
             adapter.changeCursor(cursor);
         } catch (NullPointerException e) {
             Log.e(TAG, "populateCursorToRcv: " + e.toString());

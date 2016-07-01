@@ -13,7 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkDb;
@@ -94,15 +96,14 @@ public class WifiReceiver extends BroadcastReceiver {
                     WifiModel wifiInfoModel = new WifiModel(mSsid, mBssid, mMacAddress, mNetworkId);
                     networkDb.addWifiInfoToTable(wifiInfoModel);
 
-                    // because wifiLocation table and wifi state and date table make a name that contain ssid, so we must check whether ssid is null or not.
-                    if (mSsid != null) {
+                    // because wifiLocation table and wifi state and date table make a name that contain bssid, so we must check whether bssid is null or not.
+                    if (mBssid != null) {
                         // add location to wifi
-
-                        WifiModel wifiLocationModel = new WifiModel(mSsid, mNetworkId, latitude, longitude, isHasLocation);
+                        WifiLocationModel wifiLocationModel = new WifiLocationModel(mBssid, latitude, longitude, isHasLocation);
                         networkDb.addWifiLocationToTable(wifiLocationModel);
 
                         // add state and date to db
-                        WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT);
+                        WifiStateAndDateModel wifiStateAndDateModel = new WifiStateAndDateModel(mBssid, mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT, mIpAddress);
                         networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
                     }
                 }
@@ -123,7 +124,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     // because wifiLocation table and wifi state and date table make a name that contain ssid, so we must check whether ssid is null or not.
                     if (mSsid != null) {
                         // add state and date to db
-                        WifiModel wifiStateAndDateModel = new WifiModel(mSsid, mNetworkId, mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT);
+                        WifiStateAndDateModel wifiStateAndDateModel = new WifiStateAndDateModel(mBssid, mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT, mIpAddress);
                         NetworkDb networkDb = NetworkDb.getInstance(context);
                         networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
                     }

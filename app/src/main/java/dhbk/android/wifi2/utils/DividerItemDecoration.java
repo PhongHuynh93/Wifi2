@@ -5,6 +5,8 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -23,9 +25,18 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private int mOrientation;
 
+
     public DividerItemDecoration(Context context, int orientation) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);
+        a.recycle();
+        setOrientation(orientation);
+    }
+
+    // use this constructor to change the color of the divider
+    public DividerItemDecoration(Context context, int orientation,@DrawableRes int resId) {
+        final TypedArray a = context.obtainStyledAttributes(ATTRS);
+        mDivider = ContextCompat.getDrawable(context, resId);
         a.recycle();
         setOrientation(orientation);
     }

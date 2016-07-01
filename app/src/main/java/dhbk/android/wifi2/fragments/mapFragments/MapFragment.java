@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments.historyOSMFragments;
+package dhbk.android.wifi2.fragments.mapFragments;
 
 
 import android.location.Location;
@@ -13,57 +13,48 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.osmdroid.api.IMapController;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
-import dhbk.android.wifi2.utils.Constant;
+import dhbk.android.wifi2.utils.HelpUtils;
 
-public class HistoryChildOsmMapFragment extends Fragment {
-    private static final String TAG = HistoryChildOsmMapFragment.class.getSimpleName();
+/**
+ * show map
+ * show markers corresponding to wifi hotspot location.
+ */
+public class MapFragment extends Fragment {
 
-    public HistoryChildOsmMapFragment() {
-        // Required empty public constructor
+    public MapFragment() {
     }
 
-    public static HistoryChildOsmMapFragment newInstance() {
-        HistoryChildOsmMapFragment fragment = new HistoryChildOsmMapFragment();
-        return fragment;
+    public static MapFragment newInstance() {
+        return new MapFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_history_child_osm_map, container, false);
     }
 
-//    set default map - zoom
+//    set default map - zoom and load wifi hotspot locations.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO: 6/29/2016 copy this method to draw a wifi hotspot into db
-        MapView mapView = (MapView) getActivity().findViewById(R.id.map_child); // map
-        mapView.setTileSource(TileSourceFactory.MAPNIK);
-        mapView.setMultiTouchControls(true);
-        IMapController iMapController = mapView.getController(); // map controller
-        iMapController.setZoom(Constant.ZOOM);
-        GeoPoint startPoint = new GeoPoint(10.772241, 106.657676);
-        iMapController.setCenter(startPoint);
-
-        // load wifi hotspot on map
-        // query database
+        MapView mapView = (MapView) getActivity().findViewById(R.id.map_child);
+        HelpUtils.setDefaultSettingToMap(mapView);
         loadWifiHotspotFromDb();
     }
 
+    // call presenter to query database
     private void loadWifiHotspotFromDb() {
         Fragment parentFrag = getParentFragment();
-        if (parentFrag instanceof HistoryWithOsmMapFragment) {
-            ((HistoryWithOsmMapFragment) parentFrag).getWifiHotspotFromDb();
+        if (parentFrag instanceof MapPresenterFragment) {
+            ((MapPresenterFragment) parentFrag).getWifiHotspotFromDb();
         }
     }
 

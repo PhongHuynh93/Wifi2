@@ -26,11 +26,11 @@ import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.db.NetworkDb;
 
 /*
-contain tasks relating to background or get datas from db and show it to it's child fragment.
-replace|add|pop child fragment
+. contain tasks relating to background tasks such as getting datas from db and show it to it's child fragment.
+. replace|add|pop child fragment by control ChildFragmentManger
  */
 public class HistoryPresenterFragment extends Fragment implements
-        OnFragInteractionListener.OnHistoryFragInteractionListener{
+        OnFragInteractionListener.OnHistoryFragInteractionListener {
     private static final String TAG = HistoryPresenterFragment.class.getSimpleName();
     private OnFragInteractionListener.OnMainFragInteractionListener mMainListener;
 
@@ -173,10 +173,16 @@ public class HistoryPresenterFragment extends Fragment implements
         networkDb.getWifiHistory(this);
     }
 
+    // TODO: 6/30/2016 change this to get the new table
     // get mobile data from db
     public void getMobileDataFromDb() {
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
         networkDb.getMobileHistory(this);
+    }
+
+    public void getWifiStateAndDateFromDb(WifiModel wifiModel) {
+        NetworkDb networkDb = NetworkDb.getInstance(getActivity());
+        networkDb.getWifiStateAndDate(this, wifiModel);
     }
 
     // a callback from db with data wifi history result.
@@ -184,7 +190,7 @@ public class HistoryPresenterFragment extends Fragment implements
     public void onGetWifiHistoryCursor(Cursor cursor) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_MOBILE_FRAGMENT);
         if (childFragment instanceof HistoryWifiMobileFragment) {
-            ((HistoryWifiMobileFragment)childFragment).getWifiFragmentAndPassWifiCursor(cursor);
+            ((HistoryWifiMobileFragment) childFragment).getWifiFragmentAndPassWifiCursor(cursor);
         }
     }
 
@@ -193,9 +199,16 @@ public class HistoryPresenterFragment extends Fragment implements
     public void onGetMobileHistoryCursor(Cursor cursor) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_MOBILE_FRAGMENT);
         if (childFragment instanceof HistoryWifiMobileFragment) {
-            ((HistoryWifiMobileFragment)childFragment).getMobileFragmentAndPassWifiCursor(cursor);
+            ((HistoryWifiMobileFragment) childFragment).getMobileFragmentAndPassWifiCursor(cursor);
         }
     }
 
-
+    // a callback from db with data wifi state and date history result.
+    @Override
+    public void onGetWifiStateAndDateCursor(Cursor cursor) {
+        Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
+        if (childFragment instanceof HistoryChildShowDetailWifiFragment) {
+            ((HistoryChildShowDetailWifiFragment) childFragment).passWifiStateAndDateToBottomSheetCursor(cursor);
+        }
+    }
 }

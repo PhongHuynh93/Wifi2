@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:transitionName="transition_reveal_contact"
         app:backgroundTint="@color/colorAccent"
         app:elevation="0dp"
         app:fabSize="normal"
@@ -42,83 +43,48 @@
             android:gravity="center"
             android:textSize="@dimen/font_largerr"/>
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="@dimen/space_smaller_2"
             android:layout_marginRight="@dimen/space_smaller_2"
             android:layout_weight="2.5"
             android:background="@drawable/round_corner"
-            android:columnCount="2"
+            android:orientation="vertical"
             android:padding="@dimen/space_smaller_2">
 
             <!--wifi info-->
             <TextView
                 android:id="@+id/tv_show_wifi_info"
                 android:layout_width="match_parent"
-                android:layout_columnSpan="2"
+                android:layout_height="wrap_content"
                 android:text="@string/show_message_wifiInfo"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_columnSpan="2"
                 android:layout_marginBottom="@dimen/space_smaller_2"
                 android:layout_marginTop="@dimen/space_smaller_2"
                 android:background="@color/grey_light_darker"/>
 
-            <!--bssid + link speed-->
+            <!--bssid -->
             <TextView
-                android:id="@+id/bssid" />
-
-            <TextView
-                android:id="@+id/linkspeed"
-                android:layout_gravity="end" />
+                android:id="@+id/bssid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <!--mac add + network id-->
             <TextView
-                android:id="@+id/mac_address" />
+                android:id="@+id/mac_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/networkid"
-                android:layout_gravity="end" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-            <!--ip add + wifi signal-->
-            <TextView
-                android:id="@+id/ip_address" />
-
-            <TextView
-                android:id="@+id/rssi"
-                android:layout_gravity="end"
-                android:background="@drawable/bg_view"
-                android:padding="4dp"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_smaller"/>
-
-        </GridLayout>
-
-        <GridLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/space_smaller_2"
-            android:layout_weight="1"
-            android:background="@drawable/round_corner"
-            android:columnCount="2"
-            android:padding="@dimen/space_smaller_2">
-
-            <!--date + state-->
-            <TextView
-                android:id="@+id/date" />
-
-            <TextView
-                android:id="@+id/state"
-                android:layout_gravity="end"
-                android:background="@drawable/bg_view"
-                android:padding="4dp"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_smaller"/>
-
-        </GridLayout>
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_show_wifi_on_map"
@@ -127,6 +93,7 @@
             android:layout_margin="@dimen/space_smaller"
             android:layout_weight="1.4"
             android:background="@drawable/round_corner"
+            android:backgroundTint="@color/blue_light"
             android:text="@string/show_message_viewWifiOnMap"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -139,4 +106,11 @@
             android:layout_height="0dp"
             android:layout_weight="4"/>
     </LinearLayout>
+
+    <!--bottom sheets: contains history wifi-->
+    <FrameLayout
+        android:id="@+id/history_wifi_bottom_sheets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior"/>
 </android.support.design.widget.CoordinatorLayout>

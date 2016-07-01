@@ -19,7 +19,15 @@ public interface OnFragInteractionListener {
 
     // interface for wifi and mobile history
     interface OnHistoryFragInteractionListener {
+        // get wifi info
         void onGetWifiHistoryCursor(Cursor cursor);
+        // get mobile network
         void onGetMobileHistoryCursor(Cursor cursor);
+        // get wifi state and date
+        void onGetWifiStateAndDateCursor(Cursor cursor);
+    }
+
+    interface OnMapFragInteractionListerer {
+        void onGetWifiLocationCursor(Cursor cursor);
     }
 }

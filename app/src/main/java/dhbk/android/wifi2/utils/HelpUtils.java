@@ -9,10 +9,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by phongdth.ky on 6/29/2016.
+ * contains all methods that uses in many class in my project
  */
 public class HelpUtils {
     public static boolean isGpsHasTurnOn(Context context) {
@@ -51,12 +61,33 @@ public class HelpUtils {
 
     //get table db name from ssid and networkId
     @NonNull
-    public static String getTableDbName(@NonNull String ssid, int networkId, String addString) {
-        return ssid + "_" + networkId + "_" + addString;
+    public static String getTableDbName(@NonNull String bssid, String addString) {
+        String bssidNew = getStringAfterRemoveChar(bssid, ":");
+        return bssidNew + "_" + addString;
     }
 
     @NonNull
     public static String getStringAfterRemoveChar(@NonNull String textBeforeRemove, @NonNull String charRemove) {
         return textBeforeRemove.replace(charRemove, "");
+    }
+
+
+    // translate the para string that was retrieved from db to data format
+    public static Date date(String string) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK).parse(string);
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    // set default to map
+    public static void setDefaultSettingToMap(MapView mapView) {
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setMultiTouchControls(true);
+        IMapController iMapController = mapView.getController(); // map controller
+        iMapController.setZoom(Constant.ZOOM);
+        GeoPoint startPoint = new GeoPoint(Constant.START_LATITUDE, Constant.STATE_LONGITUDE);
+        iMapController.setCenter(startPoint);
     }
 }
