@@ -13,6 +13,7 @@ import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiStateAndDateModel;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
@@ -117,7 +118,7 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void addStateAndDateWifiToTable(WifiModel wifiStateAndDateModel) {
+    public void addStateAndDateWifiToTable(WifiStateAndDateModel wifiStateAndDateModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
         if (tableName != null) {
             tableName.addWifiStateAndDate(getWritableDatabase(), wifiStateAndDateModel);

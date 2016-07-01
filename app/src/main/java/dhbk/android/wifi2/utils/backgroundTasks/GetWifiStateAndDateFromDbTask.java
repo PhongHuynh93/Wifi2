@@ -33,7 +33,7 @@ public class GetWifiStateAndDateFromDbTask extends AsyncTask<Void, Void, Cursor>
         Cursor cursor;
         try {
             // get table name
-            String tableName = HelpUtils.getTableDbName(mWifiModel.getSsid(), mWifiModel.getNetworkId(), Constant.TABLE_STATE_AND_DATE);
+            String tableName = HelpUtils.getTableDbName(mWifiModel.getBssid(), Constant.TABLE_STATE_AND_DATE);
             // get all column
             cursor = mDb.query (tableName,
                     NetworkWifiDb.COLUMN_TABLE_WIFI_STATE_AND_DATE,

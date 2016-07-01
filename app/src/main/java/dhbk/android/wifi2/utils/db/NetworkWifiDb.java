@@ -8,6 +8,7 @@ import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiInfoToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiStateAndDateToDbTask;
@@ -376,7 +377,7 @@ public class NetworkWifiDb implements
 
     // add wifi state and date to db
     @Override
-    public void addWifiStateAndDate(SQLiteDatabase db, WifiModel wifiStateAndDateModel) {
+    public void addWifiStateAndDate(SQLiteDatabase db, WifiStateAndDateModel wifiStateAndDateModel) {
         new AddWifiStateAndDateToDbTask(db, wifiStateAndDateModel).execute();
     }
 

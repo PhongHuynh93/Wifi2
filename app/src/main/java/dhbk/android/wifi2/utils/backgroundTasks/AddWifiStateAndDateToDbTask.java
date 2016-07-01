@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
@@ -18,28 +18,26 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG = AddWifiStateAndDateToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
-    private final WifiModel mWifiModel;
+    private final WifiStateAndDateModel mWifiStateAndDateModel;
     private String mTableName;
 
-    public AddWifiStateAndDateToDbTask(SQLiteDatabase db, WifiModel wifiModel) {
+    public AddWifiStateAndDateToDbTask(SQLiteDatabase db, WifiStateAndDateModel wifiStateAndDateModel) {
         this.mDb = db;
-        this.mWifiModel = wifiModel;
+        this.mWifiStateAndDateModel = wifiStateAndDateModel;
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        // 2 var to create tablename
-        String ssid = mWifiModel.getSsid();
-        int networkId = mWifiModel.getNetworkId();
-
-        mTableName = HelpUtils.getTableDbName(ssid, networkId, Constant.TABLE_STATE_AND_DATE);
+        // this var to create tablename
+        String bssid = mWifiStateAndDateModel.getBssid();
+        mTableName = HelpUtils.getTableDbName(bssid, Constant.TABLE_STATE_AND_DATE);
 
         // save to db
-        String state = mWifiModel.getState();
-        String date = mWifiModel.getDate();
-        int linkSpeed = mWifiModel.getLinkSpeed();
-        int rssi = mWifiModel.getRssi();
-        int ipAddress = mWifiModel.getIpAddress();
+        String state = mWifiStateAndDateModel.getState();
+        String date = mWifiStateAndDateModel.getDate();
+        int linkSpeed = mWifiStateAndDateModel.getLinkSpeed();
+        int rssi = mWifiStateAndDateModel.getRssi();
+        int ipAddress = mWifiStateAndDateModel.getIpAddress();
 
         mDb.beginTransaction();
         try {

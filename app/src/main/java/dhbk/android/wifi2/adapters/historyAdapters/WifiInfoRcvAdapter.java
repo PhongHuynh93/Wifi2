@@ -36,6 +36,7 @@ public class WifiInfoRcvAdapter extends
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
         final WifiModel myListItem = WifiModel.fromCursor(cursor);
+        assert myListItem != null;
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
 
 //      call history presenter method to replace with wifi details fragment.

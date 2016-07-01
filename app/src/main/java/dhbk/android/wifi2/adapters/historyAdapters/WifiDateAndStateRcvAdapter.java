@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.Constant;
 
 /**
@@ -47,7 +47,7 @@ public class WifiDateAndStateRcvAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
-        final WifiModel myListItem = WifiModel.fromCursorWifiStateAndDate(cursor);
+        final WifiStateAndDateModel myListItem = WifiStateAndDateModel.fromCursorWifiStateAndDate(cursor);
         // set text to textview
         setFontAndTextToTv(viewHolder.mStateWifi, Constant.QUICKSAND_BOLD, myListItem.getState());
         setFontAndTextToTv(viewHolder.mDateWifi, Constant.QUICKSAND_BOLD, myListItem.getDate());

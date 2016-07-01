@@ -67,13 +67,6 @@ public class WifiModel {
     }
 
 
-    public WifiModel(int linkSpeed, int rssi, String date, String state, int ipAddress) {
-        this.mLinkSpeed = linkSpeed;
-        this.mRssi = rssi;
-        this.date = date;
-        this.state = state;
-        this.mIpAddress = ipAddress;
-    }
 
     public String getState() {
         return state;
@@ -123,39 +116,6 @@ public class WifiModel {
         return null;
     }
 
-    // get wifi state and date from cursor
-    @Nullable
-    public static WifiModel fromCursorWifiStateAndDate(Cursor cursor) {
-        int linkSpeed = 0;
-        int rssi = 0;
-        String date = null;
-        String state = null;
-        int ipAddress = 0;
-
-        for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_STATE_AND_DATE.length; i++) {
-            switch (NetworkWifiDb.COLUMN_TABLE_WIFI_STATE_AND_DATE[i]) {
-                case NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_STATE:
-                    state = cursor.getString(i);
-                    break;
-                case NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_DATE:
-                    date = cursor.getString(i);
-                    break;
-                case NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_RSSI:
-                    rssi = cursor.getInt(i);
-                    break;
-                case NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_LINK_SPEED:
-                    linkSpeed = cursor.getInt(i);
-                    break;
-                case NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_IP_ADDRESS:
-                    ipAddress = cursor.getInt(i);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        return new WifiModel(linkSpeed, rssi, date, state, ipAddress);
-    }
 
     public String getBssid() {
         return mBssid;
@@ -181,15 +141,4 @@ public class WifiModel {
         return mNetworkId;
     }
 
-    public int getIsHasLocation() {
-        return mIsHasLocation;
-    }
-
-    public double getLongitude() {
-        return mLongitude;
-    }
-
-    public double getLatitude() {
-        return mLatitude;
-    }
 }
