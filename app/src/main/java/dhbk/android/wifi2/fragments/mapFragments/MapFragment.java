@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments.historyOSMFragments;
+package dhbk.android.wifi2.fragments.mapFragments;
 
 
 import android.location.Location;
@@ -22,15 +22,15 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.utils.Constant;
 
-public class HistoryChildOsmMapFragment extends Fragment {
-    private static final String TAG = HistoryChildOsmMapFragment.class.getSimpleName();
+public class MapFragment extends Fragment {
+    private static final String TAG = MapFragment.class.getSimpleName();
 
-    public HistoryChildOsmMapFragment() {
+    public MapFragment() {
         // Required empty public constructor
     }
 
-    public static HistoryChildOsmMapFragment newInstance() {
-        HistoryChildOsmMapFragment fragment = new HistoryChildOsmMapFragment();
+    public static MapFragment newInstance() {
+        MapFragment fragment = new MapFragment();
         return fragment;
     }
 
@@ -62,8 +62,8 @@ public class HistoryChildOsmMapFragment extends Fragment {
 
     private void loadWifiHotspotFromDb() {
         Fragment parentFrag = getParentFragment();
-        if (parentFrag instanceof HistoryWithOsmMapFragment) {
-            ((HistoryWithOsmMapFragment) parentFrag).getWifiHotspotFromDb();
+        if (parentFrag instanceof MapPresenterFragment) {
+            ((MapPresenterFragment) parentFrag).getWifiHotspotFromDb();
         }
     }
 

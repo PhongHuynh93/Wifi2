@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/map_coordinator"
-    tools:context=".fragments.historyOSMFragments.HistoryWithOsmMapFragment">
+    tools:context=".fragments.mapFragments.MapPresenterFragment">
 
     <!--osm map-->
     <FrameLayout

@@ -1,4 +1,4 @@
-package dhbk.android.wifi2.fragments.historyOSMFragments;
+package dhbk.android.wifi2.fragments.mapFragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,16 +14,22 @@ import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.db.NetworkDb;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
-public class HistoryWithOsmMapFragment extends Fragment {
 
-    public HistoryWithOsmMapFragment() {
+/*
+. contain background tasks such as getting datas from db
+. not effected by config change
+. add child fragment by control ChildFragmentManger
+ */
+public class MapPresenterFragment extends Fragment {
+
+    public MapPresenterFragment() {
     }
 
-    public static HistoryWithOsmMapFragment newInstance() {
-        HistoryWithOsmMapFragment fragment = new HistoryWithOsmMapFragment();
-        return fragment;
+    public static MapPresenterFragment newInstance() {
+        return new MapPresenterFragment();
     }
 
+    // not effected by config change
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +47,11 @@ public class HistoryWithOsmMapFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HistoryChildOsmMapFragment historyChildOsmMapFragment = (HistoryChildOsmMapFragment) getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_OSM_MAP_FRAGMENT);
-        if (historyChildOsmMapFragment == null) {
+        MapFragment mapFragment = (MapFragment) getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_OSM_MAP_FRAGMENT);
+        if (mapFragment == null) {
             getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.map_parent, HistoryChildOsmMapFragment.newInstance(), Constant.TAG_CHILD_OSM_MAP_FRAGMENT)
+                    .add(R.id.map_parent, MapFragment.newInstance(), Constant.TAG_CHILD_OSM_MAP_FRAGMENT)
                     .commit();
         }
     }
@@ -59,7 +65,7 @@ public class HistoryWithOsmMapFragment extends Fragment {
     // result wifi hotspot from db
     public void onReturnWifiHotspot(Cursor cursor) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_OSM_MAP_FRAGMENT);
-        if (childFragment instanceof HistoryChildOsmMapFragment)  {
+        if (childFragment instanceof MapFragment)  {
             if (cursor.moveToFirst()) {
                 // loop all row in cursor
                 do {
@@ -79,7 +85,7 @@ public class HistoryWithOsmMapFragment extends Fragment {
                         }
                     }
                     WifiHotsPotModel wifiHotsPotModel = new WifiHotsPotModel(ssid, pass, latitude, longitude);
-                    ((HistoryChildOsmMapFragment) childFragment).showWifiHotspotOnMap(wifiHotsPotModel);
+                    ((MapFragment) childFragment).showWifiHotspotOnMap(wifiHotsPotModel);
                 } while (cursor.moveToNext());
             }
         }
