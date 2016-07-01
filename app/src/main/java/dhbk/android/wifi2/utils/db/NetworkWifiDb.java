@@ -1,6 +1,5 @@
 package dhbk.android.wifi2.utils.db;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 
@@ -356,8 +355,8 @@ public class NetworkWifiDb implements
 
     // get wifi hotspot to show on map
     @Override
-    public void onGetWifiHotspot(SQLiteDatabase db, Context activityContext) {
-        new GetWifiHotspotFromDbTask(db, activityContext).execute();
+    public void onGetWifiHotspot(SQLiteDatabase db, Fragment fragment) {
+        new GetWifiHotspotFromDbTask(db, fragment).execute();
     }
 
 

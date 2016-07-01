@@ -26,4 +26,8 @@ public interface OnFragInteractionListener {
         // get wifi state and date
         void onGetWifiStateAndDateCursor(Cursor cursor);
     }
+
+    interface OnMapFragInteractionListerer {
+        void onGetWifiLocationCursor(Cursor cursor);
+    }
 }

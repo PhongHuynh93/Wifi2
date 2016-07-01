@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.db.NetworkDb;
@@ -20,7 +21,8 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 . not effected by config change
 . add child fragment by control ChildFragmentManger
  */
-public class MapPresenterFragment extends Fragment {
+public class MapPresenterFragment extends Fragment implements
+        OnFragInteractionListener.OnMapFragInteractionListerer{
 
     public MapPresenterFragment() {
     }
@@ -59,7 +61,7 @@ public class MapPresenterFragment extends Fragment {
     // get wifi hotspot from db
     public void getWifiHotspotFromDb() {
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
-        networkDb.getWifiHotspotLocation(getActivity());
+        networkDb.getWifiHotspotLocation(this);
     }
 
     // result wifi hotspot from db
@@ -91,5 +93,12 @@ public class MapPresenterFragment extends Fragment {
         }
 
         cursor.close();
+    }
+
+
+    // TODO: 7/1/16 getting cursor a set to map
+    @Override
+    public void onGetWifiLocationCursor(Cursor cursor) {
+
     }
 }

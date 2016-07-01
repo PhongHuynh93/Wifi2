@@ -94,11 +94,12 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void getWifiHotspotLocation(Context activityContext) {
+    // get wifi hotspot location and show in map
+    public void getWifiHotspotLocation(Fragment fragment) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
-                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onGetWifiHotspot(getReadableDatabase(), activityContext);
+                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onGetWifiHotspot(getReadableDatabase(), fragment);
             }
         }
     }

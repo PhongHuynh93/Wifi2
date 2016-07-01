@@ -1,11 +1,10 @@
 package dhbk.android.wifi2.utils.backgroundTasks;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
@@ -15,21 +14,23 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  * get wifi hotspot with location from db
  */
 public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
-
     private static final String TAG = GetWifiHotspotFromDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
-    private final Context mActivityContext;
+    private final Fragment mFragment;
 
-    public GetWifiHotspotFromDbTask(SQLiteDatabase db, Context activityContext) {
+    public GetWifiHotspotFromDbTask(SQLiteDatabase db, Fragment fragment) {
         mDb = db;
-        mActivityContext = activityContext;
+        mFragment = fragment;
     }
 
     @Override
     protected Cursor doInBackground(Void... params) {
+        // TODO: 7/1/16 getting each table name in db
+
+        // TODO: 7/1/16 after getting table name, go to that table name, and get location
         Cursor cursor;
         try {
-            // get
+            // get all column
             cursor = mDb.query (NetworkWifiDb.TABLE_WIFI_HOTSPOT,
                     NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION,
                     NetworkWifiDb.KEY_WIFI_HOTSPOT_ISTURNONGPS + " = ?",
@@ -44,10 +45,9 @@ public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
     @Override
     protected void onPostExecute(Cursor cursor) {
         super.onPostExecute(cursor);
-        if (mActivityContext != null) {
-            if (mActivityContext instanceof OnFragInteractionListener.OnMainFragInteractionListener) {
-                Log.i(TAG, "onPostExecute: WifiHotspot" + cursor);
-                ((OnFragInteractionListener.OnMainFragInteractionListener) mActivityContext).onReturnCursorWifiHotspot(cursor);
+        if (mFragment != null) {
+            if (mFragment instanceof OnFragInteractionListener.OnMapFragInteractionListerer) {
+                ((OnFragInteractionListener.OnMapFragInteractionListerer) mFragment).onGetWifiLocationCursor(cursor);
             }
         }
     }
