@@ -43,7 +43,7 @@ public class MapPresenterFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_history_with_osm_map, container, false);
     }
 
-//     show map
+//   add child fragment to  show map
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,10 +56,10 @@ public class MapPresenterFragment extends Fragment {
         }
     }
 
-    // get wifi hotspot by async from db
+    // get wifi hotspot from db
     public void getWifiHotspotFromDb() {
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
-        networkDb.getWifiHotspot(getActivity());
+        networkDb.getWifiHotspotLocation(getActivity());
     }
 
     // result wifi hotspot from db

@@ -94,7 +94,7 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void getWifiHotspot(Context activityContext) {
+    public void getWifiHotspotLocation(Context activityContext) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {

@@ -2,6 +2,7 @@ package dhbk.android.wifi2.utils;
 
 /**
  * Created by phongdth.ky on 6/13/2016.
+ * contain constants which is used in many java class in my project.
  */
 public class Constant {
     // replace fragment
@@ -32,7 +33,7 @@ public class Constant {
 //    map
     public static final int ZOOM = 10;
     public static final int ZOOM_CLOSE = 14;
-    public static final double START_LATITUDE = 10.772241;
+    public static final double START_LATITUDE = 10.772241; // default center point in map
     public static final double STATE_LONGITUDE = 106.657676;
 
     // list
