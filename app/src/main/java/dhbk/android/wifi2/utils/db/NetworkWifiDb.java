@@ -16,6 +16,7 @@ import dhbk.android.wifi2.utils.backgroundTasks.AddWifiWithLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiFromDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiHotspotFromDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiStateAndDateFromDbTask;
+import dhbk.android.wifi2.utils.backgroundTasks.UpdateWifiInDbTask;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
@@ -107,6 +108,11 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_HOTSPOT_INFO_SSID = "column_ssid";
     public static final String KEY_WIFI_HOTSPOT_INFO_BSSID = "column_bssid";
     public static final String KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS = "column_mac_address";
+
+    public static final String KEY_WIFI_HOTSPOT_INFO_ENCRYPTION = "column_encryption";
+    public static final String KEY_WIFI_HOTSPOT_INFO_PASSWORD = "column_password";
+
+
     public static final String KEY_WIFI_HOTSPOT_INFO_NETWORK_ID = "column_network_id";
 
     // we want to show a unique wifi hotspot, bssid is a mac address of access points, it's unique so we want this value to create a list of wifi hotspot
@@ -114,6 +120,11 @@ public class NetworkWifiDb implements
     public static final String VALUE_WIFI_HOTSPOT_INFO_SSID = " TEXT NOT NULL, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_BSSID = " TEXT NOT NULL UNIQUE, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS = " TEXT NOT NULL, ";
+
+    public static final String VALUE_WIFI_HOTSPOT_INFO_ENCRYPTION = " TEXT DEFAULT ' ', ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_PASSWORD = " TEXT DEFAULT ' ', ";
+
+
     public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER NOT NULL);";
 
     // declare array of column and value
@@ -122,6 +133,8 @@ public class NetworkWifiDb implements
             KEY_WIFI_HOTSPOT_INFO_SSID,
             KEY_WIFI_HOTSPOT_INFO_BSSID,
             KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
+            KEY_WIFI_HOTSPOT_INFO_ENCRYPTION,
+            KEY_WIFI_HOTSPOT_INFO_PASSWORD,
             KEY_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
 
@@ -130,6 +143,8 @@ public class NetworkWifiDb implements
             VALUE_WIFI_HOTSPOT_INFO_SSID,
             VALUE_WIFI_HOTSPOT_INFO_BSSID,
             VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
+            VALUE_WIFI_HOTSPOT_INFO_ENCRYPTION,
+            VALUE_WIFI_HOTSPOT_INFO_PASSWORD,
             VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
 
@@ -159,6 +174,14 @@ public class NetworkWifiDb implements
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
                     break;
+                case KEY_WIFI_HOTSPOT_INFO_ENCRYPTION:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
+                case KEY_WIFI_HOTSPOT_INFO_PASSWORD:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
                 case KEY_WIFI_HOTSPOT_INFO_NETWORK_ID:
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
@@ -169,8 +192,6 @@ public class NetworkWifiDb implements
         }
         return createWifiTable.toString();
     }
-
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -451,5 +472,9 @@ public class NetworkWifiDb implements
         new AddWifiStateAndDateToDbTask(db, wifiStateAndDateModel).execute();
     }
 
-
+    // update wifi record in db
+    @Override
+    public void editWifiHotspot(SQLiteDatabase db, WifiLocationModel wifiScanWifiModel) {
+        new UpdateWifiInDbTask(db, wifiScanWifiModel).execute();
+    }
 }

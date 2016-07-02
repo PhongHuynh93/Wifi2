@@ -33,6 +33,8 @@ public interface onDbInteractionListener {
         void addWifiLocation(SQLiteDatabase db, WifiLocationModel wifiLocationModel);
         void addWifiStateAndDate(SQLiteDatabase db, WifiStateAndDateModel wifiStateAndDateModel);
 
+        // update record
+        void editWifiHotspot(SQLiteDatabase writableDatabase, WifiLocationModel wifiScanWifiModel);
     }
 
     // method table mobile

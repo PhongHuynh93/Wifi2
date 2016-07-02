@@ -21,7 +21,7 @@ import dhbk.android.wifi2.models.WifiStateAndDateModel;
 public class NetworkDb extends SQLiteOpenHelper{
     private static NetworkDb sInstance;
     private static final String DATABASE_NAME = "database_network";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     private ArrayList<onDbInteractionListener.onDbTableInteractionListener> listTable = new ArrayList<>();
     public static synchronized NetworkDb getInstance(Context context) {
@@ -126,6 +126,14 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
+    // update new record in db depend on bssid.
+    public void editWifiHotspotToDB(WifiLocationModel wifiScanWifiModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.editWifiHotspot(getWritableDatabase(), wifiScanWifiModel);
+        }
+    }
+
     //##########################################################################################
     // METHOD MOBILE TABLE
 
@@ -159,6 +167,5 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
         return null;
     }
-
 
 }

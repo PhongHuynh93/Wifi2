@@ -33,11 +33,12 @@ public class WifiLocationModel {
 
     //    wifi with location + password + encryption
     public WifiLocationModel(String ssid, String bssid, String password, double latitude, double longitude, int isHasLocation, String encryption) {
+        this.mBssid = bssid;
+        this.mSsid = ssid;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
         this.mIsHasLocation = isHasLocation;
-        this.mBssid = bssid;
-        this.mSsid = ssid;
+
         this.mPassword = password;
         this.mEncryption = encryption;
     }
