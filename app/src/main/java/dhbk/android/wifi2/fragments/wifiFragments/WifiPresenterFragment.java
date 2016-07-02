@@ -26,7 +26,6 @@ import dhbk.android.wifi2.fragments.historyFragments.BaseFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.db.NetworkDb;
 
@@ -243,7 +242,7 @@ public class WifiPresenterFragment extends BaseFragment implements
     // TODO: 7/1/2016 change to use new table
     // save wifi states to database
     // isTurnOnGps = true => has location
-    public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude, boolean isTurnOnGps) {
+    public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude, boolean isTurnOnGps, String encryption, String bssid) {
         // translate boolean to int to save to db
         int isTurnGpsInt;
         if (isTurnOnGps) {
@@ -252,9 +251,8 @@ public class WifiPresenterFragment extends BaseFragment implements
             isTurnGpsInt = 0;
         }
 
-        WifiScanWifiModel wifiScanWifiModel = new WifiScanWifiModel()
+        WifiLocationModel wifiScanWifiModel = new WifiLocationModel(networkSSID, bssid, networkPass, latitude, longitude, isTurnGpsInt, encryption);
 
-        WifiHotsPotModel wifiHotsPotModel = new WifiHotsPotModel(networkSSID, networkPass, latitude, longitude, isTurnGpsInt);
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
         networkDb.addWifiHotspotWithLocation(wifiHotsPotModel);
     }

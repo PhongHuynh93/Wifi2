@@ -31,12 +31,19 @@ public class WifiLocationModel {
         this.mPassword = password;
     }
 
+    //    wifi with location + password + encryption
+    public WifiLocationModel(String ssid, String bssid, String password, double latitude, double longitude, int isHasLocation, String encryption) {
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
+        this.mIsHasLocation = isHasLocation;
+        this.mBssid = bssid;
+        this.mSsid = ssid;
+        this.mPassword = password;
+        this.mEncryption = encryption;
+    }
+
 
     // this constructor used to show in a recyclerview
-//    public WifiScanWifiModel(String ssid, String encryption) {
-//        this.mSsid = ssid;
-//        this.encryption = encryption;
-//    }
 
     public WifiLocationModel(String ssid, String encryption, String bssid) {
         this.mSsid = ssid;

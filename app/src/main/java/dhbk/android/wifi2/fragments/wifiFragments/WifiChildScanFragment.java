@@ -206,14 +206,14 @@ public class WifiChildScanFragment extends BaseFragment {
             if (currentLocation != null) {
                 //  save to datbase
                 if (mWifiPresenterFragment != null) {
-                    mWifiPresenterFragment.saveWifiHotspotToDb(ssid, pass, currentLocation.getLatitude(), currentLocation.getLongitude(), isTurnOnGps);
+                    mWifiPresenterFragment.saveWifiHotspotToDb(ssid, pass, currentLocation.getLatitude(), currentLocation.getLongitude(), isTurnOnGps, encryption, bssid);
                 }
             }
 
         } // if user hasn't turn on Location
         else {
             if (mWifiPresenterFragment != null) {
-                mWifiPresenterFragment.saveWifiHotspotToDb(ssid, pass, 0, 0, isTurnOnGps);
+                mWifiPresenterFragment.saveWifiHotspotToDb(ssid, pass, 0, 0, isTurnOnGps, encryption, bssid);
             }
         }
 
