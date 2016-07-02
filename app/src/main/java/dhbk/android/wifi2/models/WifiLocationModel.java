@@ -4,17 +4,64 @@ package dhbk.android.wifi2.models;
  * Created by huynhducthanhphong on 6/30/16.
  */
 public class WifiLocationModel {
-    private final double mLatitude;
-    private final double mLongitude;
-    private final int mIsHasLocation;
-    private final String mBssid;
+    private  String mEncryption;
+    private  double mLatitude;
+    private  double mLongitude;
+    private  int mIsHasLocation;
+    private  String mBssid;
+    private  String mSsid;
+    private  String mPassword;
 
     //    wifi with location
-    public WifiLocationModel(String bssid, double latitude, double longitude, int isHasLocation) {
+    public WifiLocationModel(String ssid, String bssid, double latitude, double longitude, int isHasLocation) {
         this.mLatitude = latitude;
         this.mLongitude = longitude;
         this.mIsHasLocation = isHasLocation;
         this.mBssid = bssid;
+        this.mSsid = ssid;
+    }
+
+    //    wifi with location with password
+    public WifiLocationModel(String ssid, String bssid, String password, double latitude, double longitude, int isHasLocation) {
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
+        this.mIsHasLocation = isHasLocation;
+        this.mBssid = bssid;
+        this.mSsid = ssid;
+        this.mPassword = password;
+    }
+
+    //    wifi with location + password + encryption
+    public WifiLocationModel(String ssid, String bssid, String password, double latitude, double longitude, int isHasLocation, String encryption) {
+        this.mBssid = bssid;
+        this.mSsid = ssid;
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
+        this.mIsHasLocation = isHasLocation;
+
+        this.mPassword = password;
+        this.mEncryption = encryption;
+    }
+
+
+    // this constructor used to show in a recyclerview
+
+    public WifiLocationModel(String ssid, String encryption, String bssid) {
+        this.mSsid = ssid;
+        this.mEncryption = encryption;
+        this.mBssid = bssid;
+    }
+
+    public String getEncryption() {
+        return mEncryption;
+    }
+
+    public String getPassword() {
+        return mPassword;
+    }
+
+    public String getSsid() {
+        return mSsid;
     }
 
     public double getLatitude() {

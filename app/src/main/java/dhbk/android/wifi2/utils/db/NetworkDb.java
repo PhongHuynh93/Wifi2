@@ -12,7 +12,7 @@ import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 
 /**
@@ -21,7 +21,7 @@ import dhbk.android.wifi2.models.WifiStateAndDateModel;
 public class NetworkDb extends SQLiteOpenHelper{
     private static NetworkDb sInstance;
     private static final String DATABASE_NAME = "database_network";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     private ArrayList<onDbInteractionListener.onDbTableInteractionListener> listTable = new ArrayList<>();
     public static synchronized NetworkDb getInstance(Context context) {
@@ -57,11 +57,11 @@ public class NetworkDb extends SQLiteOpenHelper{
     // METHOD WIFI TABLE
 
     // insert wifi hotspot properties in datbase
-    public void addWifiHotspot(WifiModel wifiModel) {
+    public void addWifiHotspot(WifiScanWifiModel wifiScanWifiModel) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
-                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onInsert(getWritableDatabase(), wifiModel);
+                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onInsert(getWritableDatabase(), wifiScanWifiModel);
             }
         }
     }
@@ -75,11 +75,11 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void getWifiStateAndDate(Fragment frag, WifiModel wifiModel) {
+    public void getWifiStateAndDate(Fragment frag, WifiScanWifiModel wifiScanWifiModel) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
-                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).getWifiStateAndDateCursor(getReadableDatabase(), frag, wifiModel);
+                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).getWifiStateAndDateCursor(getReadableDatabase(), frag, wifiScanWifiModel);
             }
         }
     }
@@ -105,7 +105,7 @@ public class NetworkDb extends SQLiteOpenHelper{
     }
 
     // TODO: 6/29/16 add new method to add to new table
-    public void addWifiInfoToTable(WifiModel wifiInfoModel) {
+    public void addWifiInfoToTable(WifiScanWifiModel wifiInfoModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
         if (tableName != null) {
             tableName.addWifiInfo(getWritableDatabase(), wifiInfoModel);
@@ -123,6 +123,14 @@ public class NetworkDb extends SQLiteOpenHelper{
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
         if (tableName != null) {
             tableName.addWifiStateAndDate(getWritableDatabase(), wifiStateAndDateModel);
+        }
+    }
+
+    // update new record in db depend on bssid.
+    public void editWifiHotspotToDB(WifiLocationModel wifiScanWifiModel) {
+        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
+        if (tableName != null) {
+            tableName.editWifiHotspot(getWritableDatabase(), wifiScanWifiModel);
         }
     }
 
@@ -159,6 +167,5 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
         return null;
     }
-
 
 }

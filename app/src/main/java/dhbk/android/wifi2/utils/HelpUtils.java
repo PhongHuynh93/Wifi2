@@ -8,11 +8,14 @@ import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,7 +66,7 @@ public class HelpUtils {
     @NonNull
     public static String getTableDbName(@NonNull String bssid, String addString) {
         String bssidNew = getStringAfterRemoveChar(bssid, ":");
-        return bssidNew + "_" + addString;
+        return addString + "_" + bssidNew;
     }
 
     @NonNull
@@ -83,6 +86,32 @@ public class HelpUtils {
 
     // set default to map
     public static void setDefaultSettingToMap(MapView mapView) {
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
+        mapView.setMultiTouchControls(true);
+        IMapController iMapController = mapView.getController(); // map controller
+        iMapController.setZoom(Constant.ZOOM);
+        GeoPoint startPoint = new GeoPoint(Constant.START_LATITUDE, Constant.STATE_LONGITUDE);
+        iMapController.setCenter(startPoint);
+    }
+
+    //  - add marker at a location with instruction
+    public static void setMarkerAtLocation(Context context, MapView mapView, Location userCurrentLocation, int icon, String title) {
+        if (userCurrentLocation != null) {
+            GeoPoint userCurrentPoint = new GeoPoint(userCurrentLocation.getLatitude(), userCurrentLocation.getLongitude());
+            IMapController mIMapController = mapView.getController();
+            Marker hereMarker = new Marker(mapView);
+            hereMarker.setPosition(userCurrentPoint);
+            hereMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            hereMarker.setIcon(ContextCompat.getDrawable(context, icon));
+            hereMarker.setTitle("SSID: " + title);
+            mapView.getOverlays().add(hereMarker);
+            mapView.invalidate();
+        } else {
+            Toast.makeText(context, "Not determine your current location", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void setDefaultMapSetting(MapView mapView) {
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
         IMapController iMapController = mapView.getController(); // map controller

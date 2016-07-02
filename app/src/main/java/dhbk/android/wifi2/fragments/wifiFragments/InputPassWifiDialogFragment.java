@@ -16,18 +16,19 @@ import dhbk.android.wifi2.R;
 
 /**
  * Created by phongdth.ky on 6/16/2016.
+ * show a dialog to help user input a username and a password
  */
 
 // : 6/16/2016 copy this dialogfragment to sublime text
-public class ChildConnectWifiDialogFragment extends DialogFragment {
+public class InputPassWifiDialogFragment extends DialogFragment {
     private static final String ARG_SSID = "ssid";
     private static final String ARG_POSITION = "position";
     private String mSsid;
     private int mPosition;
 
     //  create a instance contructor to get ssid, and position
-    public static ChildConnectWifiDialogFragment newInstance(@NonNull String ssid, int position) {
-        ChildConnectWifiDialogFragment f = new ChildConnectWifiDialogFragment();
+    public static InputPassWifiDialogFragment newInstance(@NonNull String ssid, int position) {
+        InputPassWifiDialogFragment f = new InputPassWifiDialogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_SSID, ssid);
         args.putInt(ARG_POSITION, position);
@@ -47,7 +48,6 @@ public class ChildConnectWifiDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_wifi_input_pass, container, false);
     }
 
@@ -65,9 +65,9 @@ public class ChildConnectWifiDialogFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 Fragment parentParent = getParentFragment();
-                if (parentParent instanceof WifiFragment) {
+                if (parentParent instanceof WifiPresenterFragment) {
                     String pass = edtPass.getText().toString();
-                    ((WifiFragment) parentParent).onAuthen(pass, mPosition);
+                    ((WifiPresenterFragment) parentParent).onAuthenWifiHotspot(pass, mPosition);
                 }
                 dismiss();
             }

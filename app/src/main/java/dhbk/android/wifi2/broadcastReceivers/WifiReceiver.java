@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
@@ -26,8 +26,6 @@ import dhbk.android.wifi2.utils.db.NetworkDb;
  */
 
 public class WifiReceiver extends BroadcastReceiver {
-    private static final String TAG = WifiReceiver.class.getSimpleName();
-
     // because when i connect or disconnect to a wifi network, this broadcast is called about 2 or 3 times
     // i only need 1 time that we can save to db, so i make 2 static var to remember not to save to db duplicate.
     private static boolean firstConnect = true;
@@ -93,13 +91,13 @@ public class WifiReceiver extends BroadcastReceiver {
                     NetworkDb networkDb = NetworkDb.getInstance(context);
 
                     // add  wifi info
-                    WifiModel wifiInfoModel = new WifiModel(mSsid, mBssid, mMacAddress, mNetworkId);
+                    WifiScanWifiModel wifiInfoModel = new WifiScanWifiModel(mSsid, mBssid, mMacAddress, mNetworkId);
                     networkDb.addWifiInfoToTable(wifiInfoModel);
 
                     // because wifiLocation table and wifi state and date table make a name that contain bssid, so we must check whether bssid is null or not.
                     if (mBssid != null) {
                         // add location to wifi
-                        WifiLocationModel wifiLocationModel = new WifiLocationModel(mBssid, latitude, longitude, isHasLocation);
+                        WifiLocationModel wifiLocationModel = new WifiLocationModel(mSsid, mBssid, latitude, longitude, isHasLocation);
                         networkDb.addWifiLocationToTable(wifiLocationModel);
 
                         // add state and date to db
@@ -107,7 +105,6 @@ public class WifiReceiver extends BroadcastReceiver {
                         networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);
                     }
                 }
-
             }
 
             // wifi state disconnect the first time, so I spare wifi info, get date at the moment and save to db.
@@ -122,7 +119,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     String nowDate = formatter.format(now);
 
                     // because wifiLocation table and wifi state and date table make a name that contain ssid, so we must check whether ssid is null or not.
-                    if (mSsid != null) {
+                    if (mBssid != null) {
                         // add state and date to db
                         WifiStateAndDateModel wifiStateAndDateModel = new WifiStateAndDateModel(mBssid, mLinkSpeed, mRssi, nowDate, Constant.WIFI_DISCONNECT, mIpAddress);
                         NetworkDb networkDb = NetworkDb.getInstance(context);

@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 
 /**
@@ -22,17 +22,19 @@ public interface onDbInteractionListener {
 
     // method table wifi
     interface onDbWifiTableInteractionListener extends onDbTableInteractionListener{
-        void onInsert(SQLiteDatabase db, WifiModel wifiModel);
+        void onInsert(SQLiteDatabase db, WifiScanWifiModel wifiScanWifiModel);
         void getWifiHistoryCursor(SQLiteDatabase db, Fragment fragment);
         void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel);
         void onGetWifiHotspot(SQLiteDatabase db, Fragment fragment);
-        void getWifiStateAndDateCursor(SQLiteDatabase readableDatabase, Fragment frag, WifiModel wifiModel);
+        void getWifiStateAndDateCursor(SQLiteDatabase readableDatabase, Fragment frag, WifiScanWifiModel wifiScanWifiModel);
 
         // new method
-        void addWifiInfo(SQLiteDatabase db, WifiModel wifiInfoModel);
+        void addWifiInfo(SQLiteDatabase db, WifiScanWifiModel wifiInfoModel);
         void addWifiLocation(SQLiteDatabase db, WifiLocationModel wifiLocationModel);
         void addWifiStateAndDate(SQLiteDatabase db, WifiStateAndDateModel wifiStateAndDateModel);
 
+        // update record
+        void editWifiHotspot(SQLiteDatabase writableDatabase, WifiLocationModel wifiScanWifiModel);
     }
 
     // method table mobile

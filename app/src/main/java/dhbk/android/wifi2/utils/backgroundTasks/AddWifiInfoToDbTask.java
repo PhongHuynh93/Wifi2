@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
@@ -14,18 +14,18 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  */
 public class AddWifiInfoToDbTask extends AsyncTask<Void, Void, Boolean> {
     private final SQLiteDatabase mDb;
-    private final WifiModel mWifiModel;
+    private final WifiScanWifiModel mWifiScanWifiModel;
 
-    public AddWifiInfoToDbTask(SQLiteDatabase db, WifiModel wifiModel) {
+    public AddWifiInfoToDbTask(SQLiteDatabase db, WifiScanWifiModel wifiScanWifiModel) {
         this.mDb = db;
-        this.mWifiModel = wifiModel;
+        this.mWifiScanWifiModel = wifiScanWifiModel;
     }
     @Override
     protected Boolean doInBackground(Void... params) {
-        String ssid = mWifiModel.getSsid();
-        String bssid = mWifiModel.getBssid();
-        String macAddress = mWifiModel.getMacAddress();
-        int networkId = mWifiModel.getNetworkId();
+        String ssid = mWifiScanWifiModel.getSsid();
+        String bssid = mWifiScanWifiModel.getBssid();
+        String macAddress = mWifiScanWifiModel.getMacAddress();
+        int networkId = mWifiScanWifiModel.getNetworkId();
 
         mDb.beginTransaction();
         try {

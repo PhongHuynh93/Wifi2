@@ -17,18 +17,18 @@ import dhbk.android.wifi2.adapters.historyAdapters.WifiInfoRcvAdapter;
 import dhbk.android.wifi2.utils.Constant;
 
 /*
-get wifi data trong db and populate to recyclerview
+// contains a recyclerview to show a list of wifi history that a user has connected or disconnected
  */
-public class HistoryWifiFragment extends HistoryBaseFragment {
-    private static final String TAG = HistoryWifiFragment.class.getSimpleName();
+public class WifiFragment extends BaseFragment {
+    private static final String TAG = WifiFragment.class.getSimpleName();
     @BindView(R.id.rcv_history)
     RecyclerView mRcvHistory;
 
-    public HistoryWifiFragment() {
+    public WifiFragment() {
     }
 
-    public static HistoryWifiFragment newInstance() {
-        return new HistoryWifiFragment();
+    public static WifiFragment newInstance() {
+        return new WifiFragment();
     }
 
     @Override

@@ -25,16 +25,13 @@ public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
 
     @Override
     protected Cursor doInBackground(Void... params) {
-        // TODO: 7/1/16 getting each table name in db
-
-        // TODO: 7/1/16 after getting table name, go to that table name, and get location
         Cursor cursor;
         try {
             // get all column
-            cursor = mDb.query (NetworkWifiDb.TABLE_WIFI_HOTSPOT,
-                    NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_LOCATION,
-                    NetworkWifiDb.KEY_WIFI_HOTSPOT_ISTURNONGPS + " = ?",
-                    new String[] {Integer.toString(1)},
+            cursor = mDb.query (NetworkWifiDb.TABLE_ALL_WIFI_LOCATIONS,
+                    NetworkWifiDb.COLUMN_TABLE_ALL_WIFI_LOCATION,
+                    null,
+                    null,
                     null, null,null);
         } catch (SQLiteException e) {
             return null;

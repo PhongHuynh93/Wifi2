@@ -15,18 +15,14 @@ import android.text.Html;
 import android.util.TypedValue;
 import android.widget.TextView;
 
-import org.osmdroid.api.IMapController;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.DividerItemDecoration;
 
 /**
  * Created by phongdth.ky on 6/28/2016.
+ * the class which all classes in "historyFragment" package extend.
  */
-public abstract class HistoryBaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     // declare a toolbar with icon back button and can listen when click icons in toolbar
     public void declareToolbar(Toolbar mToolbar) {
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
@@ -61,7 +57,7 @@ public abstract class HistoryBaseFragment extends Fragment {
     // reclare recyclerview, adapter, and get datas from db to show to it.
     public void declareRcvAndGetDataFromDb(RecyclerView recyclerView, RecyclerView.Adapter adapter, String wifiOrMobile) {
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         // add horizontal white divider between each row
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
@@ -69,17 +65,17 @@ public abstract class HistoryBaseFragment extends Fragment {
 
         // : 6/15/2016 get wifi data from database (id, state, ssid, date)
         Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof HistoryWifiMobileFragment) {
+        if (parentFragment instanceof WifiMobileFragment) {
             if (wifiOrMobile.equals(Constant.WIFI_RECYCLERVIEW)) {
-                ((HistoryWifiMobileFragment) parentFragment).callPresenterToGetWifiDataFromDb();
+                ((WifiMobileFragment) parentFragment).callPresenterToGetWifiDataFromDb();
             } else if (wifiOrMobile.equals(Constant.MOBILE_RECYCLERVIEW)){
-                ((HistoryWifiMobileFragment) parentFragment).callPresenterToGetMobileDataFromDb();
+                ((WifiMobileFragment) parentFragment).callPresenterToGetMobileDataFromDb();
             }
         }
-        // get the state and date
-        else if (parentFragment instanceof HistoryChildShowDetailWifiFragment) {
+        // do nothing now
+        else if (parentFragment instanceof ChildShowDetailWifiFragment) {
             if (wifiOrMobile.equals(Constant.BOTTOMSHEET_WIFI_RECYCLERVIEW)) {
-                ((HistoryChildShowDetailWifiFragment)parentFragment).callPresenterToGetWifiStateAndDateFromDb();
+                ((ChildShowDetailWifiFragment)parentFragment).callPresenterToGetWifiStateAndDateFromDb();
             }
         }
     }
@@ -116,13 +112,6 @@ public abstract class HistoryBaseFragment extends Fragment {
         textView.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), colorBg), PorterDuff.Mode.SRC_ATOP);
     }
 
-    public void setDefaultMapSetting(MapView mapView) {
-        mapView.setTileSource(TileSourceFactory.MAPNIK);
-        mapView.setMultiTouchControls(true);
-        IMapController iMapController = mapView.getController(); // map controller
-        iMapController.setZoom(Constant.ZOOM);
-        GeoPoint startPoint = new GeoPoint(Constant.START_LATITUDE, Constant.STATE_LONGITUDE);
-        iMapController.setCenter(startPoint);
-    }
+
 
 }

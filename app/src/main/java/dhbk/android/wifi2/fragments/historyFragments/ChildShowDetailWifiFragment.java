@@ -1,6 +1,7 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -32,12 +33,16 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.GUIUtils;
 import dhbk.android.wifi2.utils.HelpUtils;
 
-public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
+/*
+    contains a details of wifi hotspots
+    contains a placeholder for adding the bottom sheet.
+ */
+public class ChildShowDetailWifiFragment extends BaseFragment {
     private static final String ARG_SSID = "ssid";
     private static final String ARG_BSSID = "bssid";
     private static final String ARG_MAC_ADD = "mac_add";
@@ -66,30 +71,47 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
     @BindView(R.id.container_wifi_show_detail)
     CoordinatorLayout mContainerWifiShowDetail;
 
-    private WifiModel mWifiModel;
+    private WifiScanWifiModel mWifiScanWifiModel;
+    private HistoryPresenterFragment mHistoryPresenterFragment;
 
-    public HistoryChildShowDetailWifiFragment() {
+    public ChildShowDetailWifiFragment() {
     }
 
-    public static HistoryChildShowDetailWifiFragment newInstance(WifiModel wifiModel) {
-        HistoryChildShowDetailWifiFragment fragment = new HistoryChildShowDetailWifiFragment();
+    public static ChildShowDetailWifiFragment newInstance(WifiScanWifiModel wifiScanWifiModel) {
+        ChildShowDetailWifiFragment fragment = new ChildShowDetailWifiFragment();
         Bundle args = new Bundle();
 
-        args.putString(ARG_SSID, wifiModel.getSsid());
-        args.putString(ARG_BSSID, wifiModel.getBssid());
-        args.putString(ARG_MAC_ADD, wifiModel.getMacAddress());
-        args.putInt(ARG_NETWORK_ID, wifiModel.getNetworkId());
+        args.putString(ARG_SSID, wifiScanWifiModel.getSsid());
+        args.putString(ARG_BSSID, wifiScanWifiModel.getBssid());
+        args.putString(ARG_MAC_ADD, wifiScanWifiModel.getMacAddress());
+        args.putInt(ARG_NETWORK_ID, wifiScanWifiModel.getNetworkId());
 
         fragment.setArguments(args);
         return fragment;
     }
 
-    // get the para from HistoryWifiFragment
+    // set the Presenter
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof HistoryPresenterFragment) {
+            mHistoryPresenterFragment = (HistoryPresenterFragment) parentFragment;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mHistoryPresenterFragment = null;
+    }
+
+    // get the para from WifiFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mWifiModel = new WifiModel(
+            mWifiScanWifiModel = new WifiScanWifiModel(
                     getArguments().getString(ARG_SSID),
                     getArguments().getString(ARG_BSSID),
                     getArguments().getString(ARG_MAC_ADD),
@@ -128,12 +150,6 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
             }
         }
 
-        // add a bottom sheet
-        BottomSheetShowHistoryWifiFragment bottomSheetFragment = BottomSheetShowHistoryWifiFragment.newInstance();
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.history_wifi_bottom_sheets, bottomSheetFragment, Constant.TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE)
-                .commit();
         return view;
     }
 
@@ -185,22 +201,50 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
                 });
     }
 
+    // put the task connect to db here to anim smooth.
     //    make sure view run on ui thread
     private void initViews() {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
+                // add animation fade 0.5s before main content shows.
                 Animation animation = AnimationUtils.loadAnimation(getContext().getApplicationContext(), android.R.anim.fade_in);
-                animation.setDuration(300);
+                animation.setDuration(getActivity().getResources().getInteger(R.integer.animation_duration));
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
+                    }
+
+                    // because add fragment require connect to db and get the cursor which cans slow the anim
+                    // if the anim doesn't end.
+                    // So if the anim end, we call add the bottom sheet
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // add a bottom sheet
+                        BottomSheetShowWifiFragment bottomSheetFragment = BottomSheetShowWifiFragment.newInstance();
+                        getChildFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.history_wifi_bottom_sheets, bottomSheetFragment, Constant.TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE)
+                                .commit();
+//
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                // show content when the anim start
                 mMainContentShowWifiDetail.startAnimation(animation);
                 mMainContentShowWifiDetail.setVisibility(View.VISIBLE);
                 setHeightForToolbarToDefault();
 
 //                set the text of textview in this layout
                 setWifiInfo();
-//                setDateStateWifi();
-                setDefaultMapSetting(mMap);
+                HelpUtils.setDefaultMapSetting(mMap);
+
             }
         });
     }
@@ -216,10 +260,10 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
 
     // remove this fragment out of child manager fragment
     private void backPressed() {
-        Fragment fragment = getParentFragment();
-        if (fragment instanceof HistoryPresenterFragment) {
-            ((HistoryPresenterFragment) fragment).popHistoryShowDetailWifiFragment();
+        if (mHistoryPresenterFragment != null) {
+            mHistoryPresenterFragment.popHistoryShowDetailWifiFragment();
         }
+
     }
 
     // set height for toolbar to default height
@@ -236,37 +280,39 @@ public class HistoryChildShowDetailWifiFragment extends HistoryBaseFragment {
         setFontToTv(mShowWifiInfoTv, Constant.QUICKSAND_LIGHT);
 
         // set new font and change text in textview
-        String ssidMes = HelpUtils.getStringAfterRemoveChar(mWifiModel.getSsid(), "\"");
+        String ssidMes = HelpUtils.getStringAfterRemoveChar(mWifiScanWifiModel.getSsid(), "\"");
         setFontAndTextToTv(mSsidTv, Constant.QUICKSAND_BOLD, ssidMes);
-        setFontAndTextToTv(mBssidTv, Constant.QUICKSAND_LIGHT, R.string.title_message_bssid, mWifiModel.getBssid());
-        setFontAndTextToTv(mMacAddressTv, Constant.QUICKSAND_LIGHT, R.string.title_message_mac_add, mWifiModel.getMacAddress());
-        setFontAndTextToTv(mNetworkidTv, Constant.QUICKSAND_LIGHT, R.string.title_message_network_id, Integer.toString(mWifiModel.getNetworkId()));
+        setFontAndTextToTv(mBssidTv, Constant.QUICKSAND_LIGHT, R.string.title_message_bssid, mWifiScanWifiModel.getBssid());
+        setFontAndTextToTv(mMacAddressTv, Constant.QUICKSAND_LIGHT, R.string.title_message_mac_add, mWifiScanWifiModel.getMacAddress());
+        setFontAndTextToTv(mNetworkidTv, Constant.QUICKSAND_LIGHT, R.string.title_message_network_id, Integer.toString(mWifiScanWifiModel.getNetworkId()));
 
     }
 
-    //  when click, show a bottom sheet to show a list of history
+    //  when click, show a bottom sheet + connect to db to load wifi state and date
     @OnClick(R.id.btn_show_wifi_on_map)
     public void onClick() {
-        View bottomSheetFragment = getActivity().findViewById(R.id.history_wifi_bottom_sheets);
-        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetFragment); //bottomSheetFragment.getBottomSheetBehavior();
+        View bottomSheetFragmentView = getActivity().findViewById(R.id.history_wifi_bottom_sheets);
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetFragmentView); //bottomSheetFragment.getBottomSheetBehavior();
         // if bottom is hiding - STATE_COLLAPSED, we show it
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
 
-    public void callPresenterToGetWifiStateAndDateFromDb() {
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof HistoryPresenterFragment) {
-            ((HistoryPresenterFragment) parentFragment).getWifiStateAndDateFromDb(mWifiModel);
-        }
-    }
 
     // a callback from db with data wifi state and date history result.
     public void passWifiStateAndDateToBottomSheetCursor(Cursor cursor) {
         Fragment fragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE);
-        if (fragment instanceof BottomSheetShowHistoryWifiFragment) {
-            ((BottomSheetShowHistoryWifiFragment) fragment).populateDateToRecyclerView(cursor);
+        if (fragment instanceof BottomSheetShowWifiFragment) {
+            ((BottomSheetShowWifiFragment) fragment).populateDateToRecyclerView(cursor);
         }
+    }
+
+
+    // call presenter connect to db to get wifi state and date
+    public void callPresenterToGetWifiStateAndDateFromDb() {
+        if (mHistoryPresenterFragment != null) {
+                mHistoryPresenterFragment.getWifiStateAndDateFromDb(mWifiScanWifiModel);
+            }
     }
 }

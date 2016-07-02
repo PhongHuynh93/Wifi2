@@ -1,9 +1,11 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,21 +20,37 @@ import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.DividerItemDecoration;
 
 /*
-A bottom sheets in HistoryChildShowDetailWifiFragment show a list of date and state of a wifi hotspot
+A bottom sheets in ChildShowDetailWifiFragment show a list of date and state of a wifi hotspot
  */
-public class BottomSheetShowHistoryWifiFragment extends HistoryBaseFragment {
-    private static final String TAG = BottomSheetShowHistoryWifiFragment.class.getSimpleName();
+public class BottomSheetShowWifiFragment extends BaseFragment {
+    private static final String TAG = BottomSheetShowWifiFragment.class.getSimpleName();
     @BindView(R.id.rcv_show_history_wifi)
     RecyclerView mRcvShowHistoryWifi;
+    private ChildShowDetailWifiFragment mParentFragment;
 
-    public BottomSheetShowHistoryWifiFragment() {
+    public BottomSheetShowWifiFragment() {
         // Required empty public constructor
     }
 
-    public static BottomSheetShowHistoryWifiFragment newInstance() {
-        return new BottomSheetShowHistoryWifiFragment();
+    public static BottomSheetShowWifiFragment newInstance() {
+        return new BottomSheetShowWifiFragment();
     }
 
+    // call parent fragment
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof ChildShowDetailWifiFragment) {
+            mParentFragment = (ChildShowDetailWifiFragment) parentFragment;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mParentFragment = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,6 +72,7 @@ public class BottomSheetShowHistoryWifiFragment extends HistoryBaseFragment {
         mRcvShowHistoryWifi.addItemDecoration(itemDecoration);
     }
 
+
     public void populateDateToRecyclerView(Cursor cursor) {
         try {
             WifiDateAndStateRcvAdapter adapter = (WifiDateAndStateRcvAdapter) mRcvShowHistoryWifi.getAdapter();
@@ -62,4 +81,6 @@ public class BottomSheetShowHistoryWifiFragment extends HistoryBaseFragment {
             Log.e(TAG, "populateCursorToRcv: " + e.toString());
         }
     }
+
+
 }

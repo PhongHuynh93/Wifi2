@@ -16,17 +16,17 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.historyAdapters.HistoryMobileRecyclerViewAdapter;
 import dhbk.android.wifi2.utils.Constant;
 
-// contains a recyclerview to show a list of wifi history that a user has connected or disconnected
-public class HistoryMobileFragment extends HistoryBaseFragment {
-    private static final String TAG = HistoryMobileFragment.class.getSimpleName();
+// contains a recyclerview to show a list of mobile history that a user has connected or disconnected
+public class MobileFragment extends BaseFragment {
+    private static final String TAG = MobileFragment.class.getSimpleName();
     @BindView(R.id.rcv_history_mobile)
     RecyclerView mRcvHistoryMobile;
 
-    public HistoryMobileFragment() {
+    public MobileFragment() {
     }
 
-    public static HistoryMobileFragment newInstance() {
-        return new HistoryMobileFragment();
+    public static MobileFragment newInstance() {
+        return new MobileFragment();
     }
 
 

@@ -2,6 +2,10 @@ package dhbk.android.wifi2.interfaces;
 
 import android.database.Cursor;
 
+import java.util.ArrayList;
+
+import dhbk.android.wifi2.models.WifiLocationModel;
+
 /**
  * Created by phongdth.ky on 6/13/2016.
  */
@@ -13,11 +17,16 @@ public interface OnFragInteractionListener {
         void onHistoryFragReplace();
         void onHistoryWithOsmMapFragReplace();
         void onMobileFragReplace();
-        void onReturnCursorWifiHotspot(Cursor cursor); // cursor containing wifi hotspot in db
         void onMainFragReplace();
     }
 
-    // interface for wifi and mobile history
+    // interface for WifiPresenterFragment
+    interface OnWifiScanFragInteractionListener {
+        void onGetDataAfterScanWifi(ArrayList<WifiLocationModel> list);
+        void onAllowToSaveWifiHotspotToDb(String ssid, String pass, String encryption, String bssid);
+    }
+
+    // interface for HistoryPresenterFragment
     interface OnHistoryFragInteractionListener {
         // get wifi info
         void onGetWifiHistoryCursor(Cursor cursor);

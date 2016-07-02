@@ -1,9 +1,4 @@
 package dhbk.android.wifi2.fragments.wifiFragments;
-
-//import android.app.Dialog;
-
-//import android.app.Dialog;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,12 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 
 /**
  * Created by phongdth.ky on 6/13/2016.
+ * a dialog to help user turn on wifi
  */
-public class WifiChildTurnOnDialogFragment extends DialogFragment {
+public class TurnOnWifiDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
@@ -27,8 +22,8 @@ public class WifiChildTurnOnDialogFragment extends DialogFragment {
                     .setPositiveButton(R.string.mes_wifi_turn_on, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             Fragment fragment = getParentFragment();
-                            if (fragment instanceof WifiFragment) {
-                                ((WifiFragment)fragment).turnOnWifi();
+                            if (fragment instanceof WifiPresenterFragment) {
+                                ((WifiPresenterFragment)fragment).turnOnWifi();
                             }
                         }
                     })

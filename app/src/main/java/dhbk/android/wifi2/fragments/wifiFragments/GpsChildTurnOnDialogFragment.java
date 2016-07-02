@@ -16,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
 
 /**
  * Created by phongdth.ky on 6/13/2016.
@@ -34,8 +33,8 @@ public class GpsChildTurnOnDialogFragment extends DialogFragment {
                             // : 6/17/16 if yes, code to turn on location here
                             turnGPSOn();
                             Fragment fragment = getParentFragment();
-                            if (fragment instanceof WifiFragment) {
-                                ((WifiFragment)fragment).hasTurnOnGPS(true);
+                            if (fragment instanceof WifiPresenterFragment) {
+                                ((WifiPresenterFragment)fragment).onHasUserTurnOnGps(true);
                             }
                         }
                     })
@@ -43,8 +42,8 @@ public class GpsChildTurnOnDialogFragment extends DialogFragment {
                         public void onClick(DialogInterface dialog, int id) {
                             // User cancelled the dialog
                             Fragment fragment = getParentFragment();
-                            if (fragment instanceof WifiFragment) {
-                                ((WifiFragment)fragment).hasTurnOnGPS(false);
+                            if (fragment instanceof WifiPresenterFragment) {
+                                ((WifiPresenterFragment)fragment).onHasUserTurnOnGps(false);
                             }
                         }
                     });

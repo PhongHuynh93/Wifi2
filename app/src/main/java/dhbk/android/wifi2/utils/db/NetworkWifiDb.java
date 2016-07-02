@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiInfoToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiLocationToDbTask;
@@ -16,6 +16,7 @@ import dhbk.android.wifi2.utils.backgroundTasks.AddWifiWithLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiFromDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiHotspotFromDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiStateAndDateFromDbTask;
+import dhbk.android.wifi2.utils.backgroundTasks.UpdateWifiInDbTask;
 
 /**
  * Created by phongdth.ky on 6/15/2016.
@@ -107,6 +108,11 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_HOTSPOT_INFO_SSID = "column_ssid";
     public static final String KEY_WIFI_HOTSPOT_INFO_BSSID = "column_bssid";
     public static final String KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS = "column_mac_address";
+
+    public static final String KEY_WIFI_HOTSPOT_INFO_ENCRYPTION = "column_encryption";
+    public static final String KEY_WIFI_HOTSPOT_INFO_PASSWORD = "column_password";
+
+
     public static final String KEY_WIFI_HOTSPOT_INFO_NETWORK_ID = "column_network_id";
 
     // we want to show a unique wifi hotspot, bssid is a mac address of access points, it's unique so we want this value to create a list of wifi hotspot
@@ -114,6 +120,11 @@ public class NetworkWifiDb implements
     public static final String VALUE_WIFI_HOTSPOT_INFO_SSID = " TEXT NOT NULL, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_BSSID = " TEXT NOT NULL UNIQUE, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS = " TEXT NOT NULL, ";
+
+    public static final String VALUE_WIFI_HOTSPOT_INFO_ENCRYPTION = " TEXT DEFAULT ' ', ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_PASSWORD = " TEXT DEFAULT ' ', ";
+
+
     public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER NOT NULL);";
 
     // declare array of column and value
@@ -122,6 +133,8 @@ public class NetworkWifiDb implements
             KEY_WIFI_HOTSPOT_INFO_SSID,
             KEY_WIFI_HOTSPOT_INFO_BSSID,
             KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
+            KEY_WIFI_HOTSPOT_INFO_ENCRYPTION,
+            KEY_WIFI_HOTSPOT_INFO_PASSWORD,
             KEY_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
 
@@ -130,6 +143,8 @@ public class NetworkWifiDb implements
             VALUE_WIFI_HOTSPOT_INFO_SSID,
             VALUE_WIFI_HOTSPOT_INFO_BSSID,
             VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
+            VALUE_WIFI_HOTSPOT_INFO_ENCRYPTION,
+            VALUE_WIFI_HOTSPOT_INFO_PASSWORD,
             VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
 
@@ -159,6 +174,14 @@ public class NetworkWifiDb implements
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
                     break;
+                case KEY_WIFI_HOTSPOT_INFO_ENCRYPTION:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
+                case KEY_WIFI_HOTSPOT_INFO_PASSWORD:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
                 case KEY_WIFI_HOTSPOT_INFO_NETWORK_ID:
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
@@ -171,10 +194,8 @@ public class NetworkWifiDb implements
     }
 
 
-
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // LOCATION AT THAT WIFI HOTSPOT
+    // LOCATION AT A WIFI HOTSPOT
 
     // column name and value
     public static final String KEY_WIFI_LOCATION_ID = "_id";
@@ -227,6 +248,77 @@ public class NetworkWifiDb implements
                 case KEY_WIFI_LOCATION_ISTURNONGPS:
                     createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
+                    break;
+            }
+        }
+        return createWifiTable.toString();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //TODO TABLE CONTAINS LOCATION IN ALL WIFI HOTSPOT
+    // column name and value
+    public static final String TABLE_ALL_WIFI_LOCATIONS = "all_wifi_location";
+
+    public static final String KEY_ALL_WIFI_LOCATION_ID = "_id";
+    public static final String KEY_ALL_WIFI_LOCATION_SSID = "column_ssid";
+    public static final String KEY_ALL_WIFI_LOCATION_BSSID = "column_bssid";
+    public static final String KEY_ALL_WIFI_LOCATION_LAT = "column_lat";
+    public static final String KEY_ALL_WIFI_LOCATION_LONG = "column_long";
+
+    public static final String VALUE_ALL_WIFI_LOCATION_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+    public static final String VALUE_ALL_WIFI_LOCATION_SSID = " TEXT NOT NULL, ";
+    public static final String VALUE_ALL_WIFI_LOCATION_BSSID = " TEXT NOT NULL UNIQUE, ";
+    public static final String VALUE_ALL_WIFI_LOCATION_LAT = " REAL DEFAULT 0, ";
+    public static final String VALUE_ALL_WIFI_LOCATION_LONG = " REAL DEFAULT 0);";
+
+    // declare array of column and value
+    public static final String[] COLUMN_TABLE_ALL_WIFI_LOCATION = new String[] {
+            KEY_ALL_WIFI_LOCATION_ID,
+            KEY_ALL_WIFI_LOCATION_SSID,
+            KEY_ALL_WIFI_LOCATION_BSSID,
+            KEY_ALL_WIFI_LOCATION_LAT,
+            KEY_ALL_WIFI_LOCATION_LONG
+    };
+
+    public static final String[] VALUE_COLUMN_ALL_WIFI_LOCATION = new String[] {
+            VALUE_ALL_WIFI_LOCATION_ID,
+            VALUE_ALL_WIFI_LOCATION_SSID,
+            VALUE_ALL_WIFI_LOCATION_BSSID,
+            VALUE_ALL_WIFI_LOCATION_LAT,
+            VALUE_ALL_WIFI_LOCATION_LONG
+    };
+
+
+    // create wifi table
+    public static String createAllWifiLocationTable() {
+        StringBuilder createWifiTable = new StringBuilder();
+        createWifiTable.append("CREATE TABLE ");
+        createWifiTable.append(TABLE_ALL_WIFI_LOCATIONS);
+        createWifiTable.append("(");
+
+        for (int i = 0; i < COLUMN_TABLE_ALL_WIFI_LOCATION.length; i++) {
+            switch (COLUMN_TABLE_ALL_WIFI_LOCATION[i]) {
+                case KEY_ALL_WIFI_LOCATION_ID:
+                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
+                    break;
+                case KEY_ALL_WIFI_LOCATION_SSID:
+                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
+                    break;
+                case KEY_ALL_WIFI_LOCATION_BSSID:
+                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
+                    break;
+                case KEY_ALL_WIFI_LOCATION_LAT:
+                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
+                    break;
+                case KEY_ALL_WIFI_LOCATION_LONG:
+                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
+                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
+                    break;
+                default:
                     break;
             }
         }
@@ -316,25 +408,25 @@ public class NetworkWifiDb implements
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
-        db.execSQL(CREATE_TABLE_WIFI_HOTSPOT);
 
         // create table: wifi hotspot info, but two table - one contains location and one contain state and date -  create if wifi hotspot info table already has a content.
         db.execSQL(createWifiHotspotInfoTable());
+        db.execSQL(createAllWifiLocationTable());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT_INFO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_WIFI_LOCATIONS);
 
         // TODO: 6/30/16 remove table location and state that we dont have a name here
         onCreate(db);
     }
 
     @Override
-    public void onInsert(SQLiteDatabase db, WifiModel wifiModel) {
-        new AddWifiToDbTask(db, wifiModel).execute();
+    public void onInsert(SQLiteDatabase db, WifiScanWifiModel wifiScanWifiModel) {
+        new AddWifiToDbTask(db, wifiScanWifiModel).execute();
     }
 
     @Override
@@ -343,8 +435,8 @@ public class NetworkWifiDb implements
     }
 
     @Override
-    public void getWifiStateAndDateCursor(SQLiteDatabase db, Fragment frag, WifiModel wifiModel) {
-        new GetWifiStateAndDateFromDbTask(db, frag, wifiModel).execute();
+    public void getWifiStateAndDateCursor(SQLiteDatabase db, Fragment frag, WifiScanWifiModel wifiScanWifiModel) {
+        new GetWifiStateAndDateFromDbTask(db, frag, wifiScanWifiModel).execute();
     }
 
     // add wifi hotspot with location to db
@@ -364,7 +456,7 @@ public class NetworkWifiDb implements
     // TODO: 6/29/2016 new method to deal with new table, after the program run, remove another method
     // add wifi info to db
     @Override
-    public void addWifiInfo(SQLiteDatabase db, WifiModel wifiInfoModel) {
+    public void addWifiInfo(SQLiteDatabase db, WifiScanWifiModel wifiInfoModel) {
         new AddWifiInfoToDbTask(db, wifiInfoModel).execute();
     }
 
@@ -380,5 +472,9 @@ public class NetworkWifiDb implements
         new AddWifiStateAndDateToDbTask(db, wifiStateAndDateModel).execute();
     }
 
-
+    // update wifi record in db
+    @Override
+    public void editWifiHotspot(SQLiteDatabase db, WifiLocationModel wifiScanWifiModel) {
+        new UpdateWifiInDbTask(db, wifiScanWifiModel).execute();
+    }
 }

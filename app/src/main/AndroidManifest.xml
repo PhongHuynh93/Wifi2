@@ -3,10 +3,16 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="dhbk.android.wifi2">
 
+    <!-- wifi permission -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
+    <!-- location permission -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <!-- mobile permission -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -25,9 +31,20 @@
             </intent-filter>
         </activity>
 
+        <!--listen for wifi state-->
         <receiver android:name=".broadcastReceivers.WifiReceiver" >
             <intent-filter android:priority="100">
                 <action android:name="android.net.wifi.STATE_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!--listen for mobile state-->
+        <receiver
+            android:name=".broadcastReceivers.MobileReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
     </application>

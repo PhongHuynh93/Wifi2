@@ -112,5 +112,7 @@
         android:id="@+id/history_wifi_bottom_sheets"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior"/>
 </android.support.design.widget.CoordinatorLayout>

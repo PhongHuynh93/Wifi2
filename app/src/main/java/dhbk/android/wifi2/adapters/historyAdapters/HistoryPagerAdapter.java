@@ -15,8 +15,8 @@ import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryMobileFragment;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryWifiFragment;
+import dhbk.android.wifi2.fragments.historyFragments.MobileFragment;
+import dhbk.android.wifi2.fragments.historyFragments.WifiFragment;
 import dhbk.android.wifi2.models.HistoryPageModel;
 
 /**
@@ -43,9 +43,9 @@ public class HistoryPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return HistoryWifiFragment.newInstance();
+                return WifiFragment.newInstance();
             case 1:
-                return HistoryMobileFragment.newInstance();
+                return MobileFragment.newInstance();
         }
         return null;
     }

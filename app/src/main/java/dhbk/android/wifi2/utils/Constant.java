@@ -19,6 +19,7 @@ public class Constant {
     public static final String TAG_HISTORY_WIFI_DETAIL_FRAGMENT = "wifi_detail_frag";
     public static final String TAG_HISTORY_WIFI_MOBILE_FRAGMENT = "history_wifi_mobile_fragment";
     public static final String TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE = "fragment_bottom_sheet_wifi_state_and_date";
+    public static final String TAG_WIFI_PRESENTER_FRAGMENT = "wifi_presenter";
 
     //    wifi encryption security
     public static final String WIFI_WEP = "WEP";
@@ -42,13 +43,12 @@ public class Constant {
     public static final String BOTTOMSHEET_WIFI_RECYCLERVIEW = "bottom_sheet_recyclerview";
 
     // table database
-    public static final String TABLE_LOCATION = "table_location";
-    public static final String TABLE_STATE_AND_DATE = "table_state_and_date";
+    public static final String TABLE_LOCATION = "loc";
+    public static final String TABLE_STATE_AND_DATE = "state";
 
     // font path
     public static final String QUICKSAND_BOLD = "fonts/Quicksand-Bold.otf";
     public static final String QUICKSAND_LIGHT = "fonts/Quicksand-Light.otf";
     public static final String QUICKSAND_REGULAR = "fonts/Quicksand-Regular.otf";
-
 }
 

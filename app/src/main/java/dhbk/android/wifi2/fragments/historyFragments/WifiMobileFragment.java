@@ -21,11 +21,11 @@ import dhbk.android.wifi2.adapters.historyAdapters.HistoryPagerAdapter;
 import dhbk.android.wifi2.utils.PageChangeListener;
 
 /*
-show a viewpager contains a list of wifi hotspot and mobile.
+show a viewpager with tablayout contains a list of wifi hotspot and mobile.
  */
-public class HistoryWifiMobileFragment extends HistoryBaseFragment {
+public class WifiMobileFragment extends BaseFragment {
 
-    private static final String TAG = HistoryWifiMobileFragment.class.getSimpleName();
+    private static final String TAG = WifiMobileFragment.class.getSimpleName();
     @BindView(R.id.toolbar_image_outgoing)
     ImageView mToolbarImageOutgoing;
     @BindView(R.id.toolbar_image)
@@ -39,11 +39,11 @@ public class HistoryWifiMobileFragment extends HistoryBaseFragment {
     @BindView(R.id.fab_reveal_detail_wifi)
     FloatingActionButton mFabRevealDetailWifi;
 
-    public HistoryWifiMobileFragment() {
+    public WifiMobileFragment() {
     }
 
-    public static HistoryWifiMobileFragment newInstance() {
-        return new HistoryWifiMobileFragment();
+    public static WifiMobileFragment newInstance() {
+        return new WifiMobileFragment();
     }
 
 
@@ -112,8 +112,8 @@ public class HistoryWifiMobileFragment extends HistoryBaseFragment {
     public void getWifiFragmentAndPassWifiCursor(Cursor cursor) {
         HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();
         Fragment wifiFragment = adapter.getRegisteredFragment(mViewPagerContainer.getCurrentItem());
-        if (wifiFragment instanceof HistoryWifiFragment) {
-            ((HistoryWifiFragment)wifiFragment).onPopulateWifiCursorToRcv(cursor);
+        if (wifiFragment instanceof WifiFragment) {
+            ((WifiFragment)wifiFragment).onPopulateWifiCursorToRcv(cursor);
         }
     }
 
@@ -121,8 +121,8 @@ public class HistoryWifiMobileFragment extends HistoryBaseFragment {
     public void getMobileFragmentAndPassWifiCursor(Cursor cursor) {
         HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();
         Fragment mobileFragment = adapter.getRegisteredFragment(mViewPagerContainer.getCurrentItem());
-        if (mobileFragment instanceof HistoryMobileFragment) {
-            ((HistoryMobileFragment)mobileFragment).onPopulateMobileCursorToRcv(cursor);
+        if (mobileFragment instanceof MobileFragment) {
+            ((MobileFragment)mobileFragment).onPopulateMobileCursorToRcv(cursor);
         }
     }
 }
