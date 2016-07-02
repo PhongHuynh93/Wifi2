@@ -14,12 +14,13 @@ import dhbk.android.wifi2.models.MobileModel;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.
+ * adapter for showing a list of mobile history
  */
-public class HistoryMobileRecyclerViewAdapter extends
-        CursorRecyclerViewAdapter<HistoryMobileRecyclerViewAdapter.ViewHolder> {
+public class MobileInfoRcvAdapter extends
+        CursorRecyclerViewAdapter<MobileInfoRcvAdapter.ViewHolder> {
 
 
-    public HistoryMobileRecyclerViewAdapter(Context context, Cursor cursor) {
+    public MobileInfoRcvAdapter(Context context, Cursor cursor) {
         super(context, cursor);
     }
 
