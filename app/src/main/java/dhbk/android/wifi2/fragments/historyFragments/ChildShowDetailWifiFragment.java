@@ -38,6 +38,10 @@ import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.GUIUtils;
 import dhbk.android.wifi2.utils.HelpUtils;
 
+/*
+    contains a details of wifi hotspots
+    contains a placeholder for adding the bottom sheet.
+ */
 public class ChildShowDetailWifiFragment extends BaseFragment {
     private static final String ARG_SSID = "ssid";
     private static final String ARG_BSSID = "bssid";

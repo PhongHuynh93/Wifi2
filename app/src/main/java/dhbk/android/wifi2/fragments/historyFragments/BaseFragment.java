@@ -20,6 +20,7 @@ import dhbk.android.wifi2.utils.DividerItemDecoration;
 
 /**
  * Created by phongdth.ky on 6/28/2016.
+ * the class which all classes in "historyFragment" package extend.
  */
 public abstract class BaseFragment extends Fragment {
     // declare a toolbar with icon back button and can listen when click icons in toolbar

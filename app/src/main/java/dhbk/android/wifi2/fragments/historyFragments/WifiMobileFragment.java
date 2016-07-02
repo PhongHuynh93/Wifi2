@@ -21,7 +21,7 @@ import dhbk.android.wifi2.adapters.historyAdapters.HistoryPagerAdapter;
 import dhbk.android.wifi2.utils.PageChangeListener;
 
 /*
-show a viewpager contains a list of wifi hotspot and mobile.
+show a viewpager with tablayout contains a list of wifi hotspot and mobile.
  */
 public class WifiMobileFragment extends BaseFragment {
 

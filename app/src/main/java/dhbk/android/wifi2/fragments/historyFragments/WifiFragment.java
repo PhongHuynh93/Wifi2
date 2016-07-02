@@ -17,7 +17,7 @@ import dhbk.android.wifi2.adapters.historyAdapters.WifiInfoRcvAdapter;
 import dhbk.android.wifi2.utils.Constant;
 
 /*
-get wifi data trong db and populate to recyclerview
+// contains a recyclerview to show a list of wifi history that a user has connected or disconnected
  */
 public class WifiFragment extends BaseFragment {
     private static final String TAG = WifiFragment.class.getSimpleName();
