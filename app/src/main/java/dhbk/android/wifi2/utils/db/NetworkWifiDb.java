@@ -23,80 +23,6 @@ public class NetworkWifiDb implements
     public static final String TAG = NetworkWifiDb.class.getSimpleName();
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // wifi table - (notice it doesn't have location)
-    public static final String TABLE_WIFI = "table_wifi";
-
-    public static final String KEY_ID = "_id";
-    public static final String KEY_WIFI_STATE = "key_wifi_state";
-    public static final String KEY_WIFI_SSID = "key_wifi_ssid";
-    public static final String KEY_WIFI_DATE = "key_wifi_date";
-
-    public static final String KEY_WIFI_BSSID = "key_wifi_bssid";
-    public static final String KEY_WIFI_RSSI = "key_wifi_rssi";
-    public static final String KEY_WIFI_MAC_ADDRESS = "key_wifi_mac_address";
-
-    public static final String KEY_WIFI_IP_ADDRESS = "key_wifi_ip_address";
-    public static final String KEY_WIFI_LINK_SPEED = "key_wifi_link_speed";
-    public static final String KEY_WIFI_NETWORK_ID = "key_wifi_network_id";
-
-    public static final String[] COLUMN_TABLE_WIFI = new String[] {
-            KEY_ID,
-            KEY_WIFI_STATE,
-            KEY_WIFI_SSID,
-            KEY_WIFI_DATE,
-            KEY_WIFI_BSSID,
-            KEY_WIFI_RSSI,
-            KEY_WIFI_MAC_ADDRESS,
-            KEY_WIFI_IP_ADDRESS,
-            KEY_WIFI_LINK_SPEED,
-            KEY_WIFI_NETWORK_ID
-    };
-
-    // because Each configured network has a unique small integer ID, used to identify the network
-    // https://developer.android.com/reference/android/net/wifi/WifiInfo.html#getNetworkId()
-    // not ssid - because many wifi have the same ssid
-    public static final String CREATE_TABLE = "CREATE TABLE " + TABLE_WIFI + "("
-            + COLUMN_TABLE_WIFI[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_TABLE_WIFI[1] + " TEXT NOT NULL, "
-            + COLUMN_TABLE_WIFI[2] + " TEXT NOT NULL, "
-            + COLUMN_TABLE_WIFI[3] + " TEXT NOT NULL, "
-            + COLUMN_TABLE_WIFI[4] + " TEXT NOT NULL, "
-            + COLUMN_TABLE_WIFI[5] + " INTEGER NOT NULL, "
-            + COLUMN_TABLE_WIFI[6] + " TEXT NOT NULL, "
-            + COLUMN_TABLE_WIFI[7] + " INTEGER NOT NULL, "
-            + COLUMN_TABLE_WIFI[8] + " INTEGER NOT NULL, "
-            + COLUMN_TABLE_WIFI[9] + " INTEGER NOT NULL UNIQUE);";
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // wifi hotspot with location
-    public static final String TABLE_WIFI_HOTSPOT = "table_wifi_hotspot";
-    public static final String KEY_WIFI_HOTSPOT_ID = "_id";
-    public static final String KEY_WIFI_HOTSPOT_SSID = "key_wifi_hotspot_ssid";
-    public static final String KEY_WIFI_HOTSPOT_PASS = "key_wifi_hotspot_pass";
-    public static final String KEY_WIFI_HOTSPOT_LAT = "key_wifi_hotspot_lat";
-    public static final String KEY_WIFI_HOTSPOT_LONG = "key_wifi_hotspot_long";
-    public static final String KEY_WIFI_HOTSPOT_ISTURNONGPS = "key_wifi_hotspot_turn_on_gps";
-
-    public static final String[] COLUMN_TABLE_WIFI_HOTSPOT_LOCATION = new String[] {
-            KEY_WIFI_HOTSPOT_ID,
-            KEY_WIFI_HOTSPOT_SSID,
-            KEY_WIFI_HOTSPOT_PASS,
-            KEY_WIFI_HOTSPOT_LAT,
-            KEY_WIFI_HOTSPOT_LONG,
-            KEY_WIFI_HOTSPOT_ISTURNONGPS
-    };
-
-
-    public static final String CREATE_TABLE_WIFI_HOTSPOT = "CREATE TABLE " + TABLE_WIFI_HOTSPOT + "("
-            + COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[0] + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[1] + " TEXT NOT NULL UNIQUE, "
-            + COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[2] + " TEXT NOT NULL, "
-            + COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[3] + " REAL NOT NULL, "
-            + COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[4] + " REAL NOT NULL, "
-            + COLUMN_TABLE_WIFI_HOTSPOT_LOCATION[5] + " INTEGER NOT NULL);"; // giá trị này = 1 thì mới chứng to wifi hotspot đó có location
-
-    // TODO: 6/29/2016 AFTER THIS TABLE RUN, REMOVE 2 TABLE ABOVE
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
     // WIFI HOTSPOT
     public static final String TABLE_WIFI_HOTSPOT_INFO = "table_wifi_hotspot_new";
 
@@ -404,7 +330,7 @@ public class NetworkWifiDb implements
     // : 6/17/2016 test name of create table
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
+//        db.execSQL(CREATE_TABLE);
 
         // create table: wifi hotspot info, but two table - one contains location and one contain state and date -  create if wifi hotspot info table already has a content.
         db.execSQL(createWifiHotspotInfoTable());
@@ -413,7 +339,7 @@ public class NetworkWifiDb implements
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI);
+//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT_INFO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_WIFI_LOCATIONS);
 
