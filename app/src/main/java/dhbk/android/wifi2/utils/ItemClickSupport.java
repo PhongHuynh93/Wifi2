@@ -8,7 +8,7 @@ import dhbk.android.wifi2.R;
 /**
  * Created by phongdth.ky on 6/16/2016.
  */
-// implement make a click listener to recyclerview
+// implement make a recyclerview can click
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
     private OnItemClickListener mOnItemClickListener;

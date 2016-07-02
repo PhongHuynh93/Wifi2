@@ -17,7 +17,7 @@ import android.view.animation.AnimationUtils;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.interfaces.OnRevealAnimationListener;
 
-//class contain animation when transction between fragment or activity
+// class contain animation when transction between fragment or activity
 public class GUIUtils {
 
     // We have context that is used to retrieve color from @ColorRes value, duration of the animation from resources.

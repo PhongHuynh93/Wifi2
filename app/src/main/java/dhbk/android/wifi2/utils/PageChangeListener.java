@@ -7,6 +7,7 @@ import dhbk.android.wifi2.adapters.historyAdapters.HistoryPagerAdapter;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.
+ * listen for viewpage change for anim
  */
 public class PageChangeListener implements ViewPager.OnPageChangeListener {
 

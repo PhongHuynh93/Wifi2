@@ -7,8 +7,8 @@ import android.telephony.TelephonyManager;
 
 /**
  * Created by phongdth.ky on 6/17/2016.
+ * Android utility class for checking device's network connectivity and speed.
  */
-// Android utility class for checking device's network connectivity and speed.
 public class Connectivity {
 
     public static NetworkInfo getNetworkInfo(Context context){
