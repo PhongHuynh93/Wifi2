@@ -28,6 +28,7 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
+        String ssid = mWifiLocationModel.getSsid();
         String bssid = mWifiLocationModel.getBssid();
         double latitude = mWifiLocationModel.getLatitude();
         double longitude = mWifiLocationModel.getLongitude();
@@ -38,25 +39,57 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
 
         mDb.beginTransaction();
         try {
-            ContentValues wifiLocationValues = new ContentValues();
 
-            for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_LOCATION.length; i++) {
-                switch (NetworkWifiDb.COLUMN_TABLE_WIFI_LOCATION[i]) {
-                    case NetworkWifiDb.KEY_WIFI_LOCATION_LAT:
-                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_LAT, latitude);
-                        break;
-                    case NetworkWifiDb.KEY_WIFI_LOCATION_LONG:
-                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_LONG, longitude);
-                        break;
-                    case NetworkWifiDb.KEY_WIFI_LOCATION_ISTURNONGPS:
-                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_ISTURNONGPS, isHasLocation);
-                        break;
-                    default:
-                        break;
+            // add location to a wifi hotspot
+            {
+                ContentValues wifiLocationValues = new ContentValues();
+
+                for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_LOCATION.length; i++) {
+                    switch (NetworkWifiDb.COLUMN_TABLE_WIFI_LOCATION[i]) {
+                        case NetworkWifiDb.KEY_WIFI_LOCATION_LAT:
+                            wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_LAT, latitude);
+                            break;
+                        case NetworkWifiDb.KEY_WIFI_LOCATION_LONG:
+                            wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_LONG, longitude);
+                            break;
+                        case NetworkWifiDb.KEY_WIFI_LOCATION_ISTURNONGPS:
+                            wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_LOCATION_ISTURNONGPS, isHasLocation);
+                            break;
+                        default:
+                            break;
+                    }
                 }
+
+                mDb.insertOrThrow(mTableName, null, wifiLocationValues);
             }
 
-            mDb.insertOrThrow(mTableName, null, wifiLocationValues);
+
+            // add location to all wifi hotspot when has a location
+            if (isHasLocation == 1) {
+                ContentValues wifiAllLocationValues = new ContentValues();
+
+                for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_ALL_WIFI_LOCATION.length; i++) {
+                    switch (NetworkWifiDb.COLUMN_TABLE_ALL_WIFI_LOCATION[i]) {
+                        case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_SSID:
+                            wifiAllLocationValues.put(NetworkWifiDb.KEY_ALL_WIFI_LOCATION_SSID, ssid);
+                            break;
+                        case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_BSSID:
+                            wifiAllLocationValues.put(NetworkWifiDb.KEY_ALL_WIFI_LOCATION_BSSID, bssid);
+                            break;
+                        case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_LAT:
+                            wifiAllLocationValues.put(NetworkWifiDb.KEY_ALL_WIFI_LOCATION_LAT, latitude);
+                            break;
+                        case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_LONG:
+                            wifiAllLocationValues.put(NetworkWifiDb.KEY_ALL_WIFI_LOCATION_LONG, longitude);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                mDb.insertOrThrow(NetworkWifiDb.TABLE_ALL_WIFI_LOCATIONS, null, wifiAllLocationValues);
+            }
+
+
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {

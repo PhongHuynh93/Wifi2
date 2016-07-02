@@ -21,12 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.db.NetworkDb;
 
 /*
 . contain tasks relating to background tasks such as getting datas from db and show it to it's child fragment.
+. contains business logics.
 . replace|add|pop child fragment by control ChildFragmentManger
  */
 public class HistoryPresenterFragment extends Fragment implements
@@ -67,12 +68,12 @@ public class HistoryPresenterFragment extends Fragment implements
         setRetainInstance(true);
     }
 
-    // add HistoryWifiMobileFragment to show a list of wifi and mobile history.
+    // add WifiMobileFragment to show a list of wifi and mobile history.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_container, container, false);
-        HistoryWifiMobileFragment historyWifiMobileFragment = new HistoryWifiMobileFragment();
+        WifiMobileFragment historyWifiMobileFragment = new WifiMobileFragment();
         getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.historyContainer, historyWifiMobileFragment, Constant.TAG_HISTORY_WIFI_MOBILE_FRAGMENT)
@@ -83,11 +84,11 @@ public class HistoryPresenterFragment extends Fragment implements
 
 
     /*
-    replace HistoryWifiMobileFragment with HistoryChildShowDetailWifiFragment to show a detail of a specific wifi hotspot
+    replace WifiMobileFragment with ChildShowDetailWifiFragment to show a detail of a specific wifi hotspot
     after a user has clicked a right arrow icon with circular reveal animation.
      */
-    public void replaceWithShowWifiDetailFrag(WifiModel myListItem) {
-        HistoryChildShowDetailWifiFragment historyChildShowDetailWifiFragment = HistoryChildShowDetailWifiFragment.newInstance(myListItem);
+    public void replaceWithShowWifiDetailFrag(WifiScanWifiModel myListItem) {
+        ChildShowDetailWifiFragment historyChildShowDetailWifiFragment = ChildShowDetailWifiFragment.newInstance(myListItem);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // add arc motion when replace replace with another fragment
@@ -107,8 +108,8 @@ public class HistoryPresenterFragment extends Fragment implements
                     // after arc motion that makes fab move from bottom to center of the screen.
                     // make another animation called circular reveal.
                     Fragment topFrag = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
-                    if (topFrag instanceof HistoryChildShowDetailWifiFragment) {
-                        ((HistoryChildShowDetailWifiFragment) topFrag).animateRevealShow();
+                    if (topFrag instanceof ChildShowDetailWifiFragment) {
+                        ((ChildShowDetailWifiFragment) topFrag).animateRevealShow();
                     }
                 }
 
@@ -157,8 +158,8 @@ public class HistoryPresenterFragment extends Fragment implements
     // pop out HistoryCHildShowDetailWifiFragment and show animation when close
     public void popShowWifiDetailFragment() {
         Fragment wifiDetailFrag = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
-        if (wifiDetailFrag instanceof HistoryChildShowDetailWifiFragment) {
-            ((HistoryChildShowDetailWifiFragment) wifiDetailFrag).closeFragment();
+        if (wifiDetailFrag instanceof ChildShowDetailWifiFragment) {
+            ((ChildShowDetailWifiFragment) wifiDetailFrag).closeFragment();
         }
     }
 
@@ -180,17 +181,17 @@ public class HistoryPresenterFragment extends Fragment implements
         networkDb.getMobileHistory(this);
     }
 
-    public void getWifiStateAndDateFromDb(WifiModel wifiModel) {
+    public void getWifiStateAndDateFromDb(WifiScanWifiModel wifiScanWifiModel) {
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
-        networkDb.getWifiStateAndDate(this, wifiModel);
+        networkDb.getWifiStateAndDate(this, wifiScanWifiModel);
     }
 
     // a callback from db with data wifi history result.
     @Override
     public void onGetWifiHistoryCursor(Cursor cursor) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_MOBILE_FRAGMENT);
-        if (childFragment instanceof HistoryWifiMobileFragment) {
-            ((HistoryWifiMobileFragment) childFragment).getWifiFragmentAndPassWifiCursor(cursor);
+        if (childFragment instanceof WifiMobileFragment) {
+            ((WifiMobileFragment) childFragment).getWifiFragmentAndPassWifiCursor(cursor);
         }
     }
 
@@ -198,8 +199,8 @@ public class HistoryPresenterFragment extends Fragment implements
     @Override
     public void onGetMobileHistoryCursor(Cursor cursor) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_MOBILE_FRAGMENT);
-        if (childFragment instanceof HistoryWifiMobileFragment) {
-            ((HistoryWifiMobileFragment) childFragment).getMobileFragmentAndPassWifiCursor(cursor);
+        if (childFragment instanceof WifiMobileFragment) {
+            ((WifiMobileFragment) childFragment).getMobileFragmentAndPassWifiCursor(cursor);
         }
     }
 
@@ -207,8 +208,8 @@ public class HistoryPresenterFragment extends Fragment implements
     @Override
     public void onGetWifiStateAndDateCursor(Cursor cursor) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
-        if (childFragment instanceof HistoryChildShowDetailWifiFragment) {
-            ((HistoryChildShowDetailWifiFragment) childFragment).passWifiStateAndDateToBottomSheetCursor(cursor);
+        if (childFragment instanceof ChildShowDetailWifiFragment) {
+            ((ChildShowDetailWifiFragment) childFragment).passWifiStateAndDateToBottomSheetCursor(cursor);
         }
     }
 }

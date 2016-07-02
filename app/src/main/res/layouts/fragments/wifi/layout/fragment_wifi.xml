@@ -6,6 +6,7 @@
     android:background="@color/grey_light"
     android:layout_height="match_parent">
 
+    <!--layout for empty wifi hotspot-->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

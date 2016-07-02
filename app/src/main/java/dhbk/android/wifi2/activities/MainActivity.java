@@ -1,6 +1,5 @@
 package dhbk.android.wifi2.activities;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,10 +12,10 @@ import android.view.MenuItem;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.MainFragment;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
-import dhbk.android.wifi2.fragments.historyFragments.HistoryWifiMobileFragment;
+import dhbk.android.wifi2.fragments.historyFragments.WifiMobileFragment;
 import dhbk.android.wifi2.fragments.mapFragments.MapPresenterFragment;
 import dhbk.android.wifi2.fragments.mobileFragments.MobileFragment;
-import dhbk.android.wifi2.fragments.wifiFragments.WifiFragment;
+import dhbk.android.wifi2.fragments.wifiFragments.WifiPresenterFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.Constant;
 
@@ -54,10 +53,10 @@ public class MainActivity extends AppCompatActivity implements
 
                 } else if (id == R.id.wifi) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    WifiFragment wifiFragment = (WifiFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_WIFI_FRAGMENT);
-                    if (wifiFragment == null) {
-                        wifiFragment = WifiFragment.newInstance();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, wifiFragment, Constant.TAG_WIFI_FRAGMENT).commit();
+                    WifiPresenterFragment wifiPresenterFragment = (WifiPresenterFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_WIFI_PRESENTER_FRAGMENT);
+                    if (wifiPresenterFragment == null) {
+                        wifiPresenterFragment = WifiPresenterFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, wifiPresenterFragment, Constant.TAG_WIFI_PRESENTER_FRAGMENT).commit();
                     }
 
                 } else if (id == R.id.mobile) {
@@ -70,9 +69,9 @@ public class MainActivity extends AppCompatActivity implements
 
                 } else if (id == R.id.history) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    HistoryWifiMobileFragment historyWifiMobileFragment = (HistoryWifiMobileFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
+                    WifiMobileFragment historyWifiMobileFragment = (WifiMobileFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
                     if (historyWifiMobileFragment == null) {
-                        historyWifiMobileFragment = HistoryWifiMobileFragment.newInstance();
+                        historyWifiMobileFragment = WifiMobileFragment.newInstance();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyWifiMobileFragment, Constant.TAG_HISTORY_PRESENTER_FRAGMENT).commit();
                     }
                 } else if (id == R.id.map) {
@@ -128,10 +127,10 @@ public class MainActivity extends AppCompatActivity implements
     // replace with wifi fragment
     @Override
     public void onWifiFragReplace() {
-        final WifiFragment wifiFragment = WifiFragment.newInstance();
+        final WifiPresenterFragment wifiPresenterFragment = WifiPresenterFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_container, wifiFragment, Constant.TAG_WIFI_FRAGMENT)
+                .replace(R.id.main_container, wifiPresenterFragment, Constant.TAG_WIFI_PRESENTER_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -171,15 +170,4 @@ public class MainActivity extends AppCompatActivity implements
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // END REPLACE FRAGMENT
-
-    // FIXME: 6/28/2016 move this method to presenter
-    // : 6/17/2016 check historywithosmfrag and transmit cursor to it
-    @Override
-    public void onReturnCursorWifiHotspot(Cursor cursor) {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WITH_OSM_MAP_FRAGMENT);
-        if (fragment instanceof MapPresenterFragment) {
-            ((MapPresenterFragment) fragment).onReturnWifiHotspot(cursor);
-        }
-    }
-
 }

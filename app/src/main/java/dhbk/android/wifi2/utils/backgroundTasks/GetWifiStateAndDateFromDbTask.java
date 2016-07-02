@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
@@ -20,12 +20,12 @@ public class GetWifiStateAndDateFromDbTask extends AsyncTask<Void, Void, Cursor>
     private static final String TAG = GetWifiHotspotFromDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final Fragment mFragment;
-    private final WifiModel mWifiModel;
+    private final WifiScanWifiModel mWifiScanWifiModel;
 
-    public GetWifiStateAndDateFromDbTask(SQLiteDatabase db, Fragment fragment, WifiModel wifiModel) {
+    public GetWifiStateAndDateFromDbTask(SQLiteDatabase db, Fragment fragment, WifiScanWifiModel wifiScanWifiModel) {
         mDb = db;
         mFragment = fragment;
-        mWifiModel = wifiModel;
+        mWifiScanWifiModel = wifiScanWifiModel;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class GetWifiStateAndDateFromDbTask extends AsyncTask<Void, Void, Cursor>
         Cursor cursor;
         try {
             // get table name
-            String tableName = HelpUtils.getTableDbName(mWifiModel.getBssid(), Constant.TABLE_STATE_AND_DATE);
+            String tableName = HelpUtils.getTableDbName(mWifiScanWifiModel.getBssid(), Constant.TABLE_STATE_AND_DATE);
             // get all column
             cursor = mDb.query (tableName,
                     NetworkWifiDb.COLUMN_TABLE_WIFI_STATE_AND_DATE,

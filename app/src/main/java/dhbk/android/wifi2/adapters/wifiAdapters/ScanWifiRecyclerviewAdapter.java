@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 
 /**
  * Created by phongdth.ky on 6/14/2016.
@@ -18,11 +18,11 @@ public class ScanWifiRecyclerviewAdapter extends
         RecyclerView.Adapter<ScanWifiRecyclerviewAdapter.ViewHolder> {
 
     // contain data
-    private final ArrayList<WifiModel> mWifiHotSpots;
+    private final ArrayList<WifiScanWifiModel> mWifiHotSpots;
 
     // contains list of wifi around you
-    public ScanWifiRecyclerviewAdapter(ArrayList<WifiModel> wifiModels) {
-        mWifiHotSpots = wifiModels;
+    public ScanWifiRecyclerviewAdapter(ArrayList<WifiScanWifiModel> wifiScanWifiModels) {
+        mWifiHotSpots = wifiScanWifiModels;
     }
 
     @Override
@@ -55,9 +55,9 @@ public class ScanWifiRecyclerviewAdapter extends
     }
 
     // : 6/16/2016 return model ssid and encryption
-    public WifiModel getWifiModelAtPosition(int position) {
+    public WifiScanWifiModel getWifiModelAtPosition(int position) {
         String ssid = mWifiHotSpots.get(position).getSsid();
         String encryption = mWifiHotSpots.get(position).getEncryption();
-        return new WifiModel(ssid, encryption);
+        return new WifiScanWifiModel(ssid, encryption);
     }
 }

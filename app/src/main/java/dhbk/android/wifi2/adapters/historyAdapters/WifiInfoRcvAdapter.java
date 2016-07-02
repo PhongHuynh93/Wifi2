@@ -16,7 +16,7 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.activities.MainActivity;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.Constant;
 
 /**
@@ -35,7 +35,7 @@ public class WifiInfoRcvAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
-        final WifiModel myListItem = WifiModel.fromCursor(cursor);
+        final WifiScanWifiModel myListItem = WifiScanWifiModel.fromCursor(cursor);
         assert myListItem != null;
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getSsid());
 

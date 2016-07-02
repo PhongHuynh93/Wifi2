@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
-import dhbk.android.wifi2.models.WifiModel;
+import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
@@ -14,23 +14,23 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 public class AddWifiToDbTask extends AsyncTask<Void, Void, Boolean> {
     private static final String TAG  = AddWifiToDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
-    private final WifiModel mWifiModel;
+    private final WifiScanWifiModel mWifiScanWifiModel;
 
-    public AddWifiToDbTask(SQLiteDatabase db, WifiModel wifiModel) {
+    public AddWifiToDbTask(SQLiteDatabase db, WifiScanWifiModel wifiScanWifiModel) {
         this.mDb = db;
-        this.mWifiModel = wifiModel;
+        this.mWifiScanWifiModel = wifiScanWifiModel;
     }
     @Override
     protected Boolean doInBackground(Void... params) {
-        String state = mWifiModel.getState();
-        String ssid = mWifiModel.getSsid();
-        String date = mWifiModel.getDate();
-        String bssid = mWifiModel.getBssid();
-        int rssi = mWifiModel.getRssi();
-        String macAddress = mWifiModel.getMacAddress();
-        int ipAddress = mWifiModel.getIpAddress();
-        int linkSpeed = mWifiModel.getLinkSpeed();
-        int networkId = mWifiModel.getNetworkId();
+        String state = mWifiScanWifiModel.getState();
+        String ssid = mWifiScanWifiModel.getSsid();
+        String date = mWifiScanWifiModel.getDate();
+        String bssid = mWifiScanWifiModel.getBssid();
+        int rssi = mWifiScanWifiModel.getRssi();
+        String macAddress = mWifiScanWifiModel.getMacAddress();
+        int ipAddress = mWifiScanWifiModel.getIpAddress();
+        int linkSpeed = mWifiScanWifiModel.getLinkSpeed();
+        int networkId = mWifiScanWifiModel.getNetworkId();
 
         mDb.beginTransaction();
         try {
