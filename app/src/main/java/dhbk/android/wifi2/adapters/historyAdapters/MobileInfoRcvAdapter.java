@@ -8,25 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
 import dhbk.android.wifi2.models.MobileModel;
-import dhbk.android.wifi2.utils.TimeStampFormatter;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.
+ * adapter for showing a list of mobile history
  */
-public class HistoryMobileRecyclerViewAdapter extends
-        CursorRecyclerViewAdapter<HistoryMobileRecyclerViewAdapter.ViewHolder> {
+public class MobileInfoRcvAdapter extends
+        CursorRecyclerViewAdapter<MobileInfoRcvAdapter.ViewHolder> {
 
-    private TimeStampFormatter mTimeStampFormatter = new TimeStampFormatter();
-    
-    public HistoryMobileRecyclerViewAdapter(Context context, Cursor cursor) {
+
+    public MobileInfoRcvAdapter(Context context, Cursor cursor) {
         super(context, cursor);
     }
 
@@ -36,7 +30,7 @@ public class HistoryMobileRecyclerViewAdapter extends
         MobileModel myListItem = MobileModel.fromCursor(cursor);
         viewHolder.wifiStateHotspotTv.setText(myListItem.getSpeed());
         viewHolder.wifiSsidHotspotTv.setText(myListItem.getNetworkName());
-        viewHolder.wifiDateHotspotTv.setText(mTimeStampFormatter.format(date(myListItem.getDate())));
+        viewHolder.wifiDateHotspotTv.setText(myListItem.getDate());
     }
 
     @Override
@@ -59,11 +53,4 @@ public class HistoryMobileRecyclerViewAdapter extends
         }
     }
 
-    private static Date date(String string) {
-        try {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK).parse(string);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
 }

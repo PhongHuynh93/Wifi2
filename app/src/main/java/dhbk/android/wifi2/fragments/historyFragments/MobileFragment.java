@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.adapters.historyAdapters.HistoryMobileRecyclerViewAdapter;
+import dhbk.android.wifi2.adapters.historyAdapters.MobileInfoRcvAdapter;
 import dhbk.android.wifi2.utils.Constant;
 
 // contains a recyclerview to show a list of mobile history that a user has connected or disconnected
@@ -42,7 +42,7 @@ public class MobileFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRcvHistoryMobile = (RecyclerView) view.findViewById(R.id.rcv_history_mobile);
-        HistoryMobileRecyclerViewAdapter adapter = new HistoryMobileRecyclerViewAdapter(getActivity(), null);
+        MobileInfoRcvAdapter adapter = new MobileInfoRcvAdapter(getActivity(), null);
 
         declareRcvAndGetDataFromDb(mRcvHistoryMobile, adapter, Constant.MOBILE_RECYCLERVIEW);
     }
@@ -50,7 +50,7 @@ public class MobileFragment extends BaseFragment {
     // populate data from db to recyclerview
     public void onPopulateMobileCursorToRcv(Cursor cursor) {
         try {
-            HistoryMobileRecyclerViewAdapter adapter = (HistoryMobileRecyclerViewAdapter) mRcvHistoryMobile.getAdapter();
+            MobileInfoRcvAdapter adapter = (MobileInfoRcvAdapter) mRcvHistoryMobile.getAdapter();
             adapter.changeCursor(cursor);
         } catch (NullPointerException e) {
             Log.e(TAG, "populateCursorToRcv: " + e.toString());

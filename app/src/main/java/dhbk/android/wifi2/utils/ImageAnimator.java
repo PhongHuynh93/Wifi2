@@ -6,6 +6,9 @@ import android.widget.ImageView;
 
 import dhbk.android.wifi2.adapters.historyAdapters.HistoryPagerAdapter;
 
+/*
+anim for appbar, when change another image in appbar, faded old image before changing
+ */
 class ImageAnimator {
     private static final float FACTOR = 0.1f;
     private final HistoryPagerAdapter pagerAdapter;
