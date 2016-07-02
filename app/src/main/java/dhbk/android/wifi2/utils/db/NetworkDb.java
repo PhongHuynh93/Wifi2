@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.MobileModel;
-import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
@@ -56,16 +55,6 @@ public class NetworkDb extends SQLiteOpenHelper{
     //##########################################################################################
     // METHOD WIFI TABLE
 
-    // insert wifi hotspot properties in datbase
-    public void addWifiHotspot(WifiScanWifiModel wifiScanWifiModel) {
-        for (int i = 0; i < listTable.size(); i++) {
-            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
-            if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
-                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onInsert(getWritableDatabase(), wifiScanWifiModel);
-            }
-        }
-    }
-
     public void getWifiHistory(Fragment frag) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
@@ -84,15 +73,6 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    // add wifi hotspot with location to database
-    public void addWifiHotspotWithLocation(WifiHotsPotModel wifiHotsPotModel) {
-        for (int i = 0; i < listTable.size(); i++) {
-            onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
-            if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
-                ((onDbInteractionListener.onDbWifiTableInteractionListener) tableName).onInsertWifiLocation(getWritableDatabase(), wifiHotsPotModel);
-            }
-        }
-    }
 
     // get wifi hotspot location and show in map
     public void getWifiHotspotLocation(Fragment fragment) {

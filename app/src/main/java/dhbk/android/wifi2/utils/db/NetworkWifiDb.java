@@ -4,15 +4,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
-import dhbk.android.wifi2.models.WifiHotsPotModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiInfoToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiStateAndDateToDbTask;
-import dhbk.android.wifi2.utils.backgroundTasks.AddWifiToDbTask;
-import dhbk.android.wifi2.utils.backgroundTasks.AddWifiWithLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiFromDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiHotspotFromDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiStateAndDateFromDbTask;
@@ -425,11 +422,6 @@ public class NetworkWifiDb implements
     }
 
     @Override
-    public void onInsert(SQLiteDatabase db, WifiScanWifiModel wifiScanWifiModel) {
-        new AddWifiToDbTask(db, wifiScanWifiModel).execute();
-    }
-
-    @Override
     public void getWifiHistoryCursor(SQLiteDatabase db, Fragment fragment) {
         new GetWifiFromDbTask(db, fragment).execute();
     }
@@ -437,12 +429,6 @@ public class NetworkWifiDb implements
     @Override
     public void getWifiStateAndDateCursor(SQLiteDatabase db, Fragment frag, WifiScanWifiModel wifiScanWifiModel) {
         new GetWifiStateAndDateFromDbTask(db, frag, wifiScanWifiModel).execute();
-    }
-
-    // add wifi hotspot with location to db
-    @Override
-    public void onInsertWifiLocation(SQLiteDatabase db, WifiHotsPotModel wifiHotsPotModel) {
-        new AddWifiWithLocationToDbTask(db).execute(wifiHotsPotModel);
     }
 
     // get wifi hotspot to show on map
