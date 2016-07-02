@@ -4,7 +4,7 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 
-import dhbk.android.wifi2.models.WifiScanWifiModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 
 /**
  * Created by phongdth.ky on 6/13/2016.
@@ -22,8 +22,8 @@ public interface OnFragInteractionListener {
 
     // interface for WifiPresenterFragment
     interface OnWifiScanFragInteractionListener {
-        void onGetDataAfterScanWifi(ArrayList<WifiScanWifiModel> list);
-        void onAllowToSaveWifiHotspotToDb(String ssid, String pass);
+        void onGetDataAfterScanWifi(ArrayList<WifiLocationModel> list);
+        void onAllowToSaveWifiHotspotToDb(String ssid, String pass, String encryption, String bssid);
     }
 
     // interface for HistoryPresenterFragment

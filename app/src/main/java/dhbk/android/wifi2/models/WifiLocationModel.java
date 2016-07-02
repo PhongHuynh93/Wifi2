@@ -4,6 +4,7 @@ package dhbk.android.wifi2.models;
  * Created by huynhducthanhphong on 6/30/16.
  */
 public class WifiLocationModel {
+    private  String mEncryption;
     private  double mLatitude;
     private  double mLongitude;
     private  int mIsHasLocation;
@@ -28,6 +29,27 @@ public class WifiLocationModel {
         this.mBssid = bssid;
         this.mSsid = ssid;
         this.mPassword = password;
+    }
+
+
+    // this constructor used to show in a recyclerview
+//    public WifiScanWifiModel(String ssid, String encryption) {
+//        this.mSsid = ssid;
+//        this.encryption = encryption;
+//    }
+
+    public WifiLocationModel(String ssid, String encryption, String bssid) {
+        this.mSsid = ssid;
+        this.mEncryption = encryption;
+        this.mBssid = bssid;
+    }
+
+    public String getEncryption() {
+        return mEncryption;
+    }
+
+    public String getPassword() {
+        return mPassword;
     }
 
     public String getSsid() {

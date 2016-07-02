@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.utils.Constant;
 
 /**
@@ -29,12 +29,13 @@ public class ScanWifiBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> wifiScanList = wifiManager.getScanResults();
-        ArrayList<WifiScanWifiModel> wifis = new ArrayList<>();
+        ArrayList<WifiLocationModel> wifis = new ArrayList<>();
 
         // : 6/14/2016 send result back
         for (int i = 0; i < wifiScanList.size(); i++) {
             String ssid = wifiScanList.get(i).SSID;
             String capabilities = wifiScanList.get(i).capabilities;
+            String bssid = wifiScanList.get(i).BSSID;
 
 //                get wifi encryption
             String encryption;
@@ -48,7 +49,7 @@ public class ScanWifiBroadcastReceiver extends BroadcastReceiver {
                 encryption = Constant.WIFI_OPEN;
             }
 
-            WifiScanWifiModel wifiScanWifiModel = new WifiScanWifiModel(ssid, encryption);
+            WifiLocationModel wifiScanWifiModel = new WifiLocationModel(ssid, encryption, bssid);
             wifis.add(wifiScanWifiModel);
         }
         // populate vào recyclerview

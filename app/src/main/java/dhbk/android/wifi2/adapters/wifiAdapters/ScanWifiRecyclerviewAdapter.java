@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import dhbk.android.wifi2.R;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 
 /**
  * Created by phongdth.ky on 6/14/2016.
@@ -18,11 +18,11 @@ public class ScanWifiRecyclerviewAdapter extends
         RecyclerView.Adapter<ScanWifiRecyclerviewAdapter.ViewHolder> {
 
     // contain data
-    private final ArrayList<WifiScanWifiModel> mWifiHotSpots;
+    private final ArrayList<WifiLocationModel> mWifiScanWifiModels;
 
     // contains list of wifi around you
-    public ScanWifiRecyclerviewAdapter(ArrayList<WifiScanWifiModel> wifiScanWifiModels) {
-        mWifiHotSpots = wifiScanWifiModels;
+    public ScanWifiRecyclerviewAdapter(ArrayList<WifiLocationModel> wifiScanWifiModels) {
+        this.mWifiScanWifiModels = wifiScanWifiModels;
     }
 
     @Override
@@ -34,13 +34,13 @@ public class ScanWifiRecyclerviewAdapter extends
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.ssidTv.setText(mWifiHotSpots.get(position).getSsid());
-        holder.encrypTv.setText(mWifiHotSpots.get(position).getEncryption());
+        holder.ssidTv.setText(mWifiScanWifiModels.get(position).getSsid());
+        holder.encrypTv.setText(mWifiScanWifiModels.get(position).getEncryption());
     }
 
     @Override
     public int getItemCount() {
-        return mWifiHotSpots.size();
+        return mWifiScanWifiModels.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,9 +55,10 @@ public class ScanWifiRecyclerviewAdapter extends
     }
 
     // : 6/16/2016 return model ssid and encryption
-    public WifiScanWifiModel getWifiModelAtPosition(int position) {
-        String ssid = mWifiHotSpots.get(position).getSsid();
-        String encryption = mWifiHotSpots.get(position).getEncryption();
-        return new WifiScanWifiModel(ssid, encryption);
+    public WifiLocationModel getWifiModelAtPosition(int position) {
+        String ssid = mWifiScanWifiModels.get(position).getSsid();
+        String encryption = mWifiScanWifiModels.get(position).getEncryption();
+        String bssid = mWifiScanWifiModels.get(position).getBssid();
+        return new WifiLocationModel(ssid, encryption, bssid);
     }
 }

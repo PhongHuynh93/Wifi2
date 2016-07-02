@@ -53,12 +53,6 @@ public class WifiScanWifiModel {
     }
 
 
-    // this constructor used to show in a recyclerview
-    public WifiScanWifiModel(String ssid, String encryption) {
-        this.mSsid = ssid;
-        this.encryption = encryption;
-    }
-
     //    wifi info
     public WifiScanWifiModel(String mSsid, String mBssid, String mMacAddress, int mNetworkId) {
         this.mSsid = mSsid;

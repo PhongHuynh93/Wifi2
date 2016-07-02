@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.adapters.wifiAdapters.ScanWifiRecyclerviewAdapter;
 import dhbk.android.wifi2.fragments.historyFragments.BaseFragment;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.utils.ItemClickSupport;
 
 /**
@@ -40,10 +40,10 @@ public class WifiChildScanFragment extends BaseFragment {
     CoordinatorLayout mWifiScanCoordinator;
 
     // contains list of wifi hotspot
-    ArrayList<WifiScanWifiModel> mWifiScanWifiModels = new ArrayList<>();
+    ArrayList<WifiLocationModel> mWifiScanWifiModels = new ArrayList<>();
 
-    private String networkSSID;
-    private String networkPass;
+    // presenter
+    private WifiPresenterFragment mWifiPresenterFragment;
 
     public WifiChildScanFragment() {
     }
@@ -57,11 +57,23 @@ public class WifiChildScanFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        // start scan wifi hotspot
+        // get the Presenter
         Fragment parentFragment = getParentFragment();
         if (parentFragment instanceof WifiPresenterFragment) {
-            ((WifiPresenterFragment) parentFragment).startScanWifiHotspot();
+            mWifiPresenterFragment = (WifiPresenterFragment) parentFragment;
         }
+
+        // start scan wifi hotspot
+        if (mWifiPresenterFragment != null) {
+            mWifiPresenterFragment.startScanWifiHotspot();
+        }
+    }
+
+    // set presenter to null
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mWifiPresenterFragment = null;
     }
 
     @Override
@@ -69,6 +81,7 @@ public class WifiChildScanFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wifi_child_scan, container, false);
         ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -78,13 +91,12 @@ public class WifiChildScanFragment extends BaseFragment {
         declareToolbar(mToolbar);
         mToolbar.setTitle("Wifi Hotspot");
 
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof WifiPresenterFragment) {
-            ((WifiPresenterFragment) parentFragment).checkGpsHasTurnOn();
+        if (mWifiPresenterFragment != null) {
+            mWifiPresenterFragment.checkGpsHasTurnOn();
         }
 
         // add a placeholder "empty" for adapter.
-        mWifiScanWifiModels.add(new WifiScanWifiModel("empty", "empty"));
+        mWifiScanWifiModels.add(new WifiLocationModel("empty", "empty", "empty"));
         ScanWifiRecyclerviewAdapter scanWifiRecyclerviewAdapter = new ScanWifiRecyclerviewAdapter(mWifiScanWifiModels);
         declareRcvAndGetDataFromDb(mListWifiRecyclerView, scanWifiRecyclerviewAdapter, "");
 //        mListWifiRecyclerView.setAdapter(scanWifiRecyclerviewAdapter);
@@ -96,15 +108,17 @@ public class WifiChildScanFragment extends BaseFragment {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 //  (check position) get ssid, position of item on recyclerview
-                Fragment parentFragment = getParentFragment();
-                if (parentFragment instanceof WifiPresenterFragment) {
+                if (mWifiPresenterFragment != null) {
                     // get ssid at position, so after user has input pass in a dialog, we can authen at that position
                     TextView ssidTv = (TextView) v.findViewById(R.id.ssid);
                     String ssid = ssidTv.getText().toString();
-                    ((WifiPresenterFragment) parentFragment).showFillInPassWifiDialog(ssid, position);
+                    mWifiPresenterFragment.showFillInPassWifiDialog(ssid, position);
                 }
             }
         });
+
+
+
     }
 
     @Override
@@ -119,9 +133,8 @@ public class WifiChildScanFragment extends BaseFragment {
         int id = item.getItemId();
         if (id == R.id.turn_on_loc) {
             // : 6/18/16 turn on location if not
-            Fragment parentFragment = getParentFragment();
-            if (parentFragment instanceof WifiPresenterFragment) {
-                ((WifiPresenterFragment) parentFragment).checkGpsHasTurnOn();
+            if (mWifiPresenterFragment != null) {
+                mWifiPresenterFragment.checkGpsHasTurnOn();
             }
             return true;
         }
@@ -133,9 +146,8 @@ public class WifiChildScanFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof WifiPresenterFragment) {
-            ((WifiPresenterFragment) parentFragment).registerBroadcastToScanWifiHotspot();
+        if (mWifiPresenterFragment != null) {
+            mWifiPresenterFragment.registerBroadcastToScanWifiHotspot();
         }
     }
 
@@ -143,9 +155,8 @@ public class WifiChildScanFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof WifiPresenterFragment) {
-            ((WifiPresenterFragment) parentFragment).unRegisterBroadcastToScanWifiHotspot();
+        if (mWifiPresenterFragment != null) {
+            mWifiPresenterFragment.unRegisterBroadcastToScanWifiHotspot();
         }
     }
 
@@ -157,9 +168,8 @@ public class WifiChildScanFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         // call a dialog to turn help user turn on lcaotion
-                        Fragment parentFrag = getParentFragment();
-                        if (parentFrag instanceof WifiPresenterFragment) {
-                            ((WifiPresenterFragment) parentFrag).showGpsDialogToTurnOn();
+                        if (mWifiPresenterFragment != null) {
+                            mWifiPresenterFragment.showGpsDialogToTurnOn();
                         }
                     }
                 })
@@ -167,7 +177,7 @@ public class WifiChildScanFragment extends BaseFragment {
     }
 
     // a callback from presenter, get wifi scan data and show to recyclerview
-    public void addWifiHotSpotToRcv(ArrayList<WifiScanWifiModel> wifis) {
+    public void addWifiHotSpotToRcv(ArrayList<WifiLocationModel> wifis) {
         ScanWifiRecyclerviewAdapter scanWifiRecyclerviewAdapter = (ScanWifiRecyclerviewAdapter) mListWifiRecyclerView.getAdapter();
         mWifiScanWifiModels.clear();
         mWifiScanWifiModels.addAll(wifis);
@@ -176,36 +186,34 @@ public class WifiChildScanFragment extends BaseFragment {
 
 
     // unregister broadcast success wifi, get location and save to datbase
-    public void saveWifiHotspotToDb(String ssid, String pass) {
+    public void saveWifiHotspotToDb(String ssid, String pass, String encryption, String bssid) {
         // : 6/16/16 get lat long
         boolean isTurnOnGps = false;
 
         // check again before save to db, if users has turned on GPS before.
-        Fragment parentFrag = getParentFragment();
-        if (parentFrag instanceof WifiPresenterFragment) {
-            ((WifiPresenterFragment) parentFrag).checkGpsHasTurnOn();
-            isTurnOnGps = ((WifiPresenterFragment) parentFrag).isHasTurnOnGps();
+        if (mWifiPresenterFragment != null) {
+            mWifiPresenterFragment.checkGpsHasTurnOn();
+            isTurnOnGps = mWifiPresenterFragment.isHasTurnOnGps();
         }
 
         if (isTurnOnGps) {
             Location currentLocation = null;
 
-            if (parentFrag instanceof WifiPresenterFragment) {
-                currentLocation = ((WifiPresenterFragment) parentFrag).getCurrentLocation();
+            if (mWifiPresenterFragment != null) {
+                currentLocation = mWifiPresenterFragment.getCurrentLocation();
             }
 
             if (currentLocation != null) {
                 //  save to datbase
-                if (parentFrag instanceof WifiPresenterFragment) {
-                    ((WifiPresenterFragment) parentFrag).saveWifiHotspotToDb(networkSSID, networkPass, currentLocation.getLatitude(), currentLocation.getLongitude(), isTurnOnGps);
+                if (mWifiPresenterFragment != null) {
+                    mWifiPresenterFragment.saveWifiHotspotToDb(ssid, pass, currentLocation.getLatitude(), currentLocation.getLongitude(), isTurnOnGps);
                 }
             }
 
         } // if user hasn't turn on Location
         else {
-            Fragment parentFragment = getParentFragment();
-            if (parentFragment instanceof WifiPresenterFragment) {
-                ((WifiPresenterFragment) parentFragment).saveWifiHotspotToDb(networkSSID, networkPass, 0, 0, isTurnOnGps);
+            if (mWifiPresenterFragment != null) {
+                mWifiPresenterFragment.saveWifiHotspotToDb(ssid, pass, 0, 0, isTurnOnGps);
             }
         }
 
@@ -214,7 +222,7 @@ public class WifiChildScanFragment extends BaseFragment {
 
 
     // get ssid and pass depond on position
-    public WifiScanWifiModel getWifiSsidAndPass(int position) {
+    public WifiLocationModel getWifiSsidAndPass(int position) {
         ScanWifiRecyclerviewAdapter scanWifiRecyclerviewAdapter = (ScanWifiRecyclerviewAdapter) mListWifiRecyclerView.getAdapter();
         return scanWifiRecyclerviewAdapter.getWifiModelAtPosition(position);
     }

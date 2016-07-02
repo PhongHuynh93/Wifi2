@@ -18,11 +18,15 @@ public class ListenStateChangeBroadcastReceiver extends BroadcastReceiver {
     private final Fragment mFragment;
     private final String mSsid;
     private final String mPass;
+    private final String mEncryption;
+    private final String mBssid;
 
-    public ListenStateChangeBroadcastReceiver(Fragment fragment, String ssid, String pass) {
+    public ListenStateChangeBroadcastReceiver(Fragment fragment, String ssid, String pass, String encryption, String bssid) {
         this.mFragment = fragment;
         this.mSsid = ssid;
         this.mPass = pass;
+        this.mEncryption = pass;
+        this.mBssid = pass;
     }
 
     @Override
@@ -36,7 +40,7 @@ public class ListenStateChangeBroadcastReceiver extends BroadcastReceiver {
                     firstConnect = false;
                     if (mFragment instanceof OnFragInteractionListener.OnWifiScanFragInteractionListener) {
                         // allow to save that wifi hotspot to db
-                        ((OnFragInteractionListener.OnWifiScanFragInteractionListener) mFragment).onAllowToSaveWifiHotspotToDb(mSsid, mPass);
+                        ((OnFragInteractionListener.OnWifiScanFragInteractionListener) mFragment).onAllowToSaveWifiHotspotToDb(mSsid, mPass, mEncryption, mBssid);
                     }
                 }
             } else {

@@ -25,6 +25,7 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.historyFragments.BaseFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.models.WifiHotsPotModel;
+import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.db.NetworkDb;
@@ -151,7 +152,7 @@ public class WifiPresenterFragment extends BaseFragment implements
 
     // a callback from WifiScanRecever with wifi info
     @Override
-    public void onGetDataAfterScanWifi(ArrayList<WifiScanWifiModel> wifiScanList) {
+    public void onGetDataAfterScanWifi(ArrayList<WifiLocationModel> wifiScanList) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT);
         if (childFragment instanceof WifiChildScanFragment) {
             ((WifiChildScanFragment) childFragment).addWifiHotSpotToRcv(wifiScanList);
@@ -163,10 +164,11 @@ public class WifiPresenterFragment extends BaseFragment implements
     public void onAuthenWifiHotspot(String networkPass, int position) {
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT);
         if (childFragment instanceof WifiChildScanFragment) {
-            WifiScanWifiModel wifiScanWifiModel = ((WifiChildScanFragment) childFragment).getWifiSsidAndPass(position);
+            WifiLocationModel wifiScanWifiModel = ((WifiChildScanFragment) childFragment).getWifiSsidAndPass(position);
 
             String networkSSID = wifiScanWifiModel.getSsid();
             String encryption = wifiScanWifiModel.getEncryption();
+            String networkBSSID = wifiScanWifiModel.getBssid();
 
             // Add a new network description to the set of configured networks.
             WifiConfiguration conf = new WifiConfiguration();
@@ -196,7 +198,7 @@ public class WifiPresenterFragment extends BaseFragment implements
 
             // if connect to that wifi hotspot success, we will have state change in wifi.
             // so to listen for state change in wifi, call a broadcast recever
-            mListenStateChangeBroadcastReceiver = new ListenStateChangeBroadcastReceiver(this, networkSSID, networkPass);
+            mListenStateChangeBroadcastReceiver = new ListenStateChangeBroadcastReceiver(this, networkSSID, networkPass, encryption, networkBSSID);
             getContext().registerReceiver(mListenStateChangeBroadcastReceiver, new IntentFilter(WifiManager.NETWORK_STATE_CHANGED_ACTION));
         }
     }
@@ -204,13 +206,13 @@ public class WifiPresenterFragment extends BaseFragment implements
 
     // a callback from broadcast receiver, store wifiHotspot to DB.
     @Override
-    public void onAllowToSaveWifiHotspotToDb(String ssid, String pass) {
+    public void onAllowToSaveWifiHotspotToDb(String ssid, String pass, String encryption, String bssid) {
         // register broadcast
         getContext().unregisterReceiver(mListenStateChangeBroadcastReceiver);
         // call WifiChildScanFragment to save to db
         Fragment childFragment = getChildFragmentManager().findFragmentByTag(Constant.TAG_CHILD_SCAN_WIFI_FRAGMENT);
         if (childFragment instanceof WifiChildScanFragment) {
-            ((WifiChildScanFragment) childFragment).saveWifiHotspotToDb(ssid, pass);
+            ((WifiChildScanFragment) childFragment).saveWifiHotspotToDb(ssid, pass, encryption, bssid);
         }
     }
 
@@ -242,12 +244,15 @@ public class WifiPresenterFragment extends BaseFragment implements
     // save wifi states to database
     // isTurnOnGps = true => has location
     public void saveWifiHotspotToDb(String networkSSID, String networkPass, double latitude, double longitude, boolean isTurnOnGps) {
+        // translate boolean to int to save to db
         int isTurnGpsInt;
         if (isTurnOnGps) {
             isTurnGpsInt = 1;
         } else {
             isTurnGpsInt = 0;
         }
+
+        WifiScanWifiModel wifiScanWifiModel = new WifiScanWifiModel()
 
         WifiHotsPotModel wifiHotsPotModel = new WifiHotsPotModel(networkSSID, networkPass, latitude, longitude, isTurnGpsInt);
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
