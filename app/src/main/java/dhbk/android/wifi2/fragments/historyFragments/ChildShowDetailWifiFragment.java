@@ -1,6 +1,7 @@
 package dhbk.android.wifi2.fragments.historyFragments;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -67,6 +68,7 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
     CoordinatorLayout mContainerWifiShowDetail;
 
     private WifiScanWifiModel mWifiScanWifiModel;
+    private HistoryPresenterFragment mHistoryPresenterFragment;
 
     public ChildShowDetailWifiFragment() {
     }
@@ -82,6 +84,22 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
 
         fragment.setArguments(args);
         return fragment;
+    }
+
+    // set the Presenter
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof HistoryPresenterFragment) {
+            mHistoryPresenterFragment = (HistoryPresenterFragment) parentFragment;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mHistoryPresenterFragment = null;
     }
 
     // get the para from WifiFragment
@@ -128,12 +146,6 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
             }
         }
 
-        // add a bottom sheet
-        BottomSheetShowWifiFragment bottomSheetFragment = BottomSheetShowWifiFragment.newInstance();
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.history_wifi_bottom_sheets, bottomSheetFragment, Constant.TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE)
-                .commit();
         return view;
     }
 
@@ -185,6 +197,7 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
                 });
     }
 
+    // put the task connect to db here to anim smooth.
     //    make sure view run on ui thread
     private void initViews() {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -193,15 +206,41 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
                 // add animation fade 0.5s before main content shows.
                 Animation animation = AnimationUtils.loadAnimation(getContext().getApplicationContext(), android.R.anim.fade_in);
                 animation.setDuration(getActivity().getResources().getInteger(R.integer.animation_duration));
+                animation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
+                    }
+
+                    // because add fragment require connect to db and get the cursor which cans slow the anim
+                    // if the anim doesn't end.
+                    // So if the anim end, we call add the bottom sheet
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        // add a bottom sheet
+                        BottomSheetShowWifiFragment bottomSheetFragment = BottomSheetShowWifiFragment.newInstance();
+                        getChildFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.history_wifi_bottom_sheets, bottomSheetFragment, Constant.TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE)
+                                .commit();
+//
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                // show content when the anim start
                 mMainContentShowWifiDetail.startAnimation(animation);
                 mMainContentShowWifiDetail.setVisibility(View.VISIBLE);
                 setHeightForToolbarToDefault();
 
 //                set the text of textview in this layout
                 setWifiInfo();
-//                setDateStateWifi();
                 HelpUtils.setDefaultMapSetting(mMap);
+
             }
         });
     }
@@ -217,10 +256,10 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
 
     // remove this fragment out of child manager fragment
     private void backPressed() {
-        Fragment fragment = getParentFragment();
-        if (fragment instanceof HistoryPresenterFragment) {
-            ((HistoryPresenterFragment) fragment).popHistoryShowDetailWifiFragment();
+        if (mHistoryPresenterFragment != null) {
+            mHistoryPresenterFragment.popHistoryShowDetailWifiFragment();
         }
+
     }
 
     // set height for toolbar to default height
@@ -245,23 +284,17 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
 
     }
 
-    //  when click, show a bottom sheet to show a list of history
+    //  when click, show a bottom sheet + connect to db to load wifi state and date
     @OnClick(R.id.btn_show_wifi_on_map)
     public void onClick() {
-        View bottomSheetFragment = getActivity().findViewById(R.id.history_wifi_bottom_sheets);
-        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetFragment); //bottomSheetFragment.getBottomSheetBehavior();
+        View bottomSheetFragmentView = getActivity().findViewById(R.id.history_wifi_bottom_sheets);
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetFragmentView); //bottomSheetFragment.getBottomSheetBehavior();
         // if bottom is hiding - STATE_COLLAPSED, we show it
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         }
     }
 
-    public void callPresenterToGetWifiStateAndDateFromDb() {
-        Fragment parentFragment = getParentFragment();
-        if (parentFragment instanceof HistoryPresenterFragment) {
-            ((HistoryPresenterFragment) parentFragment).getWifiStateAndDateFromDb(mWifiScanWifiModel);
-        }
-    }
 
     // a callback from db with data wifi state and date history result.
     public void passWifiStateAndDateToBottomSheetCursor(Cursor cursor) {
@@ -269,5 +302,13 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
         if (fragment instanceof BottomSheetShowWifiFragment) {
             ((BottomSheetShowWifiFragment) fragment).populateDateToRecyclerView(cursor);
         }
+    }
+
+
+    // call presenter connect to db to get wifi state and date
+    public void callPresenterToGetWifiStateAndDateFromDb() {
+        if (mHistoryPresenterFragment != null) {
+                mHistoryPresenterFragment.getWifiStateAndDateFromDb(mWifiScanWifiModel);
+            }
     }
 }

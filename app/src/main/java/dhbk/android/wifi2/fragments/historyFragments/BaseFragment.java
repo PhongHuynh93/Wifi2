@@ -71,7 +71,7 @@ public abstract class BaseFragment extends Fragment {
                 ((WifiMobileFragment) parentFragment).callPresenterToGetMobileDataFromDb();
             }
         }
-        // get the state and date
+        // do nothing now
         else if (parentFragment instanceof ChildShowDetailWifiFragment) {
             if (wifiOrMobile.equals(Constant.BOTTOMSHEET_WIFI_RECYCLERVIEW)) {
                 ((ChildShowDetailWifiFragment)parentFragment).callPresenterToGetWifiStateAndDateFromDb();
