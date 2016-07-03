@@ -6,6 +6,7 @@ import android.database.Cursor;
  * Created by huynhducthanhphong on 6/19/16.
  */
 public class MobileModel {
+    private String state;
     private String networkName;
     private String speed;
     private String date;
@@ -14,6 +15,17 @@ public class MobileModel {
         this.networkName = networkName;
         this.speed = speed;
         this.date = date;
+    }
+
+    public MobileModel(String networkName, String speed, String date, String state) {
+        this.networkName = networkName;
+        this.speed = speed;
+        this.date = date;
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
     }
 
     public String getNetworkName() {
