@@ -36,6 +36,11 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_HOTSPOT_INFO_PASSWORD = "column_password";
 
 
+    // add new column
+    public static final String KEY_WIFI_HOTSPOT_INFO_LAT = "column_lat";
+    public static final String KEY_WIFI_HOTSPOT_INFO_LONG = "column_long";
+    public static final String KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS = "column_turn_on_gps";
+
     public static final String KEY_WIFI_HOTSPOT_INFO_NETWORK_ID = "column_network_id";
 
     // we want to show a unique wifi hotspot, bssid is a mac address of access points, it's unique so we want this value to create a list of wifi hotspot
@@ -48,6 +53,10 @@ public class NetworkWifiDb implements
     public static final String VALUE_WIFI_HOTSPOT_INFO_PASSWORD = " TEXT DEFAULT ' ', ";
 
 
+    public static final String VALUE_WIFI_HOTSPOT_INFO_LAT = " REAL DEFAULT 0, ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_LONG = " REAL DEFAULT 0, ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_ISTURNONGPS = " INTEGER DEFAULT 0, ";
+
     public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER NOT NULL);";
 
     // declare array of column and value
@@ -58,6 +67,9 @@ public class NetworkWifiDb implements
             KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
             KEY_WIFI_HOTSPOT_INFO_ENCRYPTION,
             KEY_WIFI_HOTSPOT_INFO_PASSWORD,
+            KEY_WIFI_HOTSPOT_INFO_LAT,
+            KEY_WIFI_HOTSPOT_INFO_LONG,
+            KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS,
             KEY_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
 
@@ -68,6 +80,9 @@ public class NetworkWifiDb implements
             VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS,
             VALUE_WIFI_HOTSPOT_INFO_ENCRYPTION,
             VALUE_WIFI_HOTSPOT_INFO_PASSWORD,
+            VALUE_WIFI_HOTSPOT_INFO_LAT,
+            VALUE_WIFI_HOTSPOT_INFO_LONG,
+            VALUE_WIFI_HOTSPOT_INFO_ISTURNONGPS,
             VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID,
     };
 
@@ -105,6 +120,21 @@ public class NetworkWifiDb implements
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
                     break;
+
+                // new column
+                case KEY_WIFI_HOTSPOT_INFO_LAT:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
+                case KEY_WIFI_HOTSPOT_INFO_LONG:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
+                case KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
+                    break;
+
                 case KEY_WIFI_HOTSPOT_INFO_NETWORK_ID:
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);

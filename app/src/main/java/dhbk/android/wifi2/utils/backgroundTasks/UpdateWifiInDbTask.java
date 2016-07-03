@@ -28,6 +28,9 @@ public class UpdateWifiInDbTask extends AsyncTask<Void, Void, Boolean> {
         String bssid = mWifiLocationModel.getBssid();
         String password = mWifiLocationModel.getPassword();
         String encryption = mWifiLocationModel.getEncryption();
+        double latitude = mWifiLocationModel.getLatitude();
+        double longitude = mWifiLocationModel.getLongitude();
+        int isTurnGpsInt = mWifiLocationModel.getIsHasLocation();
 
         mDb.beginTransaction();
         try {
@@ -45,6 +48,17 @@ public class UpdateWifiInDbTask extends AsyncTask<Void, Void, Boolean> {
                         break;
                     case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_PASSWORD:
                         wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_PASSWORD, password);
+                        break;
+
+                    // add location to db.
+                    case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LAT:
+                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LAT, latitude);
+                        break;
+                    case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LONG:
+                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LONG, longitude);
+                        break;
+                    case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS:
+                        wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS, isTurnGpsInt);
                         break;
                     default:
                         break;
