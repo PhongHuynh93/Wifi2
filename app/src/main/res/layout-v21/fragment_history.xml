@@ -89,5 +89,6 @@
         android:tint="@color/white"
         android:clickable="true"
         android:id="@+id/fab_reveal_detail_wifi"
+        android:transitionName="transition_reveal_contact"
         android:src="@drawable/ic_search_black_24dp"/>
 </android.support.design.widget.CoordinatorLayout>

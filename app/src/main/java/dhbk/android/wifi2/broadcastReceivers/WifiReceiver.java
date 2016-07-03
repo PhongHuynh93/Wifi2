@@ -67,7 +67,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
                     String nowDate = formatter.format(now);
 
-                    // TODO: 6/29/2016 check if user has turn on location, if has turn on, get current location
+                    // : 6/29/2016 check if user has turn on location, if has turn on, get current location
                     int isHasLocation = 0;
 
                     if (HelpUtils.isGpsHasTurnOn(context)) {
