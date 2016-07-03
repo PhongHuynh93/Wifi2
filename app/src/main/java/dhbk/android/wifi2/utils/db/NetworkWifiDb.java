@@ -134,67 +134,6 @@ public class NetworkWifiDb implements
         return createWifiTable.toString();
     }
 
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
-    // LOCATION AT A WIFI HOTSPOT
-
-    // column name and value
-    public static final String KEY_WIFI_LOCATION_ID = "_id";
-    public static final String KEY_WIFI_LOCATION_LAT = "column_lat";
-    public static final String KEY_WIFI_LOCATION_LONG = "column_long";
-    public static final String KEY_WIFI_LOCATION_ISTURNONGPS = "column_turn_on_gps";
-
-    public static final String VALUE_WIFI_LOCATION_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
-    public static final String VALUE_WIFI_LOCATION_LAT = " REAL NOT NULL DEFAULT 0, ";
-    public static final String VALUE_WIFI_LOCATION_LONG = " REAL NOT NULL DEFAULT 0, ";
-    public static final String VALUE_WIFI_LOCATION_ISTURNONGPS = " INTEGER NOT NULL UNIQUE DEFAULT 0);";
-
-    // declare array of column and value
-    public static final String[] COLUMN_TABLE_WIFI_LOCATION = new String[] {
-            KEY_WIFI_LOCATION_ID,
-            KEY_WIFI_LOCATION_LAT,
-            KEY_WIFI_LOCATION_LONG,
-            KEY_WIFI_LOCATION_ISTURNONGPS
-    };
-
-    public static final String[] VALUE_COLUMN_WIFI_LOCATION = new String[] {
-            VALUE_WIFI_LOCATION_ID,
-            VALUE_WIFI_LOCATION_LAT,
-            VALUE_WIFI_LOCATION_LONG,
-            VALUE_WIFI_LOCATION_ISTURNONGPS
-    };
-
-
-    // create wifi table
-    public static String createWifiLocationTable(String tableName) {
-        StringBuilder createWifiTable = new StringBuilder();
-        createWifiTable.append("CREATE TABLE ");
-        createWifiTable.append(tableName);
-        createWifiTable.append("(");
-
-        for (int i = 0; i < COLUMN_TABLE_WIFI_LOCATION.length; i++) {
-            switch (COLUMN_TABLE_WIFI_LOCATION[i]) {
-                case KEY_WIFI_LOCATION_ID:
-                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
-                    break;
-                case KEY_WIFI_LOCATION_LAT:
-                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
-                    break;
-                case KEY_WIFI_LOCATION_LONG:
-                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
-                    break;
-                case KEY_WIFI_LOCATION_ISTURNONGPS:
-                    createWifiTable.append(COLUMN_TABLE_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_WIFI_LOCATION[i]);
-                    break;
-            }
-        }
-        return createWifiTable.toString();
-    }
-
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // STATE AND DATE OF WIFI HOTSPOT
     // column name and value
