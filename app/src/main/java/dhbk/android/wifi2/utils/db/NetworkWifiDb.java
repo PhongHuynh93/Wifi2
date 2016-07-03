@@ -137,7 +137,10 @@ public class NetworkWifiDb implements
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // STATE AND DATE OF WIFI HOTSPOT
     // column name and value
+    public static final String TABLE_WIFI_STATE_AND_DATE = "table_wifi_state_and_date";
+
     public static final String KEY_WIFI_STATE_AND_DATE_ID = "_id";
+    public static final String KEY_WIFI_STATE_AND_DATE_BSSID = "column_bssid";
     public static final String KEY_WIFI_STATE_AND_DATE_STATE = "column_state";
     public static final String KEY_WIFI_STATE_AND_DATE_DATE = "column_date";
     public static final String KEY_WIFI_STATE_AND_DATE_RSSI = "column_rssi";
@@ -145,8 +148,9 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_STATE_AND_DATE_IP_ADDRESS = "column_ip_address";
 
     public static final String VALUE_WIFI_STATE_AND_DATE_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
-    public static final String VALUE_WIFI_STATE_AND_DATE_STATE = " TEXT NOT NULL, ";
-    public static final String VALUE_WIFI_STATE_AND_DATE_DATE = " TEXT NOT NULL, ";
+    public static final String VALUE_WIFI_STATE_AND_DATE_BSSID = " TEXT, ";
+    public static final String VALUE_WIFI_STATE_AND_DATE_STATE = " TEXT, ";
+    public static final String VALUE_WIFI_STATE_AND_DATE_DATE = " TEXT, ";
     public static final String VALUE_WIFI_STATE_AND_DATE_RSSI = " INTEGER, ";
     public static final String VALUE_WIFI_STATE_AND_DATE_LINK_SPEED = " INTEGER, ";
     public static final String VALUE_WIFI_STATE_AND_DATE_IP_ADDRESS = " INTEGER);";
@@ -154,6 +158,7 @@ public class NetworkWifiDb implements
     // declare array of column and value
     public static final String[] COLUMN_TABLE_WIFI_STATE_AND_DATE = new String[] {
             KEY_WIFI_STATE_AND_DATE_ID,
+            KEY_WIFI_STATE_AND_DATE_BSSID,
             KEY_WIFI_STATE_AND_DATE_STATE,
             KEY_WIFI_STATE_AND_DATE_DATE,
             KEY_WIFI_STATE_AND_DATE_RSSI,
@@ -163,6 +168,7 @@ public class NetworkWifiDb implements
 
     public static final String[] VALUE_COLUMN_WIFI_STATE_AND_DATE = new String[] {
             VALUE_WIFI_STATE_AND_DATE_ID,
+            VALUE_WIFI_STATE_AND_DATE_BSSID,
             VALUE_WIFI_STATE_AND_DATE_STATE,
             VALUE_WIFI_STATE_AND_DATE_DATE,
             VALUE_WIFI_STATE_AND_DATE_RSSI,
@@ -172,15 +178,19 @@ public class NetworkWifiDb implements
 
 
     // create wifi table
-    public static String createWifiStateAndDate(String tableName) {
+    public static String createWifiStateAndDate() {
         StringBuilder createWifiTable = new StringBuilder();
         createWifiTable.append("CREATE TABLE ");
-        createWifiTable.append(tableName);
+        createWifiTable.append(TABLE_WIFI_STATE_AND_DATE);
         createWifiTable.append("(");
 
         for (int i = 0; i < COLUMN_TABLE_WIFI_STATE_AND_DATE.length; i++) {
             switch (COLUMN_TABLE_WIFI_STATE_AND_DATE[i]) {
                 case KEY_WIFI_STATE_AND_DATE_ID:
+                    createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
+                    createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
+                    break;
+                case KEY_WIFI_STATE_AND_DATE_BSSID:
                     createWifiTable.append(COLUMN_TABLE_WIFI_STATE_AND_DATE[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_STATE_AND_DATE[i]);
                     break;
@@ -216,11 +226,13 @@ public class NetworkWifiDb implements
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createWifiHotspotInfoTable());
+        db.execSQL(createWifiStateAndDate());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT_INFO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_STATE_AND_DATE);
         onCreate(db);
     }
 

@@ -107,7 +107,7 @@ public class AddWifiLocationToDbTask extends AsyncTask<Void, Void, Boolean> {
                         case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LONG:
                             wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LONG, longitude);
                             break;
-                        case NetworkWifiDb.KEY_WIFI_LOCATION_ISTURNONGPS:
+                        case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS:
                             wifiLocationValues.put(NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS, isHasLocation);
                             break;
                         case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS:
