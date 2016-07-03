@@ -30,16 +30,11 @@ public class NetworkWifiDb implements
     public static final String KEY_WIFI_HOTSPOT_INFO_SSID = "column_ssid";
     public static final String KEY_WIFI_HOTSPOT_INFO_BSSID = "column_bssid";
     public static final String KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS = "column_mac_address";
-
     public static final String KEY_WIFI_HOTSPOT_INFO_ENCRYPTION = "column_encryption";
     public static final String KEY_WIFI_HOTSPOT_INFO_PASSWORD = "column_password";
-
-
-    // add new column
     public static final String KEY_WIFI_HOTSPOT_INFO_LAT = "column_lat";
     public static final String KEY_WIFI_HOTSPOT_INFO_LONG = "column_long";
     public static final String KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS = "column_turn_on_gps";
-
     public static final String KEY_WIFI_HOTSPOT_INFO_NETWORK_ID = "column_network_id";
 
     // we want to show a unique wifi hotspot, bssid is a mac address of access points, it's unique so we want this value to create a list of wifi hotspot
@@ -47,15 +42,11 @@ public class NetworkWifiDb implements
     public static final String VALUE_WIFI_HOTSPOT_INFO_SSID = " TEXT DEFAULT ' ', ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_BSSID = " TEXT NOT NULL UNIQUE, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS = " TEXT DEFAULT ' ', ";
-
     public static final String VALUE_WIFI_HOTSPOT_INFO_ENCRYPTION = " TEXT DEFAULT ' ', ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_PASSWORD = " TEXT DEFAULT ' ', ";
-
-
     public static final String VALUE_WIFI_HOTSPOT_INFO_LAT = " REAL DEFAULT 0, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_LONG = " REAL DEFAULT 0, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_ISTURNONGPS = " INTEGER DEFAULT 0, ";
-
     public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER);";
 
     // declare array of column and value
@@ -119,8 +110,6 @@ public class NetworkWifiDb implements
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
                     break;
-
-                // new column
                 case KEY_WIFI_HOTSPOT_INFO_LAT:
                     createWifiTable.append(COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]);
                     createWifiTable.append(VALUE_COLUMN_WIFI_HOTSPOT_INFO[i]);
@@ -207,78 +196,6 @@ public class NetworkWifiDb implements
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    //TODO TABLE CONTAINS LOCATION IN ALL WIFI HOTSPOT
-    // column name and value
-    public static final String TABLE_ALL_WIFI_LOCATIONS = "all_wifi_location";
-
-    public static final String KEY_ALL_WIFI_LOCATION_ID = "_id";
-    public static final String KEY_ALL_WIFI_LOCATION_SSID = "column_ssid";
-    public static final String KEY_ALL_WIFI_LOCATION_BSSID = "column_bssid";
-    public static final String KEY_ALL_WIFI_LOCATION_LAT = "column_lat";
-    public static final String KEY_ALL_WIFI_LOCATION_LONG = "column_long";
-
-    public static final String VALUE_ALL_WIFI_LOCATION_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
-    public static final String VALUE_ALL_WIFI_LOCATION_SSID = " TEXT NOT NULL, ";
-    public static final String VALUE_ALL_WIFI_LOCATION_BSSID = " TEXT NOT NULL UNIQUE, ";
-    public static final String VALUE_ALL_WIFI_LOCATION_LAT = " REAL DEFAULT 0, ";
-    public static final String VALUE_ALL_WIFI_LOCATION_LONG = " REAL DEFAULT 0);";
-
-    // declare array of column and value
-    public static final String[] COLUMN_TABLE_ALL_WIFI_LOCATION = new String[] {
-            KEY_ALL_WIFI_LOCATION_ID,
-            KEY_ALL_WIFI_LOCATION_SSID,
-            KEY_ALL_WIFI_LOCATION_BSSID,
-            KEY_ALL_WIFI_LOCATION_LAT,
-            KEY_ALL_WIFI_LOCATION_LONG
-    };
-
-    public static final String[] VALUE_COLUMN_ALL_WIFI_LOCATION = new String[] {
-            VALUE_ALL_WIFI_LOCATION_ID,
-            VALUE_ALL_WIFI_LOCATION_SSID,
-            VALUE_ALL_WIFI_LOCATION_BSSID,
-            VALUE_ALL_WIFI_LOCATION_LAT,
-            VALUE_ALL_WIFI_LOCATION_LONG
-    };
-
-
-    // create wifi table
-    public static String createAllWifiLocationTable() {
-        StringBuilder createWifiTable = new StringBuilder();
-        createWifiTable.append("CREATE TABLE ");
-        createWifiTable.append(TABLE_ALL_WIFI_LOCATIONS);
-        createWifiTable.append("(");
-
-        for (int i = 0; i < COLUMN_TABLE_ALL_WIFI_LOCATION.length; i++) {
-            switch (COLUMN_TABLE_ALL_WIFI_LOCATION[i]) {
-                case KEY_ALL_WIFI_LOCATION_ID:
-                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
-                    break;
-                case KEY_ALL_WIFI_LOCATION_SSID:
-                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
-                    break;
-                case KEY_ALL_WIFI_LOCATION_BSSID:
-                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
-                    break;
-                case KEY_ALL_WIFI_LOCATION_LAT:
-                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
-                    break;
-                case KEY_ALL_WIFI_LOCATION_LONG:
-                    createWifiTable.append(COLUMN_TABLE_ALL_WIFI_LOCATION[i]);
-                    createWifiTable.append(VALUE_COLUMN_ALL_WIFI_LOCATION[i]);
-                    break;
-                default:
-                    break;
-            }
-        }
-        return createWifiTable.toString();
-    }
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
     // STATE AND DATE OF WIFI HOTSPOT
     // column name and value
     public static final String KEY_WIFI_STATE_AND_DATE_ID = "_id";
@@ -359,20 +276,12 @@ public class NetworkWifiDb implements
     // : 6/17/2016 test name of create table
     @Override
     public void onCreate(SQLiteDatabase db) {
-//        db.execSQL(CREATE_TABLE);
-
-        // create table: wifi hotspot info, but two table - one contains location and one contain state and date -  create if wifi hotspot info table already has a content.
         db.execSQL(createWifiHotspotInfoTable());
-        db.execSQL(createAllWifiLocationTable());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WIFI_HOTSPOT_INFO);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_WIFI_LOCATIONS);
-
-        // TODO: 6/30/16 remove table location and state that we dont have a name here
         onCreate(db);
     }
 

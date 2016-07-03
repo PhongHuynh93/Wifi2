@@ -65,6 +65,4 @@ public class MapFragment extends Fragment {
         wifiHpLoc.setLongitude(wifiLocationModel.getLongitude());
         HelpUtils.setMarkerAtLocation(getContext(), mMapChild, wifiHpLoc, R.drawable.ic_wifi_map, wifiLocationModel.getSsid());
     }
-
-
 }
