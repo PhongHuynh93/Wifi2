@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 
 import dhbk.android.wifi2.utils.Connectivity;
 
+/**
+ * receive an intent whenever a network state has changed.
+ */
 public class MobileReceiver extends BroadcastReceiver {
     private static boolean firstMobileConnect = true;
     private static boolean firstMobileDisconnect = true;
@@ -14,34 +17,17 @@ public class MobileReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
-//            ConnectivityManager connectivityManager = (ConnectivityManager)
-//                    context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//            NetworkInfo activeNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//            boolean isConnected = activeNetInfo != null && activeNetInfo.isConnectedOrConnecting();
-//            if (isConnected) {
-//                if (firstMobileConnect) {
-//                    Log.i("NET", "connecte" + isConnected);
-//                    firstMobileDisconnect = true;
-//                    firstMobileConnect = false;
-//                }
-//            } else {
-//                if (firstMobileDisconnect) {
-//                    firstMobileConnect = true;
-//                    firstMobileDisconnect = false;
-//                    Log.i("NET", "not connecte" + isConnected);
-//
-//                }
-//            }
-
             if (Connectivity.isConnectedMobile(context)) {
                 if (firstMobileConnect) {
                     firstMobileDisconnect = true;
                     firstMobileConnect = false;
+
                 }
             } else {
                 if (firstMobileDisconnect) {
                     firstMobileConnect = true;
                     firstMobileDisconnect = false;
+
 
                 }
             }
