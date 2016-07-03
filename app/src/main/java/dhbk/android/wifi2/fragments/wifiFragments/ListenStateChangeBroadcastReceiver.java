@@ -25,8 +25,8 @@ public class ListenStateChangeBroadcastReceiver extends BroadcastReceiver {
         this.mFragment = fragment;
         this.mSsid = ssid;
         this.mPass = pass;
-        this.mEncryption = pass;
-        this.mBssid = pass;
+        this.mEncryption = encryption;
+        this.mBssid = bssid;
     }
 
     @Override
