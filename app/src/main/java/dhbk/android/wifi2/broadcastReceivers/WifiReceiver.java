@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
@@ -90,16 +89,12 @@ public class WifiReceiver extends BroadcastReceiver {
 
                     NetworkDb networkDb = NetworkDb.getInstance(context);
 
-                    // add  wifi info
-                    WifiScanWifiModel wifiInfoModel = new WifiScanWifiModel(mSsid, mBssid, mMacAddress, mNetworkId);
-                    networkDb.addWifiInfoToTable(wifiInfoModel);
+                    // add wifi info
+                    WifiLocationModel wifiLocationModel = new WifiLocationModel(mSsid, mBssid, "", latitude, longitude, isHasLocation, "", mMacAddress, mNetworkId);
+                    networkDb.addWifiLocationToTable(wifiLocationModel);
 
                     // because wifiLocation table and wifi state and date table make a name that contain bssid, so we must check whether bssid is null or not.
                     if (mBssid != null) {
-                        // add location to wifi
-                        WifiLocationModel wifiLocationModel = new WifiLocationModel(mSsid, mBssid, latitude, longitude, isHasLocation);
-                        networkDb.addWifiLocationToTable(wifiLocationModel);
-
                         // add state and date to db
                         WifiStateAndDateModel wifiStateAndDateModel = new WifiStateAndDateModel(mBssid, mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT, mIpAddress);
                         networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);

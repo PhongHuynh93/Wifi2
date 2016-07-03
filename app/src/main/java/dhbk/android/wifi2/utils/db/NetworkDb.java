@@ -84,13 +84,6 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    // TODO: 6/29/16 add new method to add to new table
-    public void addWifiInfoToTable(WifiScanWifiModel wifiInfoModel) {
-        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
-        if (tableName != null) {
-            tableName.addWifiInfo(getWritableDatabase(), wifiInfoModel);
-        }
-    }
 
     public void addWifiLocationToTable(WifiLocationModel wifiLocationModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();

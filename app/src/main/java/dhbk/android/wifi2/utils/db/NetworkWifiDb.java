@@ -7,7 +7,6 @@ import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.WifiLocationModel;
 import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
-import dhbk.android.wifi2.utils.backgroundTasks.AddWifiInfoToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiStateAndDateToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.GetWifiFromDbTask;
@@ -45,9 +44,9 @@ public class NetworkWifiDb implements
 
     // we want to show a unique wifi hotspot, bssid is a mac address of access points, it's unique so we want this value to create a list of wifi hotspot
     public static final String VALUE_WIFI_HOTSPOT_INFO_ID = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
-    public static final String VALUE_WIFI_HOTSPOT_INFO_SSID = " TEXT NOT NULL, ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_SSID = " TEXT DEFAULT ' ', ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_BSSID = " TEXT NOT NULL UNIQUE, ";
-    public static final String VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS = " TEXT NOT NULL, ";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_MAC_ADDRESS = " TEXT DEFAULT ' ', ";
 
     public static final String VALUE_WIFI_HOTSPOT_INFO_ENCRYPTION = " TEXT DEFAULT ' ', ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_PASSWORD = " TEXT DEFAULT ' ', ";
@@ -57,7 +56,7 @@ public class NetworkWifiDb implements
     public static final String VALUE_WIFI_HOTSPOT_INFO_LONG = " REAL DEFAULT 0, ";
     public static final String VALUE_WIFI_HOTSPOT_INFO_ISTURNONGPS = " INTEGER DEFAULT 0, ";
 
-    public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER NOT NULL);";
+    public static final String VALUE_WIFI_HOTSPOT_INFO_NETWORK_ID = " INTEGER);";
 
     // declare array of column and value
     public static final String[] COLUMN_TABLE_WIFI_HOTSPOT_INFO = new String[] {
@@ -393,14 +392,6 @@ public class NetworkWifiDb implements
         new GetWifiHotspotFromDbTask(db, fragment).execute();
     }
 
-
-
-    // TODO: 6/29/2016 new method to deal with new table, after the program run, remove another method
-    // add wifi info to db
-    @Override
-    public void addWifiInfo(SQLiteDatabase db, WifiScanWifiModel wifiInfoModel) {
-        new AddWifiInfoToDbTask(db, wifiInfoModel).execute();
-    }
 
     // add wifi location to db
     @Override

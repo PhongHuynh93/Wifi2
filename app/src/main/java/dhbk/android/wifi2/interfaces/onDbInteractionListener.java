@@ -26,7 +26,6 @@ public interface onDbInteractionListener {
         void getWifiStateAndDateCursor(SQLiteDatabase readableDatabase, Fragment frag, WifiScanWifiModel wifiScanWifiModel);
 
         // new method
-        void addWifiInfo(SQLiteDatabase db, WifiScanWifiModel wifiInfoModel);
         void addWifiLocation(SQLiteDatabase db, WifiLocationModel wifiLocationModel);
         void addWifiStateAndDate(SQLiteDatabase db, WifiStateAndDateModel wifiStateAndDateModel);
 
