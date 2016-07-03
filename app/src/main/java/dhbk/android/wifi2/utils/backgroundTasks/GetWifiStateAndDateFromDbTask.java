@@ -26,7 +26,6 @@ public class GetWifiStateAndDateFromDbTask extends AsyncTask<Void, Void, Cursor>
         mWifiScanWifiModel = wifiScanWifiModel;
     }
 
-    // FIXME: 7/3/16 test this the table name
     @Override
     protected Cursor doInBackground(Void... params) {
         Cursor cursor;

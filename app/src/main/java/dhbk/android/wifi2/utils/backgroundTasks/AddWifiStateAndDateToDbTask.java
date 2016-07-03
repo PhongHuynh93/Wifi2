@@ -24,7 +24,6 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
         this.mWifiStateAndDateModel = wifiStateAndDateModel;
     }
 
-    // FIXME: 7/3/16 test this
     @Override
     protected Boolean doInBackground(Void... params) {
         // this var to create tablename
