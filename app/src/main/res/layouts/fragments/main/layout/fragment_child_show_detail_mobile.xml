@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
+
+    <!--fab to reveal content-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_mobile_show_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:transitionName="transition_reveal_contact"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="0dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="8dp"/>
+
+    <!--main contain-->
+    <LinearLayout
+        android:id="@+id/main_content_show_mobile_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <!--title of this layout-->
+        <TextView
+            android:id="@+id/title_generation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="@dimen/space_smaller_2"
+            android:layout_marginRight="@dimen/space_smaller_2"
+            android:gravity="center"
+            android:textSize="@dimen/font_largerr"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.5"
+            android:layout_marginLeft="@dimen/space_smaller_2"
+            android:layout_marginRight="@dimen/space_smaller_2"
+            android:background="@drawable/round_corner"
+            android:orientation="vertical"
+            android:padding="@dimen/space_smaller_2">
+
+            <!--message: mobile info and a line-->
+            <TextView
+                android:id="@+id/title_mess_mobile_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/show_message_wifiInfo"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/space_smaller_2"
+                android:layout_marginTop="@dimen/space_smaller_2"
+                android:background="@color/grey_light_darker"/>
+
+            <!-- mobiletype -->
+            <TextView
+                android:id="@+id/mobile_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!-- speed text -->
+            <TextView
+                android:id="@+id/mobile_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <!--bottom sheets: contains history wifi-->
+        <FrameLayout
+            android:id="@+id/mobile_date_and_state_frag"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5.4"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:fitsSystemWindows="true"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

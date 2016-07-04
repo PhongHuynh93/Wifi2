@@ -8,10 +8,9 @@
 
     <include layout="@layout/toolbar"/>
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -62,7 +61,7 @@
                     android:textStyle="bold"/>
             </FrameLayout>
 
-            <!--telephony + history-->
+            <!-- + history-->
             <FrameLayout
                 android:id="@+id/scan_telephony"
                 android:layout_width="match_parent"
@@ -81,6 +80,7 @@
                     android:textSize="40sp"/>
             </FrameLayout>
 
+            <!--map-->
             <FrameLayout
                 android:id="@+id/map_history"
                 android:layout_width="match_parent"
@@ -113,6 +113,6 @@
                     android:textColor="@android:color/white"/>
             </FrameLayout>
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 </android.support.design.widget.CoordinatorLayout>
 
