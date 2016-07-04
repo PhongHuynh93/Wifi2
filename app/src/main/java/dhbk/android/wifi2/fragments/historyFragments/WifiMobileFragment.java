@@ -116,6 +116,8 @@ public class WifiMobileFragment extends BaseFragment {
     }
 
     //        find the wifiFragment and pass cursor data to it.
+    // FIXME: 7/4/16 error because onCreateVIew of MobileFragment class will call the db to populate the rcv
+    // but the current viewpager not the mobile fragment
     public void getMobileFragmentAndPassWifiCursor(Cursor cursor) {
         HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();
         Fragment mobileFragment = adapter.getRegisteredFragment(mViewPagerContainer.getCurrentItem());
