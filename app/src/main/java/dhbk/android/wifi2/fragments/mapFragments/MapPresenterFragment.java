@@ -77,18 +77,18 @@ public class MapPresenterFragment extends Fragment implements
                     double latitude = 0.0;
                     double longitude = 0.0;
                     int isHasLocation = 1;
-                    for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_ALL_WIFI_LOCATION.length; i++) {
-                        switch (NetworkWifiDb.COLUMN_TABLE_ALL_WIFI_LOCATION[i]) {
-                            case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_SSID:
+                    for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO.length; i++) {
+                        switch (NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]) {
+                            case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_SSID:
                                 ssid = cursor.getString(i);
                                 break;
-                            case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_BSSID:
+                            case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_BSSID:
                                 bssid = cursor.getString(i);
                                 break;
-                            case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_LAT:
+                            case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LAT:
                                 latitude = cursor.getDouble(i);
                                 break;
-                            case NetworkWifiDb.KEY_ALL_WIFI_LOCATION_LONG:
+                            case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LONG:
                                 longitude = cursor.getDouble(i);
                                 break;
                             default:

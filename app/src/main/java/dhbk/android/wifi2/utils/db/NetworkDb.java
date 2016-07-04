@@ -20,7 +20,7 @@ import dhbk.android.wifi2.models.WifiStateAndDateModel;
 public class NetworkDb extends SQLiteOpenHelper{
     private static NetworkDb sInstance;
     private static final String DATABASE_NAME = "database_network";
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
 
     private ArrayList<onDbInteractionListener.onDbTableInteractionListener> listTable = new ArrayList<>();
     public static synchronized NetworkDb getInstance(Context context) {
@@ -84,13 +84,6 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    // TODO: 6/29/16 add new method to add to new table
-    public void addWifiInfoToTable(WifiScanWifiModel wifiInfoModel) {
-        onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();
-        if (tableName != null) {
-            tableName.addWifiInfo(getWritableDatabase(), wifiInfoModel);
-        }
-    }
 
     public void addWifiLocationToTable(WifiLocationModel wifiLocationModel) {
         onDbInteractionListener.onDbWifiTableInteractionListener tableName = getNetworkWifiDb();

@@ -8,15 +8,13 @@ import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.models.WifiScanWifiModel;
-import dhbk.android.wifi2.utils.Constant;
-import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/17/2016.
  * get wifi state and date with location from db with table name is created by "para - wifiModel"
  */
-public class GetWifiStateAndDateFromDbTask extends AsyncTask<Void, Void, Cursor>{
+public class GetWifiStateAndDateFromDbTask extends AsyncTask<Void, Void, Cursor> {
     private static final String TAG = GetWifiHotspotFromDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final Fragment mFragment;
@@ -32,13 +30,13 @@ public class GetWifiStateAndDateFromDbTask extends AsyncTask<Void, Void, Cursor>
     protected Cursor doInBackground(Void... params) {
         Cursor cursor;
         try {
-            // get table name
-            String tableName = HelpUtils.getTableDbName(mWifiScanWifiModel.getBssid(), Constant.TABLE_STATE_AND_DATE);
+            // bssid is the condition which record should the database get
+            String bssidCondition = mWifiScanWifiModel.getBssid();
             // get all column
-            cursor = mDb.query (tableName,
+            cursor = mDb.query(NetworkWifiDb.TABLE_WIFI_STATE_AND_DATE,
                     NetworkWifiDb.COLUMN_TABLE_WIFI_STATE_AND_DATE,
-                    null, null,
-                    null, null,null);
+                    NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_BSSID + " = ?", new String[]{bssidCondition},
+                    null, null, null);
         } catch (SQLiteException e) {
             return null;
         }

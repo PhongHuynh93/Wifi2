@@ -14,7 +14,6 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
  * get wifi hotspot with location from db
  */
 public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
-    private static final String TAG = GetWifiHotspotFromDbTask.class.getSimpleName();
     private final SQLiteDatabase mDb;
     private final Fragment mFragment;
 
@@ -27,11 +26,11 @@ public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
     protected Cursor doInBackground(Void... params) {
         Cursor cursor;
         try {
-            // get all column
-            cursor = mDb.query (NetworkWifiDb.TABLE_ALL_WIFI_LOCATIONS,
-                    NetworkWifiDb.COLUMN_TABLE_ALL_WIFI_LOCATION,
-                    null,
-                    null,
+            // get all column where column VALUE_WIFI_HOTSPOT_INFO_ISTURNONGPS = 1, so we have the location
+            cursor = mDb.query (NetworkWifiDb.TABLE_WIFI_HOTSPOT_INFO,
+                    NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO,
+                    NetworkWifiDb.VALUE_WIFI_HOTSPOT_INFO_ISTURNONGPS + " = ?",
+                    new String[] {Integer.toString(1)},
                     null, null,null);
         } catch (SQLiteException e) {
             return null;

@@ -4,17 +4,28 @@ package dhbk.android.wifi2.models;
  * Created by huynhducthanhphong on 6/30/16.
  */
 public class WifiLocationModel {
-    private  String mEncryption;
-    private  double mLatitude;
-    private  double mLongitude;
-    private  int mIsHasLocation;
-    private  String mBssid;
-    private  String mSsid;
-    private  String mPassword;
+    private int mNetworkId;
+    private String mMacAddress;
+    private String mEncryption;
+    private double mLatitude;
+    private double mLongitude;
+    private int mIsHasLocation;
+    private String mBssid;
+    private String mSsid;
+    private String mPassword;
+
+    public int getNetworkId() {
+        return mNetworkId;
+    }
+
+    public String getMacAddress() {
+        return mMacAddress;
+    }
 
     //    wifi with location
     public WifiLocationModel(String ssid, String bssid, double latitude, double longitude, int isHasLocation) {
         this.mLatitude = latitude;
+
         this.mLongitude = longitude;
         this.mIsHasLocation = isHasLocation;
         this.mBssid = bssid;
@@ -41,6 +52,20 @@ public class WifiLocationModel {
 
         this.mPassword = password;
         this.mEncryption = encryption;
+    }
+
+    //    wifi with location + password + encryption + mac add + network id
+    public WifiLocationModel(String ssid, String bssid, String password, double latitude, double longitude, int isHasLocation, String encryption, String macaddress, int network_id) {
+        this.mBssid = bssid;
+        this.mSsid = ssid;
+        this.mLatitude = latitude;
+        this.mLongitude = longitude;
+        this.mIsHasLocation = isHasLocation;
+
+        this.mPassword = password;
+        this.mEncryption = encryption;
+        this.mMacAddress = macaddress;
+        this.mNetworkId = network_id;
     }
 
 

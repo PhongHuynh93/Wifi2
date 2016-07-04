@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -14,8 +13,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
+import dhbk.android.wifi2.utils.Connectivity;
 import dhbk.android.wifi2.utils.Constant;
 import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkDb;
@@ -43,10 +42,9 @@ public class WifiReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(intent.getAction())) {
-            NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
 
             // wifi state connect the first time, so I spare wifi info, get date at the moment and save to db.
-            if (info != null && info.isConnected()) {
+            if (Connectivity.isConnectedWifi(context)) {
                 if (firstConnect) {
                     // 2 var to make this class run one time
                     firstDisconnect = true;
@@ -64,11 +62,9 @@ public class WifiReceiver extends BroadcastReceiver {
                     mNetworkId = wifiInfo.getNetworkId();
 
                     // time now
-                    Date now = new Date(System.currentTimeMillis());
-                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
-                    String nowDate = formatter.format(now);
+                    String nowDate = HelpUtils.getNowDate();
 
-                    // TODO: 6/29/2016 check if user has turn on location, if has turn on, get current location
+                    // : 6/29/2016 check if user has turn on location, if has turn on, get current location
                     int isHasLocation = 0;
 
                     if (HelpUtils.isGpsHasTurnOn(context)) {
@@ -90,16 +86,12 @@ public class WifiReceiver extends BroadcastReceiver {
 
                     NetworkDb networkDb = NetworkDb.getInstance(context);
 
-                    // add  wifi info
-                    WifiScanWifiModel wifiInfoModel = new WifiScanWifiModel(mSsid, mBssid, mMacAddress, mNetworkId);
-                    networkDb.addWifiInfoToTable(wifiInfoModel);
+                    // add wifi info
+                    WifiLocationModel wifiLocationModel = new WifiLocationModel(mSsid, mBssid, "", latitude, longitude, isHasLocation, "", mMacAddress, mNetworkId);
+                    networkDb.addWifiLocationToTable(wifiLocationModel);
 
                     // because wifiLocation table and wifi state and date table make a name that contain bssid, so we must check whether bssid is null or not.
                     if (mBssid != null) {
-                        // add location to wifi
-                        WifiLocationModel wifiLocationModel = new WifiLocationModel(mSsid, mBssid, latitude, longitude, isHasLocation);
-                        networkDb.addWifiLocationToTable(wifiLocationModel);
-
                         // add state and date to db
                         WifiStateAndDateModel wifiStateAndDateModel = new WifiStateAndDateModel(mBssid, mLinkSpeed, mRssi, nowDate, Constant.WIFI_CONNECT, mIpAddress);
                         networkDb.addStateAndDateWifiToTable(wifiStateAndDateModel);

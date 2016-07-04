@@ -6,26 +6,19 @@ import android.database.Cursor;
  * Created by huynhducthanhphong on 6/19/16.
  */
 public class MobileModel {
-    private String networkName;
-    private String speed;
-    private String date;
 
-    public MobileModel(String networkName, String speed, String date) {
-        this.networkName = networkName;
-        this.speed = speed;
-        this.date = date;
-    }
+    private String mobileType;
+    private String generation;
+    private String speedText;
+    private String nowDate;
+    private String mobileState;
 
-    public String getNetworkName() {
-        return networkName;
-    }
-
-    public String getSpeed() {
-        return speed;
-    }
-
-    public String getDate() {
-        return date;
+    public MobileModel(String mobileType, String generation, String speedText, String nowDate, String mobileState) {
+        this.mobileType = mobileType;
+        this.generation = generation;
+        this.speedText = speedText;
+        this.nowDate = nowDate;
+        this.mobileState = mobileState;
     }
 
     public static MobileModel fromCursor(Cursor cursor) {

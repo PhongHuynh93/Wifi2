@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
-import dhbk.android.wifi2.utils.Constant;
-import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
@@ -30,7 +28,6 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
     protected Boolean doInBackground(Void... params) {
         // this var to create tablename
         String bssid = mWifiStateAndDateModel.getBssid();
-        mTableName = HelpUtils.getTableDbName(bssid, Constant.TABLE_STATE_AND_DATE);
 
         // save to db
         String state = mWifiStateAndDateModel.getState();
@@ -45,6 +42,9 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
 
             for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_STATE_AND_DATE.length; i++) {
                 switch (NetworkWifiDb.COLUMN_TABLE_WIFI_STATE_AND_DATE[i]) {
+                    case NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_BSSID:
+                        wifiStateAndDateValues.put(NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_BSSID, bssid);
+                        break;
                     case NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_STATE:
                         wifiStateAndDateValues.put(NetworkWifiDb.KEY_WIFI_STATE_AND_DATE_STATE, state);
                         break;
@@ -65,7 +65,7 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
                 }
             }
 
-            mDb.insertOrThrow(mTableName, null, wifiStateAndDateValues);
+            mDb.insertOrThrow(NetworkWifiDb.TABLE_WIFI_STATE_AND_DATE, null, wifiStateAndDateValues);
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {
@@ -75,23 +75,5 @@ public class AddWifiStateAndDateToDbTask extends AsyncTask<Void, Void, Boolean> 
             mDb.endTransaction();
         }
         return true;
-    }
-
-    @Override
-    protected void onPostExecute(Boolean correctDb) {
-        super.onPostExecute(correctDb);
-        if (!correctDb) {
-            mDb.beginTransaction();
-            // if we catch this exception, means that we have not already created table wifi location, so we create in here.
-            try {
-                String createTableName = NetworkWifiDb.createWifiStateAndDate(mTableName);
-                mDb.execSQL(createTableName);
-                mDb.setTransactionSuccessful();
-            } catch (SQLiteException errorCreateTable) {
-                Log.e(TAG, "doInBackground: " + errorCreateTable);
-            } finally {
-                mDb.endTransaction();
-            }
-        }
     }
 }

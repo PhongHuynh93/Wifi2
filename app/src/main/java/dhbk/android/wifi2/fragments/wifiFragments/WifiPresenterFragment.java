@@ -253,7 +253,6 @@ public class WifiPresenterFragment extends BaseFragment implements
 
         // ko add new mà là update cái cũ
         NetworkDb networkDb = NetworkDb.getInstance(getActivity());
-        // TODO: 7/1/2016 change to use new table
         networkDb.editWifiHotspotToDB(wifiScanWifiModel);
     }
 }

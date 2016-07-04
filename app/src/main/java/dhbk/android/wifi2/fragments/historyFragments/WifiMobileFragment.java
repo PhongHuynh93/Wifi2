@@ -24,8 +24,6 @@ import dhbk.android.wifi2.utils.PageChangeListener;
 show a viewpager with tablayout contains a list of wifi hotspot and mobile.
  */
 public class WifiMobileFragment extends BaseFragment {
-
-    private static final String TAG = WifiMobileFragment.class.getSimpleName();
     @BindView(R.id.toolbar_image_outgoing)
     ImageView mToolbarImageOutgoing;
     @BindView(R.id.toolbar_image)
