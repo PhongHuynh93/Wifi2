@@ -15,7 +15,6 @@ import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.MainFragment;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
-import dhbk.android.wifi2.fragments.historyFragments.WifiMobileFragment;
 import dhbk.android.wifi2.fragments.mapFragments.MapPresenterFragment;
 import dhbk.android.wifi2.fragments.wifiFragments.WifiPresenterFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
@@ -70,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements
 
                 } else if (id == R.id.history) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    WifiMobileFragment historyWifiMobileFragment = (WifiMobileFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
-                    if (historyWifiMobileFragment == null) {
-                        historyWifiMobileFragment = WifiMobileFragment.newInstance();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyWifiMobileFragment, Constant.TAG_HISTORY_PRESENTER_FRAGMENT).commit();
+                    HistoryPresenterFragment historyPresenterFragment = (HistoryPresenterFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
+                    if (historyPresenterFragment == null) {
+                        historyPresenterFragment = HistoryPresenterFragment.newInstance();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, historyPresenterFragment, Constant.TAG_HISTORY_PRESENTER_FRAGMENT).commit();
                     }
                 } else if (id == R.id.map) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
