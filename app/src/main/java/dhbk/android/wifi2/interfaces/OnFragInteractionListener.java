@@ -16,7 +16,6 @@ public interface OnFragInteractionListener {
         void onWifiFragReplace();
         void onHistoryFragReplace();
         void onHistoryWithOsmMapFragReplace();
-        void onMobileFragReplace();
         void onMainFragReplace();
     }
 
@@ -30,7 +29,7 @@ public interface OnFragInteractionListener {
     interface OnHistoryFragInteractionListener {
         // get wifi info
         void onGetWifiHistoryCursor(Cursor cursor);
-        // get mobile network
+        // get mobile network generation
         void onGetMobileHistoryCursor(Cursor cursor);
         // get wifi state and date
         void onGetWifiStateAndDateCursor(Cursor cursor);

@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 
 /**
@@ -23,7 +22,7 @@ public interface onDbInteractionListener {
     interface onDbWifiTableInteractionListener extends onDbTableInteractionListener{
         void getWifiHistoryCursor(SQLiteDatabase db, Fragment fragment);
         void onGetWifiHotspot(SQLiteDatabase db, Fragment fragment);
-        void getWifiStateAndDateCursor(SQLiteDatabase readableDatabase, Fragment frag, WifiScanWifiModel wifiScanWifiModel);
+        void getWifiStateAndDateCursor(SQLiteDatabase readableDatabase, Fragment frag, WifiLocationModel wifiScanWifiModel);
 
         // new method
         void addWifiLocation(SQLiteDatabase db, WifiLocationModel wifiLocationModel);
@@ -35,7 +34,7 @@ public interface onDbInteractionListener {
 
     // method table mobile
     interface onDbMobileTableInteractionListener extends onDbTableInteractionListener{
-        void onInsert(SQLiteDatabase db, MobileModel model);
+        void addMobileNetwork(SQLiteDatabase db, MobileModel model);
         void getMobileHistoryCursor(SQLiteDatabase readableDatabase, Fragment fragment);
     }
 }

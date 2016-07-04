@@ -10,6 +10,7 @@ import dhbk.android.wifi2.utils.db.NetworkMobileDb;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.
+ * add mobile info to 2 table
  */
 public class AddMobileToDbTask extends AsyncTask<MobileModel, Void, Boolean> {
     private final SQLiteDatabase mDb;
@@ -25,18 +26,30 @@ public class AddMobileToDbTask extends AsyncTask<MobileModel, Void, Boolean> {
         }
 
         MobileModel mobileModel = params[0];
-        String name = mobileModel.getNetworkName();
-        String speed = mobileModel.getSpeed();
-        String date = mobileModel.getDate();
+        String mobileType = mobileModel.getMobileType();
+        String generation = mobileModel.getGeneration();
+        String speedText = mobileModel.getSpeedText();
+        String nowDate = mobileModel.getNowDate();
+        String mobileState = mobileModel.getMobileState();
 
         mDb.beginTransaction();
         try {
+            // add to TABLE_MOBILE_GENERATION
             ContentValues mobileHotspotValues = new ContentValues();
-            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_NAME, name);
-            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_SPEED, speed);
-            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_DATE, date);
+            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_TYPE, mobileType);
+            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_GENERATION, generation);
+            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_SPEED, speedText);
+            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_DATE, nowDate);
+            mobileHotspotValues.put(NetworkMobileDb.KEY_MOBILE_STATE, mobileState);
 
             mDb.insertOrThrow(NetworkMobileDb.TABLE_MOBILE, null, mobileHotspotValues);
+
+            // add to TABLE_MOBILE
+            ContentValues mobileGenValues = new ContentValues();
+            mobileGenValues.put(NetworkMobileDb.KEY_MOBILE_GENERATION, generation);
+            mDb.insertOrThrow(NetworkMobileDb.TABLE_MOBILE_GENERATION, null, mobileGenValues);
+
+            //
             mDb.setTransactionSuccessful();
 
         } catch (SQLiteException e) {

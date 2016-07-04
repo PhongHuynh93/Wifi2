@@ -2,13 +2,17 @@ package dhbk.android.wifi2.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -25,22 +29,21 @@ import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
  * + show a maps contain all wifi hotspot.
  */
 public class MainFragment extends Fragment {
-    @BindView(R.id.button_scan_wifi)
-    Button mButtonScanWifi;
-    @BindView(R.id.tv_mobile)
-    TextView mTvMobile;
-    @BindView(R.id.tv_history)
-    TextView mTvHistory;
-    @BindView(R.id.button_show_map)
-    Button mButtonShowMap;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.scan_wifi)
     FrameLayout mScanWifi;
     @BindView(R.id.tv_features)
     FrameLayout mTvFeatures;
+    @BindView(R.id.tv_history)
+    TextView mTvHistory;
     @BindView(R.id.scan_telephony)
-    LinearLayout mScanTelephony;
+    FrameLayout mScanTelephony;
+    @BindView(R.id.button_show_map)
+    Button mButtonShowMap;
     @BindView(R.id.map_history)
     FrameLayout mMapHistory;
+
     private OnFragInteractionListener.OnMainFragInteractionListener mListener;
 
     public MainFragment() {
@@ -74,20 +77,33 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.bind(this, view);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Main");
+
+        // make a hamberger in toolbar
+        DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                getActivity(), drawerLayout, mToolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        );
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true); //disable "hamburger to arrow" drawable
+        actionBarDrawerToggle.syncState();
+
         return view;
     }
 
-    @OnClick({R.id.button_scan_wifi, R.id.tv_mobile, R.id.tv_history, R.id.button_show_map})
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @OnClick({R.id.button_scan_wifi, R.id.tv_history, R.id.button_show_map})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_scan_wifi:
                 if (mListener != null) {
                     mListener.onWifiFragReplace();
-                }
-                break;
-            case R.id.tv_mobile:
-                if (mListener != null) {
-                    mListener.onMobileFragReplace();
                 }
                 break;
             case R.id.tv_history:

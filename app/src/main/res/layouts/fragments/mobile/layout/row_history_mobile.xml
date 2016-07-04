@@ -17,9 +17,9 @@
         android:scaleType="fitXY"
         android:src="@drawable/location_here_map"/>
 
-    <!--ssid, max line for one row and when it's too long, truncate at the end -->
+    <!--generation of mobile, max line for one row and when it's too long, truncate at the end -->
     <TextView
-        android:id="@+id/row_ssid_wifi_history"
+        android:id="@+id/row_generation_mobile_history"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -29,35 +29,6 @@
         android:text="Ssid"
         android:textColor="@color/black"
         android:textSize="25sp"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <!--state-->
-        <TextView
-            android:id="@+id/row_state_wifi_history"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@drawable/bg_view"
-            android:gravity="center_horizontal"
-            android:padding="4dp"
-            android:text="DisConnected"
-            android:textColor="@android:color/white"
-            android:textSize="8sp"/>
-
-        <!--date-->
-        <TextView
-            android:id="@+id/row_date_wifi_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date"
-            android:textColor="@color/black"/>
-    </LinearLayout>
 
     <!--icon right-->
     <ImageView

@@ -2,15 +2,22 @@ package dhbk.android.wifi2.adapters.historyAdapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
+import dhbk.android.wifi2.activities.MainActivity;
 import dhbk.android.wifi2.adapters.CursorRecyclerViewAdapter;
+import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
 import dhbk.android.wifi2.models.MobileModel;
+import dhbk.android.wifi2.utils.Constant;
 
 /**
  * Created by huynhducthanhphong on 6/19/16.
@@ -18,19 +25,31 @@ import dhbk.android.wifi2.models.MobileModel;
  */
 public class MobileInfoRcvAdapter extends
         CursorRecyclerViewAdapter<MobileInfoRcvAdapter.ViewHolder> {
-
+    private final Context mActivityContext;
 
     public MobileInfoRcvAdapter(Context context, Cursor cursor) {
         super(context, cursor);
+        this.mActivityContext = context;
     }
 
     // gan tinh chat cua mobile vao adapter giong nhu wifi vay
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
-        MobileModel myListItem = MobileModel.fromCursor(cursor);
-        viewHolder.wifiStateHotspotTv.setText(myListItem.getSpeed());
-        viewHolder.wifiSsidHotspotTv.setText(myListItem.getNetworkName());
-        viewHolder.wifiDateHotspotTv.setText(myListItem.getDate());
+        final MobileModel myListItem = MobileModel.fromCursor(cursor);
+        viewHolder.mRowGenerationMobileHistory.setText(myListItem.getGeneration());
+
+        // listen the icon click
+        viewHolder.mImgArrowRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mActivityContext instanceof MainActivity) {
+                    Fragment historyPresenterfragment = ((MainActivity) mActivityContext).getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
+                    if (historyPresenterfragment instanceof HistoryPresenterFragment) {
+                        ((HistoryPresenterFragment) historyPresenterfragment).replaceWithShowMobileDetailFrag(myListItem);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -41,16 +60,15 @@ public class MobileInfoRcvAdapter extends
         return vh;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView wifiStateHotspotTv;
-        public TextView wifiSsidHotspotTv;
-        public TextView wifiDateHotspotTv;
+    public class ViewHolder  extends RecyclerView.ViewHolder{
+        @BindView(R.id.row_generation_mobile_history)
+        TextView mRowGenerationMobileHistory;
+        @BindView(R.id.img_arrow_right)
+        ImageView mImgArrowRight;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            wifiStateHotspotTv = (TextView) itemView.findViewById(R.id.row_state_wifi_history);
-            wifiSsidHotspotTv = (TextView) itemView.findViewById(R.id.row_ssid_wifi_history);
-            wifiDateHotspotTv = (TextView) itemView.findViewById(R.id.row_date_wifi_history);
+            ButterKnife.bind(this, itemView);
         }
     }
-
 }

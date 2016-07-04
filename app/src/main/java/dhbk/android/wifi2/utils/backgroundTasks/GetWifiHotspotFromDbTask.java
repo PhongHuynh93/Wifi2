@@ -11,7 +11,7 @@ import dhbk.android.wifi2.utils.db.NetworkWifiDb;
 
 /**
  * Created by phongdth.ky on 6/17/2016.
- * get wifi hotspot with location from db
+ * get wifi hotspot with location from db, use in MapFragment
  */
 public class GetWifiHotspotFromDbTask extends AsyncTask<Void, Void, Cursor>{
     private final SQLiteDatabase mDb;
