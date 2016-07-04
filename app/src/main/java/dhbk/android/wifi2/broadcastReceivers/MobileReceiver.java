@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
+import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.utils.Connectivity;
+import dhbk.android.wifi2.utils.Constant;
+import dhbk.android.wifi2.utils.HelpUtils;
 import dhbk.android.wifi2.utils.db.NetworkDb;
 
 /**
@@ -15,6 +17,12 @@ import dhbk.android.wifi2.utils.db.NetworkDb;
 public class MobileReceiver extends BroadcastReceiver {
     private static boolean firstMobileConnect = true;
     private static boolean firstMobileDisconnect = true;
+    private String mobileType;
+    private String generation;
+    private String speedText;
+    private String nowDate;
+
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -24,17 +32,22 @@ public class MobileReceiver extends BroadcastReceiver {
                     firstMobileDisconnect = true;
                     firstMobileConnect = false;
 
-                    NetworkInfo info = Connectivity.getNetworkInfo(context.getApplicationContext());
-                    String mobileType = info.getSubtypeName();
+                    mobileType = Connectivity.getSubtypeName(context);
+                    generation = Connectivity.getNetWordGeneration(context);
+                    speedText = Connectivity.getSpeedMobile(context);
+                    nowDate = HelpUtils.getNowDate();
+
                     NetworkDb networkDb = NetworkDb.getInstance(context);
-//                    networkDb.addMobile(mobileType, speedText, nowDate, Constant.MOBILE_CONNECT);
+                    MobileModel mobileReceiver = new MobileModel(mobileType, generation, speedText, nowDate, Constant.MOBILE_CONNECT);
+                    networkDb.addMobile(mobileReceiver);
                 }
             } else {
                 if (firstMobileDisconnect) {
                     firstMobileConnect = true;
                     firstMobileDisconnect = false;
-//                    NetworkDb networkDb = NetworkDb.getInstance(context);
-//                    networkDb.addMobile(mobileType, speedText, nowDate, Constant.MOBILE_DISCONNECT);
+                    NetworkDb networkDb = NetworkDb.getInstance(context);
+                    MobileModel mobileReceiver = new MobileModel(mobileType, generation, speedText, nowDate, Constant.MOBILE_CONNECT);
+                    networkDb.addMobile(mobileReceiver);
                 }
             }
         }

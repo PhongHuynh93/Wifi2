@@ -62,9 +62,7 @@ public class WifiReceiver extends BroadcastReceiver {
                     mNetworkId = wifiInfo.getNetworkId();
 
                     // time now
-                    Date now = new Date(System.currentTimeMillis());
-                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
-                    String nowDate = formatter.format(now);
+                    String nowDate = HelpUtils.getNowDate();
 
                     // : 6/29/2016 check if user has turn on location, if has turn on, get current location
                     int isHasLocation = 0;

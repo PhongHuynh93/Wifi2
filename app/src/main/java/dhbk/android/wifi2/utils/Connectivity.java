@@ -103,7 +103,9 @@ public class Connectivity {
         }
     }
 
-    public static String getSpeedMobile(int subType) {
+    public static String getSpeedMobile(Context context) {
+        NetworkInfo info = Connectivity.getNetworkInfo(context);
+        int subType =  info.getSubtype();
         switch(subType){
             case TelephonyManager.NETWORK_TYPE_1xRTT:
                 return Constant.NETWORK_TYPE_1xRTT; // ~ 50-100 kbps
@@ -146,7 +148,9 @@ public class Connectivity {
         }
     }
 
-    public String getNetWordGeneration(int networkType) {
+    public static String getNetWordGeneration(Context context) {
+        NetworkInfo info = Connectivity.getNetworkInfo(context);
+        int networkType =  info.getSubtype();
         switch (networkType) {
             case TelephonyManager.NETWORK_TYPE_GPRS:
             case 16: // TelephonyManager.NETWORK_TYPE_GSM:
@@ -172,6 +176,11 @@ public class Connectivity {
             default:
                 return Constant.NETWORK_CLASS_UNKNOWN;
         }
+    }
+
+    public static String getSubtypeName(Context context) {
+        NetworkInfo info = Connectivity.getNetworkInfo(context.getApplicationContext());
+        return info.getSubtypeName();
     }
 
 }

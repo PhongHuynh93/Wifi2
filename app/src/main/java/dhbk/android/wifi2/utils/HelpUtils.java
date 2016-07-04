@@ -17,6 +17,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -118,5 +119,12 @@ public class HelpUtils {
         iMapController.setZoom(Constant.ZOOM);
         GeoPoint startPoint = new GeoPoint(Constant.START_LATITUDE, Constant.STATE_LONGITUDE);
         iMapController.setCenter(startPoint);
+    }
+
+    // return time now
+    public static String getNowDate() {
+        Date now = new Date(System.currentTimeMillis());
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.UK);
+        return formatter.format(now);
     }
 }
