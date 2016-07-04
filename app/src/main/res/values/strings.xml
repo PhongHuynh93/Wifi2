@@ -28,6 +28,10 @@
     <string name="show_message_wifiInfo">Wifi Info</string>
 
 
+    <!--detail mobile info-->
+    <string name="show_me_mobileInfo">Mobile Network Info</string>
+
+
     <!--wifi signal string-->
     <string name="show_message_wifi_signal_excellent">Excellent</string>
     <string name="show_message_wifi_signal_good">Good</string>

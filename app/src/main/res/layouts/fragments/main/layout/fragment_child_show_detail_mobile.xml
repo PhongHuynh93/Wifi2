@@ -59,7 +59,7 @@
                 android:id="@+id/title_mess_mobile_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/show_message_wifiInfo"/>
+                android:text="@string/show_me_mobileInfo"/>
 
             <View
                 android:layout_width="match_parent"
