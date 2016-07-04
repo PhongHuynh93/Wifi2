@@ -57,28 +57,28 @@ public class GUIUtils {
     // : 6/12/16 15 After clicking back pressed button I like to hide circular reveal animation.
     // The startRadius is a full width of view, the final radius is the FloatingActionButton width divided by 2.
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void animateRevealHide(final Context ctx, final View parentView, @ColorRes final int color,
+    public static void animateRevealHide(final Context ctx, final View parentView, final View mainContentView, @ColorRes final int color,
                                          final int finalRadius, final OnRevealAnimationListener listener) {
         int cx = (parentView.getLeft() + parentView.getRight()) / 2;
         int cy = (parentView.getTop() + parentView.getBottom()) / 2;
         int initialRadius = parentView.getWidth();
-
-//        because this child view if not center so we use parentview to center it
-        final View view = parentView.findViewById(R.id.main_content_show_wifi_detail);
+//
+////        because this child view if not center so we use parentview to center it
+//        final View view = parentView.findViewById(R.id.main_content_show_wifi_detail);
 
 //        make circular from full width to the width of fab
-        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius, finalRadius);
+        Animator anim = ViewAnimationUtils.createCircularReveal(mainContentView, cx, cy, initialRadius, finalRadius);
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
                 super.onAnimationStart(animation);
-                view.setBackgroundColor(ContextCompat.getColor(ctx, color));
+                mainContentView.setBackgroundColor(ContextCompat.getColor(ctx, color));
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                view.setVisibility(View.INVISIBLE);
+                mainContentView.setVisibility(View.INVISIBLE);
                 listener.onRevealHide();
             }
         });

@@ -226,11 +226,22 @@ public class HistoryPresenterFragment extends Fragment implements
         getChildFragmentManager().popBackStack();
     }
 
-    // pop out HistoryCHildShowDetailWifiFragment and show animation when close
-    public void popShowWifiDetailFragment() {
-        Fragment wifiDetailFrag = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
-        if (wifiDetailFrag instanceof ChildShowDetailWifiFragment) {
-            ((ChildShowDetailWifiFragment) wifiDetailFrag).closeFragment();
+    // pop out whether wifi or mobile detail infos and show animation when close
+    public void popShowDetailFragment() {
+        // wiif
+        {
+            Fragment wifiDetailFrag = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_WIFI_DETAIL_FRAGMENT);
+            if (wifiDetailFrag instanceof ChildShowDetailWifiFragment) {
+                ((ChildShowDetailWifiFragment) wifiDetailFrag).closeFragment();
+            }
+        }
+
+        // mobile
+        {
+            Fragment mobileDetailFrag = getChildFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_MOBILE_DETAIL_FRAGMENT);
+            if (mobileDetailFrag instanceof ChildShowDetailMobileFragment) {
+                ((ChildShowDetailMobileFragment) mobileDetailFrag).closeFragment();
+            }
         }
     }
 

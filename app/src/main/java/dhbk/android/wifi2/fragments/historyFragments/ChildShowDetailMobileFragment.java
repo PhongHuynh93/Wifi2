@@ -120,6 +120,11 @@ public class ChildShowDetailMobileFragment extends BaseFragment {
     }
 
     @Override
+    public void showAnimToClose() {
+        super.showAnimToClose(mContainerCoordinator, mMainContentShowMobileDetail, mFabMobileShowDetail);
+    }
+
+    @Override
     protected void initViews() {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override

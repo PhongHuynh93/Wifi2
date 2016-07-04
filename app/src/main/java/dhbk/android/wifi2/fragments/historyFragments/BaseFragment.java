@@ -188,8 +188,8 @@ public abstract class BaseFragment extends Fragment {
     }
 
     // call anim when close this fragment
-    public void showAnimToClose(View container, View fab) {
-        GUIUtils.animateRevealHide(getContext(), container, R.color.white, fab.getWidth() / 2,
+    public void showAnimToClose(View container, View mainContentView, View fab) {
+        GUIUtils.animateRevealHide(getContext(), container, mainContentView, R.color.white, fab.getWidth() / 2,
                 new OnRevealAnimationListener() {
                     // : 6/12/16 16  When the animation ends, we have to inform the Activity with the OnRevealAnimationListener to call super.onBackPressed().
                     @Override

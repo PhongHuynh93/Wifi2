@@ -180,7 +180,7 @@ public class ChildShowDetailWifiFragment extends BaseFragment {
 //
 //                    }
 //                });
-        super.showAnimToClose(mContainerWifiShowDetail, mFabWifiShowDetail);
+        super.showAnimToClose(mContainerWifiShowDetail, mMainContentShowWifiDetail, mFabWifiShowDetail);
     }
 
     // put the task connect to db here to anim smooth.

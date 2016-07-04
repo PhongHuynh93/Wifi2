@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements
         // call wifi presenter to pop ShowWifiDetailFrag out of backstack
         Fragment presenterFragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
         if (presenterFragment instanceof HistoryPresenterFragment && presenterFragment.getChildFragmentManager().getBackStackEntryCount() > 0) {
-            ((HistoryPresenterFragment) presenterFragment).popShowWifiDetailFragment();
+            ((HistoryPresenterFragment) presenterFragment).popShowDetailFragment();
             return; // after pop out a nested fragment, not pop out again by run super.onBackPressed();
         } else {
             // pop out normal fragment by run super.onBackPressed
