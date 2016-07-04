@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/dark_teal</color>
-    <color name="colorPrimaryDark">@android:color/transparent</color>
+    <color name="colorPrimaryDark">@color/darker_teal</color>
     <color name="colorAccent">@color/dark_teal</color>
     <color name="deep_purple_medium">#673AB7</color>
     <color name="dark_teal">#009688</color>
+    <color name="darker_teal">#00796B</color>
     <color name="dark_orange">#EF6C00</color>
     <color name="wifi_connect_dialog">@color/dark_teal</color>
     <color name="indigo">#3F51B5</color>

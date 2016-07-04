@@ -1,5 +1,9 @@
 package dhbk.android.wifi2.models;
 
+import android.database.Cursor;
+
+import dhbk.android.wifi2.utils.db.NetworkWifiDb;
+
 /**
  * Created by huynhducthanhphong on 6/30/16.
  */
@@ -104,4 +108,54 @@ public class WifiLocationModel {
     public String getBssid() {
         return mBssid;
     }
+
+
+    // get wifi info from cursor
+    public static WifiLocationModel fromCursor(Cursor cursor) {
+        String ssid = null;
+        String bssid = null;
+        String mac_address = null;
+        String encryption = null;
+        String password = null;
+        double latitude = 0;
+        double longitude = 0;
+        int isTurnOnGps = 0;
+        int network_id = 0;
+        for (int i = 0; i < NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO.length; i++) {
+            switch (NetworkWifiDb.COLUMN_TABLE_WIFI_HOTSPOT_INFO[i]) {
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_SSID:
+                    ssid = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_BSSID:
+                    bssid = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_MAC_ADDRESS:
+                    mac_address = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_ENCRYPTION:
+                    encryption = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_PASSWORD:
+                    password = cursor.getString(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LAT:
+                    latitude = cursor.getDouble(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_LONG:
+                    longitude = cursor.getDouble(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_ISTURNONGPS:
+                    isTurnOnGps = cursor.getInt(i);
+                    break;
+                case NetworkWifiDb.KEY_WIFI_HOTSPOT_INFO_NETWORK_ID:
+                    network_id = cursor.getInt(i);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return new WifiLocationModel(ssid, bssid,password, latitude, longitude, isTurnOnGps, encryption, mac_address, network_id);
+    }
+
 }

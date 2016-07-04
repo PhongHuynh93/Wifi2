@@ -44,7 +44,6 @@ public class WifiFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         WifiInfoRcvAdapter adapter = new WifiInfoRcvAdapter(getActivity(), null);
-        mRcvHistory = (RecyclerView) getActivity().findViewById(R.id.rcv_history);
         declareRcvAndGetDataFromDb(mRcvHistory, adapter, Constant.WIFI_RECYCLERVIEW);
     }
 
@@ -57,5 +56,4 @@ public class WifiFragment extends BaseFragment {
             Log.e(TAG, "populateCursorToRcv: " + e.toString());
         }
     }
-
 }

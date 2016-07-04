@@ -20,6 +20,7 @@ public class Constant {
     public static final String TAG_HISTORY_WIFI_MOBILE_FRAGMENT = "history_wifi_mobile_fragment";
     public static final String TAG_BOTTOM_SHEET_WIFI_STATE_AND_DATE = "fragment_bottom_sheet_wifi_state_and_date";
     public static final String TAG_WIFI_PRESENTER_FRAGMENT = "wifi_presenter";
+    public static final String TAG_HISTORY_MOBILE_DETAIL_FRAGMENT = "history_child_mobile_detail";
 
     //    wifi encryption security
     public static final String WIFI_WEP = "WEP";
@@ -75,6 +76,8 @@ public class Constant {
     public static final String QUICKSAND_LIGHT = "fonts/Quicksand-Light.otf";
     public static final String QUICKSAND_REGULAR = "fonts/Quicksand-Regular.otf";
 
+    // layout
+    public static final float TOOLBAR_HEIGHT_DP = 100;
 
 }
 

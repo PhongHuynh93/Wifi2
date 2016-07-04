@@ -17,12 +17,12 @@ import dhbk.android.wifi2.utils.db.NetworkDb;
 public class MobileReceiver extends BroadcastReceiver {
     private static boolean firstMobileConnect = true;
     private static boolean firstMobileDisconnect = true;
+
+    // make 4 var to global var because in disconnected, we can use.
     private String mobileType;
     private String generation;
     private String speedText;
     private String nowDate;
-
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -46,7 +46,7 @@ public class MobileReceiver extends BroadcastReceiver {
                     firstMobileConnect = true;
                     firstMobileDisconnect = false;
                     NetworkDb networkDb = NetworkDb.getInstance(context);
-                    MobileModel mobileReceiver = new MobileModel(mobileType, generation, speedText, nowDate, Constant.MOBILE_CONNECT);
+                    MobileModel mobileReceiver = new MobileModel(mobileType, generation, speedText, nowDate, Constant.MOBILE_DISCONNECT);
                     networkDb.addMobile(mobileReceiver);
                 }
             }

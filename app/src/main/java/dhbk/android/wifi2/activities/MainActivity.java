@@ -8,13 +8,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.fragments.MainFragment;
 import dhbk.android.wifi2.fragments.historyFragments.HistoryPresenterFragment;
 import dhbk.android.wifi2.fragments.historyFragments.WifiMobileFragment;
 import dhbk.android.wifi2.fragments.mapFragments.MapPresenterFragment;
-import dhbk.android.wifi2.fragments.mobileFragments.MobileFragment;
 import dhbk.android.wifi2.fragments.wifiFragments.WifiPresenterFragment;
 import dhbk.android.wifi2.interfaces.OnFragInteractionListener;
 import dhbk.android.wifi2.utils.Constant;
@@ -25,10 +27,18 @@ Show Main layout, implement navigation drawer and replace|add fragments.
 public class MainActivity extends AppCompatActivity implements
         OnFragInteractionListener.OnMainFragInteractionListener {
 
+    @BindView(R.id.main_container)
+    FrameLayout mMainContainer;
+    @BindView(R.id.nav_view)
+    NavigationView mNavView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         // add Main Layout
         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MAIN_FRAGMENT);
@@ -38,8 +48,7 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         // declare navigation drawer and actions when click one menu item.
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 int id = item.getItemId();
@@ -59,14 +68,6 @@ public class MainActivity extends AppCompatActivity implements
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, wifiPresenterFragment, Constant.TAG_WIFI_PRESENTER_FRAGMENT).commit();
                     }
 
-                } else if (id == R.id.mobile) {
-                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    MobileFragment mobileFragment = (MobileFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MOBILE_FRAGMENT);
-                    if (mobileFragment == null) {
-                        mobileFragment = MobileFragment.newInstance();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mobileFragment, Constant.TAG_MOBILE_FRAGMENT).commit();
-                    }
-
                 } else if (id == R.id.history) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     WifiMobileFragment historyWifiMobileFragment = (WifiMobileFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
@@ -83,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements
                     }
 
                 }
-                DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawerLayout.closeDrawer(GravityCompat.START);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements
         // call wifi presenter to pop ShowWifiDetailFrag out of backstack
         Fragment presenterFragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
         if (presenterFragment instanceof HistoryPresenterFragment && presenterFragment.getChildFragmentManager().getBackStackEntryCount() > 0) {
-            ((HistoryPresenterFragment)presenterFragment).popShowWifiDetailFragment();
+            ((HistoryPresenterFragment) presenterFragment).popShowWifiDetailFragment();
             return; // after pop out a nested fragment, not pop out again by run super.onBackPressed();
         } else {
             // pop out normal fragment by run super.onBackPressed
@@ -157,16 +157,6 @@ public class MainActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    // replace with mobile fragment
-    @Override
-    public void onMobileFragReplace() {
-        final MobileFragment mobileFragment = MobileFragment.newInstance();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_container, mobileFragment, Constant.TAG_MOBILE_FRAGMENT)
-                .addToBackStack(null)
-                .commit();
-    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // END REPLACE FRAGMENT

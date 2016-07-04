@@ -1,99 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:fitsSystemWindows="true">
 
-    <RelativeLayout
+    <include layout="@layout/toolbar"/>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!--wifi-->
-        <FrameLayout
-            android:fitsSystemWindows="true"
-            android:id="@+id/scan_wifi"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:background="@color/grey_dark">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/wifi"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="70sp"/>
-
-            <Button
-                android:id="@+id/button_scan_wifi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="@dimen/btn_scan_wifi_mg_bot"
-                android:background="@drawable/bg_button"
-                android:text="@string/button_scan_wifi"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"/>
-        </FrameLayout>
-
-        <!--text-->
-        <FrameLayout
-            android:fitsSystemWindows="true"
-            android:id="@+id/tv_features"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@id/scan_wifi">
-
-            <!--bold + uppercase + -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/tv_feature_mg_left"
-                android:text="@string/tv_main_nav"
-                android:textAllCaps="true"
-                android:textStyle="bold"/>
-        </FrameLayout>
-
-        <!--telephony + history-->
-        <LinearLayout
-            android:fitsSystemWindows="true"
-            android:id="@+id/scan_telephony"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/tv_features"
-            android:layout_marginBottom="@dimen/margin_between_two_box"
-            android:orientation="horizontal">
-
-            <!--teplephony-->
+            android:layout_height="match_parent">
+            <!--wifi-->
             <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/margin_between_two_box"
-                android:layout_weight="1"
-                android:background="@color/deep_purple_medium">
+                android:id="@+id/scan_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="@color/grey_dark">
+
                 <TextView
-                    android:id="@+id/tv_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="MOBILE"
+                    android:text="@string/wifi"
+                    android:textAllCaps="true"
                     android:textColor="@android:color/white"
-                    android:textSize="40sp"/>
+                    android:textSize="70sp"/>
+
+                <Button
+                    android:id="@+id/button_scan_wifi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="@dimen/btn_scan_wifi_mg_bot"
+                    android:background="@drawable/bg_button"
+                    android:text="@string/button_scan_wifi"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"/>
             </FrameLayout>
 
-            <!--history-->
+            <!--text-->
             <FrameLayout
-                android:fitsSystemWindows="true"
+                android:id="@+id/tv_features"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@id/scan_wifi">
 
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin_between_two_box"
-                android:layout_weight="1"
-                android:background="@color/dark_teal">
+                <!--bold + uppercase + -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/tv_feature_mg_left"
+                    android:text="@string/tv_main_nav"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+
+            <!--telephony + history-->
+            <FrameLayout
+                android:id="@+id/scan_telephony"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/tv_features"
+                android:layout_marginBottom="@dimen/margin_between_two_box"
+                android:background="@color/blue">
 
                 <TextView
                     android:id="@+id/tv_history"
@@ -104,41 +80,39 @@
                     android:textColor="@android:color/white"
                     android:textSize="40sp"/>
             </FrameLayout>
-        </LinearLayout>
 
-        <FrameLayout
-            android:fitsSystemWindows="true"
+            <FrameLayout
+                android:id="@+id/map_history"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@id/scan_telephony"
+                android:layout_marginTop="@dimen/margin_between_two_box"
+                android:background="@color/indigo">
 
-            android:id="@+id/map_history"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@id/scan_telephony"
-            android:layout_marginTop="@dimen/margin_between_two_box"
-            android:background="@color/indigo">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center_horizontal"
+                    android:layout_marginTop="65dp"
+                    android:text="WIFI HOTSPOTS"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"
+                    android:textSize="40sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|center_horizontal"
-                android:layout_marginTop="65dp"
-                android:text="WIFI HOTSPOTS"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:textSize="40sp"/>
-
-            <Button
-                android:id="@+id/button_show_map"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginBottom="40dp"
-                android:background="@drawable/bg_button"
-                android:text="find on map"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"/>
-        </FrameLayout>
-    </RelativeLayout>
-</android.support.v4.widget.NestedScrollView>
+                <Button
+                    android:id="@+id/button_show_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="40dp"
+                    android:background="@drawable/bg_button"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="find on map"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"/>
+            </FrameLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
 

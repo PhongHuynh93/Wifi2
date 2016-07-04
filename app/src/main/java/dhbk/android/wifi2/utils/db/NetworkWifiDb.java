@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiLocationToDbTask;
 import dhbk.android.wifi2.utils.backgroundTasks.AddWifiStateAndDateToDbTask;
@@ -19,7 +18,6 @@ import dhbk.android.wifi2.utils.backgroundTasks.UpdateWifiInDbTask;
  */
 public class NetworkWifiDb implements
         onDbInteractionListener.onDbWifiTableInteractionListener {
-    public static final String TAG = NetworkWifiDb.class.getSimpleName();
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     // WIFI HOTSPOT
@@ -242,7 +240,7 @@ public class NetworkWifiDb implements
     }
 
     @Override
-    public void getWifiStateAndDateCursor(SQLiteDatabase db, Fragment frag, WifiScanWifiModel wifiScanWifiModel) {
+    public void getWifiStateAndDateCursor(SQLiteDatabase db, Fragment frag, WifiLocationModel wifiScanWifiModel) {
         new GetWifiStateAndDateFromDbTask(db, frag, wifiScanWifiModel).execute();
     }
 

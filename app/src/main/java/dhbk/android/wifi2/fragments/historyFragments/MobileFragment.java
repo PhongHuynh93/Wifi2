@@ -41,9 +41,7 @@ public class MobileFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRcvHistoryMobile = (RecyclerView) view.findViewById(R.id.rcv_history_mobile);
         MobileInfoRcvAdapter adapter = new MobileInfoRcvAdapter(getActivity(), null);
-
         declareRcvAndGetDataFromDb(mRcvHistoryMobile, adapter, Constant.MOBILE_RECYCLERVIEW);
     }
 

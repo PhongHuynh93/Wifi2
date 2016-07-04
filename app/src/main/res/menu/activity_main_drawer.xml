@@ -15,10 +15,6 @@
                     android:icon="@drawable/ic_wifi_empty"
                     android:title="Wifi network"/>
                 <item
-                    android:id="@+id/mobile"
-                    android:icon="@drawable/ic_call_black_24dp"
-                    android:title="Mobile network"/>
-                <item
                     android:id="@+id/history"
                     android:icon="@drawable/ic_menu_slideshow"
                     android:title="History"/>

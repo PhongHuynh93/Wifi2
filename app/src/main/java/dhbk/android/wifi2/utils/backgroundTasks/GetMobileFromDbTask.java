@@ -26,8 +26,9 @@ public class GetMobileFromDbTask  extends AsyncTask<Void, Void, Cursor> {
     protected Cursor doInBackground(Void... params) {
         Cursor cursor;
         try {
-            cursor = mDb.query (NetworkMobileDb.TABLE_MOBILE,
-                    new String[] {NetworkMobileDb.KEY_MOBILE_ID, NetworkMobileDb.KEY_MOBILE_NAME, NetworkMobileDb.KEY_MOBILE_SPEED, NetworkMobileDb.KEY_MOBILE_DATE},
+            // get table COLUMN_TABLE_MOBILE_GENERATION
+            cursor = mDb.query (NetworkMobileDb.TABLE_MOBILE_GENERATION,
+                    NetworkMobileDb.COLUMN_TABLE_MOBILE_GENERATION,
                     null,
                     null,
                     null, null,null);

@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import dhbk.android.wifi2.interfaces.onDbInteractionListener;
 import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.models.WifiLocationModel;
-import dhbk.android.wifi2.models.WifiScanWifiModel;
 import dhbk.android.wifi2.models.WifiStateAndDateModel;
 
 /**
@@ -64,7 +63,7 @@ public class NetworkDb extends SQLiteOpenHelper{
         }
     }
 
-    public void getWifiStateAndDate(Fragment frag, WifiScanWifiModel wifiScanWifiModel) {
+    public void getWifiStateAndDate(Fragment frag, WifiLocationModel wifiScanWifiModel) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbWifiTableInteractionListener) {
@@ -110,13 +109,11 @@ public class NetworkDb extends SQLiteOpenHelper{
     //##########################################################################################
     // METHOD MOBILE TABLE
 
-    public void addMobile(String mobileType, String speedText, String nowDate) {
-        MobileModel mobileModel = new MobileModel(mobileType, speedText, nowDate);
-
+    public void addMobile(MobileModel mobileModel) {
         for (int i = 0; i < listTable.size(); i++) {
             onDbInteractionListener.onDbTableInteractionListener tableName = listTable.get(i);
             if (tableName instanceof onDbInteractionListener.onDbMobileTableInteractionListener) {
-                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).onInsert(getReadableDatabase(), mobileModel);
+                ((onDbInteractionListener.onDbMobileTableInteractionListener) tableName).addMobileNetwork(getReadableDatabase(), mobileModel);
             }
         }
     }
