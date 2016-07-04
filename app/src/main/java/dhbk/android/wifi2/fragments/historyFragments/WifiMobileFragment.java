@@ -24,6 +24,8 @@ import dhbk.android.wifi2.utils.PageChangeListener;
 show a viewpager with tablayout contains a list of wifi hotspot and mobile.
  */
 public class WifiMobileFragment extends BaseFragment {
+    private static final int POSITION_WIFI_FRAGMENT = 0;
+    private static final int POSITION_MOBILE_FRAGMENT = 1;
     @BindView(R.id.toolbar_image_outgoing)
     ImageView mToolbarImageOutgoing;
     @BindView(R.id.toolbar_image)
@@ -109,7 +111,7 @@ public class WifiMobileFragment extends BaseFragment {
     //        find the wifiFragment and pass cursor data to it.
     public void getWifiFragmentAndPassWifiCursor(Cursor cursor) {
         HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();
-        Fragment wifiFragment = adapter.getRegisteredFragment(mViewPagerContainer.getCurrentItem());
+        Fragment wifiFragment = adapter.getRegisteredFragment(POSITION_WIFI_FRAGMENT);
         if (wifiFragment instanceof WifiFragment) {
             ((WifiFragment)wifiFragment).onPopulateWifiCursorToRcv(cursor);
         }
@@ -120,7 +122,7 @@ public class WifiMobileFragment extends BaseFragment {
     // but the current viewpager not the mobile fragment
     public void getMobileFragmentAndPassWifiCursor(Cursor cursor) {
         HistoryPagerAdapter adapter = (HistoryPagerAdapter) mViewPagerContainer.getAdapter();
-        Fragment mobileFragment = adapter.getRegisteredFragment(mViewPagerContainer.getCurrentItem());
+        Fragment mobileFragment = adapter.getRegisteredFragment(POSITION_MOBILE_FRAGMENT);
         if (mobileFragment instanceof MobileFragment) {
             ((MobileFragment)mobileFragment).onPopulateMobileCursorToRcv(cursor);
         }
