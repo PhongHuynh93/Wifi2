@@ -45,6 +45,7 @@ public class MainFragment extends Fragment {
     FrameLayout mMapHistory;
 
     private OnFragInteractionListener.OnMainFragInteractionListener mListener;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     public MainFragment() {
     }
@@ -83,14 +84,18 @@ public class MainFragment extends Fragment {
 
         // make a hamberger in toolbar
         DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+        actionBarDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(), drawerLayout, mToolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true); //disable "hamburger to arrow" drawable
-        actionBarDrawerToggle.syncState();
-
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        actionBarDrawerToggle.syncState();
     }
 
     @Override

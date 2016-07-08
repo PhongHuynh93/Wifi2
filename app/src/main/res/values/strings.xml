@@ -48,4 +48,7 @@
     <!--toolbar title-->
     <string name="title_message_wifi_toolbar">Wifi Details</string>
     <string name="title_message_mobile_toolbar">Mobile Details</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

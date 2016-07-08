@@ -144,7 +144,7 @@ public class ChildShowDetailMobileFragment extends BaseFragment {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         // connect to db to laod mobile state and date
-//
+                        // TODO: 7/5/2016 add the child frag to show a list of mobile state and date
                     }
 
                     @Override

@@ -19,23 +19,6 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            res.srcDirs =
-                    [
-                            'src/main/res/layouts/fragments/main',
-                            'src/main/res/layouts/fragments/wifi',
-                            'src/main/res/layouts/fragments/mobile',
-                            'src/main/res/layouts/fragments/history',
-                            'src/main/res/layouts/fragments/map',
-                            'src/main/res/layouts/fragments',
-                            'src/main/res/layouts/activities',
-                            'src/main/res/layouts/contents',
-                            'src/main/res/layouts',
-                            'src/main/res'
-                    ]
-        }
-    }
 }
 
 dependencies {
