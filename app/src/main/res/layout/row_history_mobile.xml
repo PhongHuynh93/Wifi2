@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--layout for wifi info, contains an image, a ssid and a icon so user can click it to see details wifi-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="15dp"
+              android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/location_here_map"/>
+
+    <!--generation of mobile, max line for one row and when it's too long, truncate at the end -->
+    <TextView
+        android:id="@+id/row_generation_mobile_history"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:text="Ssid"
+        android:textColor="@color/black"
+        android:textSize="25sp"/>
+
+    <!--icon right-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/img_arrow_right"
+        android:src="@drawable/ic_keyboard_arrow_right"/>
+</LinearLayout>

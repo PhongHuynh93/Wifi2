@@ -50,6 +50,7 @@ public class WifiInfoRcvAdapter extends
                 }
             }
         });
+
     }
 
     @Override
