@@ -26,6 +26,12 @@ import dhbk.android.wifi2.R;
 import dhbk.android.wifi2.models.MobileModel;
 import dhbk.android.wifi2.utils.Constant;
 
+
+/*
+    contains a details of mobile
+    contains a placeholder for adding the bottom sheet.
+ */
+
 public class ChildShowDetailMobileFragment extends BaseFragment {
 
     private static final String ARG_GENERATION = "arg_generation";
