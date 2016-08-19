@@ -20,6 +20,7 @@ import dhbk.android.wifi2.R;
 /**
  * Created by phongdth.ky on 6/13/2016.
  */
+// todo - how to make a dialog
 // show a GPS dialog, and pass true/false to fragment depend on what they click.
 public class GpsChildTurnOnDialogFragment extends DialogFragment {
         @Override

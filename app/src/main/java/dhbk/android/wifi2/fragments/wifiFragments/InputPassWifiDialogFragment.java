@@ -20,6 +20,7 @@ import dhbk.android.wifi2.R;
  */
 
 // : 6/16/2016 copy this dialogfragment to sublime text
+    // todo - how to make custom dialog
 public class InputPassWifiDialogFragment extends DialogFragment {
     private static final String ARG_SSID = "ssid";
     private static final String ARG_POSITION = "position";
