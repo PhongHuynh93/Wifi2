@@ -48,10 +48,11 @@ public class MainActivity extends AppCompatActivity implements
             getSupportFragmentManager().beginTransaction().add(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
         }
 
-        // declare navigation drawer and actions when click one menu item.
+        // declare navigation drawer + actions when click one menu item -> close the drawer
         mNavView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
+//                get the item which have selected
                 int id = item.getItemId();
                 if (id == R.id.main) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -85,7 +86,13 @@ public class MainActivity extends AppCompatActivity implements
                     }
 
                 }
+                // todo high light the current item selected
+
+//                todo  change the action bar title
+
+//                close the drawer
                 mDrawerLayout.closeDrawer(GravityCompat.START);
+//                remember to return true after all
                 return true;
             }
         });

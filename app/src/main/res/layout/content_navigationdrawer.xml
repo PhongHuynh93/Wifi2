@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--content of nav-->
+<!--width is wrap and height is full-->
+<!--remember to declare the layout_gravity-->
 <android.support.design.widget.NavigationView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
