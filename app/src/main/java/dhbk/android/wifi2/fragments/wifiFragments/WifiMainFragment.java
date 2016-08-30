@@ -48,6 +48,7 @@ public class WifiMainFragment extends BaseFragment {
 
     // if user has turn
     private void hasUserTurnOnWifi() {
+        // check wifi enabled or not
         WifiManager wifi = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (wifi.isWifiEnabled()) {
             // : 6/13/2016 call method to show wifi access points around user location.
