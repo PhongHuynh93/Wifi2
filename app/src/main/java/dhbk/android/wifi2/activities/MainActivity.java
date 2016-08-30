@@ -56,12 +56,15 @@ public class MainActivity extends AppCompatActivity implements
 //                get the item which have selected
                 int id = item.getItemId();
                 if (id == R.id.main) {
+
+                    // clear fragment backstack
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_MAIN_FRAGMENT);
                     if (mainFragment == null) {
                         mainFragment = MainFragment.newInstance();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
                     }
+                    // end clear fragment backstack 
 
                 } else if (id == R.id.wifi) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
