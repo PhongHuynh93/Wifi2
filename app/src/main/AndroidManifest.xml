@@ -3,14 +3,14 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="dhbk.android.wifi2">
 
-    <!-- wifi permission -->
+    <!-- declare wifi permission -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
-    <!-- location permission -->
+    <!-- declare location permission -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
-    <!-- mobile permission -->
+    <!-- declare mobile permission -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
