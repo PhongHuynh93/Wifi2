@@ -12,11 +12,18 @@ import dhbk.android.wifi2.R;
  * Created by phongdth.ky on 6/13/2016.
  * a dialog to help user turn on wifi
  */
+// extends this class and only declare 1 method onCreateDialog
 public class TurnOnWifiDialogFragment extends DialogFragment {
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            /**
+             * declare title
+             * declare content
+             * declare 2 button, disagree and agress
+             */
             builder.setTitle(R.string.mes_turn_on_wifi_title)
                     .setMessage(R.string.mes_turn_on_wifi_body)
                     .setPositiveButton(R.string.mes_wifi_turn_on, new DialogInterface.OnClickListener() {

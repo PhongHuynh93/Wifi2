@@ -82,7 +82,7 @@ public class WifiPresenterFragment extends BaseFragment implements
                 .commit();
     }
 
-    // show a dialog to turn on wifi
+    // show a dialog to let user turn on wifi turn on wifi
     public void showDialogToTurnOnWifi() {
         TurnOnWifiDialogFragment turnOnWifiDialogFragment = new TurnOnWifiDialogFragment();
         turnOnWifiDialogFragment.show(getChildFragmentManager(), Constant.TAG_CHILD_WIFI_DIALOG_FRAGMENT);
