@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    // replace with main Fragment
+    // replace fragment
     @Override
     public void onMainFragReplace() {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
         }
     }
+    // end replace fragment
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // REPLACE FRAGMENT
