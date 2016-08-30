@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements
                         mainFragment = MainFragment.newInstance();
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, mainFragment, Constant.TAG_MAIN_FRAGMENT).commit();
                     }
-                    // end clear fragment backstack 
+                    // end clear fragment backstack
 
                 } else if (id == R.id.wifi) {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -103,22 +103,24 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    // When press "Back" button
+    //  Press "Back" button
     @Override
     public void onBackPressed() {
-        // call wifi presenter to pop ShowWifiDetailFrag out of backstack
+        // pop fragment if it exist
         Fragment presenterFragment = getSupportFragmentManager().findFragmentByTag(Constant.TAG_HISTORY_PRESENTER_FRAGMENT);
         if (presenterFragment instanceof HistoryPresenterFragment && presenterFragment.getChildFragmentManager().getBackStackEntryCount() > 0) {
             ((HistoryPresenterFragment) presenterFragment).popShowDetailFragment();
             return; // after pop out a nested fragment, not pop out again by run super.onBackPressed();
         } else {
-            // pop out normal fragment by run super.onBackPressed
         }
 
+        // close drawerlayout if it's open
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
+
+            // remove activity with it's fragment if it in foreground
             super.onBackPressed();
         }
     }
